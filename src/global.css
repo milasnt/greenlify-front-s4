@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme {
+
+  --font-display: Inter, sans-serif; 
+
+  --color-bg: #ffffff;
+  --color-bg-soft: #fafafa;
+  --color-bg-card: #ffffff;
+  --background-image-gradient-green: linear-gradient(135deg, #00a86b, #4caf50);
+  --background-image-gradient-purple: linear-gradient(135deg, #8b5cf6, #a78bda);
+
+  --color-green-primary: #00a86b;
+  --color-green-light: #4caf50;
+  --color-green-lighter: #e8f5e9;
+  --color-green-dark: #00875a;
+  --color-green-ultra-light: #f1f8f4;
+
+  --color-purple-primary: #8b5cf6;
+  --color-purple-light: #a78bda;
+  --color-purple-lighter: #f3f0ff;
+
+  --color-text-main: #1a1a1a;
+  --color-text-secondary: #666666;
+  --color-text-muted: #999999;
+
+  --color-border: rgba(0, 0, 0, 0.06);
+  --color-border-hover: rgba(0, 0, 0, 0.1);
+
+  --shadow-custom-sm: 0 4px 10px rgba(0, 0, 0, 0.03);
+  --shadow-custom-md: 0 10px 30px rgba(0, 0, 0, 0.06);
+  --shadow-green: 0 10px 30px rgba(0, 168, 107, 0.15);
+  --shadow-purple: 0 10px 30px rgba(139, 92, 246, 0.15);
+}
+
+@layer base {
+  * {
+    @apply m-0 p-0 box-border;
+  }
+
+  html {
+    font-size: 62.5%;
+    @apply overflow-x-hidden scroll-smooth;
+  }
+
+  body {
+    @apply min-h-screen w-full overflow-x-hidden bg-bg font-display text-[1.6rem] text-text-main;
+  }
+
+  img {
+    @apply block max-w-full h-auto;
+  }
+
+  a {
+    @apply no-underline;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+}
