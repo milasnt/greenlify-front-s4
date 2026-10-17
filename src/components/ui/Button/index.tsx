@@ -1,13 +1,19 @@
 import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
+import { FaArrowRight } from "react-icons/fa6";
 
 interface ButtonProps {
     children: ReactNode;
-    variant?: "primary" | "secondary";
+    variant?: "primary" | "secondary" | "dark" | "accent" | "outline";
     size?: "sm" | "md" | "lg";
     full?: boolean;
+    arrow?: boolean;
     href?: string;
+    to?: string;
     type?: "button" | "submit" | "reset";
+    disabled?: boolean;
     onClick?: () => void;
+    className?: string;
 }
 
 export default function Button({
@@ -15,40 +21,64 @@ export default function Button({
     variant = "primary",
     size = "md",
     full = false,
+    arrow = false,
     href,
+    to,
     type = "button",
+    disabled = false,
     onClick,
+    className = "",
 }: ButtonProps) {
 
     const baseStyles =
-        "block w-fit text-center no-underline font-semibold rounded-3xl transition duration-300 whitespace-nowrap outline-none";
+        "group inline-flex w-fit items-center justify-center gap-2 whitespace-nowrap rounded-full text-center font-heading font-bold no-underline transition duration-300 hover:-translate-y-0.5 disabled:pointer-events-none disabled:opacity-60 max-[480px]:w-full";
 
     const variantStyles = {
-        primary: "bg-gradient-green text-bg hover:brightness-110",
-        secondary: "bg-bg border border border-gradient-green text-green-primary hover:bg-gradient-green hover:text-bg",
+        primary: "bg-green-primary text-white shadow-lg shadow-green-primary/30 hover:shadow-xl hover:shadow-green-primary/30",
+        secondary: "border border-border bg-bg-card text-text-main hover:bg-green-lighter",
+        dark: "bg-night text-night-text hover:bg-night/90",
+        accent: "bg-green-light text-night shadow-lg shadow-green-light/25",
+        outline: "border border-white/40 text-white hover:bg-white/10",
     };
 
     const sizeStyles = {
-        sm: "px-[2rem] py-[1rem] text-[1.3rem] max-[992px]:px-[2.4rem] max-[992px]:py-[1.3rem] max-[992px]:text-[1.45rem] max-[768px]:px-[2.2rem] max-[768px]:py-[1.2rem] max-[768px]:text-[1.4rem] max-[480px]:w-full max-[480px]:text-center max-[480px]:px-[1.6rem] max-[480px]:py-[1.2rem] max-[480px]:text-[1.4rem]",
-        md: "px-[2.8rem] py-[1.4rem] text-[1.5rem] max-[992px]:px-[2.4rem] max-[992px]:py-[1.3rem] max-[992px]:text-[1.45rem] max-[768px]:px-[2.2rem] max-[768px]:py-[1.2rem] max-[768px]:text-[1.4rem] max-[480px]:w-full max-[480px]:text-center max-[480px]:px-[1.6rem] max-[480px]:py-[1.2rem] max-[480px]:text-[1.4rem]",
-        lg: "px-[3rem] py-[1.8rem] text-[1.7rem] max-[992px]:px-[2.8rem] max-[992px]:py-[1.6rem] max-[768px]:px-[2.4rem] max-[768px]:py-[1.5rem] max-[768px]:text-[1.6rem] max-[480px]:w-full max-[480px]:text-center max-[480px]:px-[1.6rem] max-[480px]:py-[1.4rem] max-[480px]:text-[1.5rem]",
+        sm: "px-4 py-2 text-xs",
+        md: "px-5 py-3 text-sm",
+        lg: "px-6 py-3.5 text-sm",
     };
 
     const widthStyles = full ? "w-full" : "";
 
-    const className = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${widthStyles} rounded-custom-lg`;
+    const classes = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${widthStyles} ${className}`;
+
+    const content = (
+        <>
+            {children}
+            {arrow && (
+                <FaArrowRight className="text-[1.1em] transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden />
+            )}
+        </>
+    );
+
+    if (to) {
+        return (
+            <Link to={to} className={classes}>
+                {content}
+            </Link>
+        );
+    }
 
     if (href) {
         return (
-        <a href={href} className={className}>
-            {children}
-        </a>
+            <a href={href} className={classes}>
+                {content}
+            </a>
         );
     }
 
     return (
-        <button type={type} onClick={onClick} className={className}>
-            {children}
+        <button type={type} onClick={onClick} disabled={disabled} className={classes}>
+            {content}
         </button>
-  );
+    );
 }

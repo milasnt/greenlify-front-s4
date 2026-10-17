@@ -2,24 +2,48 @@ import type { ReactNode } from "react";
 
 interface SectionProps {
     children: ReactNode;
-    variant?: "primary" | "secondary";
+    variant?: "primary" | "secondary" | "mint" | "card" | "night";
+    size?: "md" | "sm";
+    id?: string;
     className?: string;
 }
 
 export default function Section({
     children,
     variant = "primary",
+    size = "md",
+    id,
     className = "",
 }: SectionProps) {
+
+    const isNight = variant === "night";
 
     const variantStyles = {
         primary: "bg-bg",
         secondary: "bg-bg-soft",
+        mint: "bg-green-lighter/60",
+        card: "border-y border-border bg-bg-card",
+        night: "bg-night text-night-text",
+    };
+
+    const sizeStyles = {
+        md: "py-20 lg:py-28",
+        sm: "py-12 lg:py-16",
     };
 
     return (
-        <section className={`w-full ${variantStyles[variant]} ${className}`}>
-            <div className="max-w-[140rem] mx-auto px-16 py-24 max-[992px]:px-12 max-[992px]:py-20 max-[480px]:px-[1.6rem] max-[480px]:py-12">
+        <section
+            id={id}
+            className={`relative w-full scroll-mt-24 overflow-hidden ${variantStyles[variant]} ${className}`}
+        >
+            {isNight && (
+                <>
+                    <div className="absolute left-1/4 top-0 h-72 w-72 rounded-full bg-purple-primary/25 blur-3xl" aria-hidden />
+                    <div className="absolute bottom-0 right-1/4 h-72 w-72 rounded-full bg-green-light/15 blur-3xl" aria-hidden />
+                </>
+            )}
+
+            <div className={`relative mx-auto w-full max-w-6xl px-4 sm:px-6 ${sizeStyles[size]}`}>
                 {children}
             </div>
         </section>
