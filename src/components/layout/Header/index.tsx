@@ -1,36 +1,33 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { FaBars, FaXmark } from "react-icons/fa6";
 import Menu from "../Menu";
+import Logo from "../Logo";
+import Button from "../../ui/Button";
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  return (
-    <header className="w-full border-b border-border bg-bg">
-      <div className="mx-auto flex max-w-[140rem] flex-wrap items-center justify-between gap-16 px-16 py-5 max-[992px]:gap-8 max-[992px]:px-8 max-[768px]:px-8 max-[768px]:py-[1.8rem] max-[480px]:px-[1.6rem]">
-        <Link
-          to="/"
-          className="flex items-center gap-4"
-          onClick={() => setIsMenuOpen(false)}
-        >
-          <span className="text-[2.2rem] font-bold text-text-main max-[480px]:text-[1.9rem]">
-            Green<span className="text-green-primary">lify</span>
-          </span>
-        </Link>
+    return (
+        <header className="sticky top-0 z-40 w-full border-b border-border bg-bg/85 backdrop-blur-md">
+            <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-3 sm:px-6">
+                <Logo onClick={() => setIsMenuOpen(false)} />
 
-        <button
-          type="button"
-          onClick={() => setIsMenuOpen((prev) => !prev)}
-          aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
-          aria-expanded={isMenuOpen}
-          className="hidden h-10 w-10 items-center justify-center rounded-lg border border-border text-[1.8rem] text-text-main transition duration-300 hover:border-green-primary hover:text-green-primary max-[768px]:flex"
-        >
-          {isMenuOpen ? <FaXmark /> : <FaBars />}
-        </button>
+                <button
+                    type="button"
+                    onClick={() => setIsMenuOpen((prev) => !prev)}
+                    aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
+                    aria-expanded={isMenuOpen}
+                    className="grid h-10 w-10 place-items-center rounded-full border border-border bg-bg-card text-text-main md:hidden"
+                >
+                    {isMenuOpen ? <FaXmark /> : <FaBars />}
+                </button>
 
-        <Menu isOpen={isMenuOpen} onNavigate={() => setIsMenuOpen(false)} />
-      </div>
-    </header>
-  );
+                <Menu isOpen={isMenuOpen} onNavigate={() => setIsMenuOpen(false)} />
+
+                <Button href="https://soulup.io/" size="sm" arrow>
+                  Visite a SoulUP
+                </Button>
+            </div>
+        </header>
+    );
 }

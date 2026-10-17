@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { FaChevronDown } from "react-icons/fa6";
 
 interface MenuProps {
   isOpen?: boolean;
@@ -8,87 +9,65 @@ interface MenuProps {
 export default function Menu({ isOpen = false, onNavigate }: MenuProps) {
   return (
     <nav
-      className={`flex flex-1 justify-center max-[768px]:w-full max-[768px]:basis-full ${
-        isOpen ? "max-[768px]:flex" : "max-[768px]:hidden"
+      aria-label="Navegação principal" className={`flex flex-1 justify-center max-md:w-full max-md:basis-full ${
+        isOpen ? "max-md:flex" : "max-md:hidden"
       }`}
     >
-      <ul className="flex items-center gap-12 list-none max-[992px]:gap-8 max-[768px]:w-full max-[768px]:flex-col max-[768px]:items-start max-[768px]:gap-1 max-[768px]:py-4">
-
-        <li className="max-[768px]:w-full">
+      <ul className="flex items-center gap-1 max-md:w-full max-md:flex-col max-md:items-stretch max-md:py-4">
+        <li>
           <Link
             to="/"
             onClick={onNavigate}
-            className="block text-[1.5rem] font-medium text-text-secondary transition duration-300 hover:text-green-primary max-[768px]:w-full max-[768px]:py-3"
+            className="block rounded-full px-4 py-2 text-sm font-semibold text-text-secondary transition duration-300 hover:bg-green-lighter hover:text-text-main max-md:w-full"
           >
             Home
           </Link>
         </li>
 
-        <li className="relative group max-[768px]:w-full">
+        <li className="relative group">
           <Link
             to="/sobre"
             onClick={onNavigate}
-            className="flex items-center gap-2 py-4 text-[1.5rem] font-medium text-text-secondary transition duration-300 hover:text-green-primary max-[768px]:w-full max-[768px]:py-3"
+            className="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold text-text-secondary transition duration-300 hover:bg-green-lighter hover:text-text-main max-md:w-full"
           >
             Sobre
-            <span className="text-[1rem] transition-transform duration-300 group-hover:rotate-180 max-[768px]:hidden">
-              ⌄
-            </span>
+            <FaChevronDown
+              className="text-[0.6rem] transition-transform duration-300 group-hover:rotate-180"
+              aria-hidden="true"
+            />
           </Link>
 
-          <ul className="absolute left-1/2 top-[calc(100%+0.5rem)] z-50 invisible w-64 -translate-x-1/2 translate-y-2 list-none rounded-xl border border-border bg-bg-card p-2 opacity-0 shadow-lg transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 max-[768px]:static max-[768px]:z-auto max-[768px]:visible max-[768px]:w-full max-[768px]:translate-x-0 max-[768px]:translate-y-0 max-[768px]:opacity-100 max-[768px]:border-0 max-[768px]:bg-transparent max-[768px]:p-0 max-[768px]:pl-6 max-[768px]:shadow-none">
+          <ul className="absolute left-0 top-full z-50 hidden min-w-56 flex-col gap-1 rounded-2xl border border-border bg-bg-card p-2 shadow-custom-md group-hover:flex group-focus-within:flex max-md:static max-md:mt-1 max-md:w-full max-md:border-0 max-md:bg-transparent max-md:p-0 max-md:pl-4 max-md:shadow-none">
             <li>
-              <Link
-                to="/sobre"
-                onClick={onNavigate}
-                className="block w-full whitespace-nowrap rounded-lg px-4 py-3 text-[1.4rem] font-medium text-text-secondary transition duration-300 hover:bg-green-ultra-light hover:text-green-primary"
-              >
+              <Link to="/sobre" onClick={onNavigate} className="block rounded-xl px-4 py-2 text-sm font-medium text-text-secondary transition duration-300 hover:bg-green-lighter hover:text-green-primary">
                 Sobre a Greenlify
               </Link>
             </li>
-
             <li>
-              <Link
-                to="/nossasolucao"
-                onClick={onNavigate}
-                className="block w-full whitespace-nowrap rounded-lg px-4 py-3 text-[1.4rem] font-medium text-text-secondary transition duration-300 hover:bg-green-ultra-light hover:text-green-primary"
-              >
+              <Link to="/nossasolucao" onClick={onNavigate} className="block rounded-xl px-4 py-2 text-sm font-medium text-text-secondary transition duration-300 hover:bg-green-lighter hover:text-green-primary">
                 Nossa solução
               </Link>
             </li>
           </ul>
         </li>
 
-        <li className="max-[768px]:w-full">
-          <Link
-            to="/integrantes"
-            onClick={onNavigate}
-            className="block text-[1.5rem] font-medium text-text-secondary transition duration-300 hover:text-green-primary max-[768px]:w-full max-[768px]:py-3"
-          >
+        <li>
+          <Link to="/integrantes" onClick={onNavigate} className="block rounded-full px-4 py-2 text-sm font-semibold text-text-secondary transition duration-300 hover:bg-green-lighter hover:text-text-main max-md:w-full">
             Integrantes
           </Link>
         </li>
 
-        <li className="max-[768px]:w-full">
-          <Link
-            to="/faq"
-            onClick={onNavigate}
-            className="block text-[1.5rem] font-medium text-text-secondary transition duration-300 hover:text-green-primary max-[768px]:w-full max-[768px]:py-3"
-          >
+        <li>
+          <Link to="/faq" onClick={onNavigate} className="block rounded-full px-4 py-2 text-sm font-semibold text-text-secondary transition duration-300 hover:bg-green-lighter hover:text-text-main max-md:w-full">
             FAQ
           </Link>
         </li>
 
-        <li className="max-[768px]:w-full">
-          <Link
-            to="/contato"
-            onClick={onNavigate}
-            className="block text-[1.5rem] font-medium text-text-secondary transition duration-300 hover:text-green-primary max-[768px]:w-full max-[768px]:py-3"
-          >
+        <li>
+          <Link to="/contato" onClick={onNavigate} className="block rounded-full px-4 py-2 text-sm font-semibold text-text-secondary transition duration-300 hover:bg-green-lighter hover:text-text-main max-md:w-full">
             Contato
           </Link>
         </li>
-
       </ul>
     </nav>
   );
