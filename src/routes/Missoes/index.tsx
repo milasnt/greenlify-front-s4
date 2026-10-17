@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import Section from "../../components/Section";
-import Hero from "../../components/Hero";
+import Section from "../../components/layout/Section";
+import Hero from "../../components/layout/Hero";
 import { MissionCard, MissaoMensal } from "../../components/MissionCard";
 import { FaLeaf, FaListCheck } from "react-icons/fa6";
-import Card from "../../components/Card";
+import Card from "../../components/ui/Card";
 import { Link } from "react-router-dom";
-import Button from "../../components/Button";
+import Button from "../../components/ui/Button";
 
 export interface Missao {
     id: string;

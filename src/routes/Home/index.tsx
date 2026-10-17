@@ -1,7 +1,7 @@
-import Hero from "../../components/Hero";
-import Button from "../../components/Button";
+import Hero from "../../components/layout/Hero";
+import Button from "../../components/ui/Button";
 import Dashboard from "../../components/Dashboard";
-import Section from "../../components/Section";
+import Section from "../../components/layout/Section";
 import { FaLeaf } from "react-icons/fa";
 import { Link } from "react-router-dom";
 

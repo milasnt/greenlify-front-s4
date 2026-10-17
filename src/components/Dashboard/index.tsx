@@ -1,5 +1,5 @@
 import { FaBolt, FaTrophy, FaEarthAmericas, FaDroplet, FaLightbulb, FaRoute} from "react-icons/fa6";
-import Card from "../Card";
+import Card from "../ui/Card";
 
 export default function Dashboard() {
   return (

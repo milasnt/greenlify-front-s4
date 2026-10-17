@@ -1,7 +1,7 @@
-import Section from "../../components/Section";
-import Hero from "../../components/Hero";
-import Card from "../../components/Card";
-import Roadmap from "../../components/Roadmap";
+import Section from "../../components/layout/Section";
+import Hero from "../../components/layout/Hero";
+import Card from "../../components/ui/Card";
+import Roadmap from "../../components/ui/Roadmap";
 import imgFiap from "../../assets/img/sobre/img-fiap.jpeg";
 import imgSoulup from "../../assets/img/sobre/img-soulup.png";
 import { FaSeedling, FaLeaf, FaRobot, FaChartLine, FaUsers, FaTrophy, FaCode, FaCss3Alt } from "react-icons/fa";

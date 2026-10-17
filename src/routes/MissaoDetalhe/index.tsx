@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { FaCircleCheck } from "react-icons/fa6";
-import MissionModal from "../../components/MissionModal";
+import MissionModal from "../../features/missions/components/MissionModal";
 import { missoes } from "../Missoes";
 
 export default function MissaoDetalhe() {

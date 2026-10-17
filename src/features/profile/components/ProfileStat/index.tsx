@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import Card from "../Card";
+import Card from "../../../../components/ui/Card";
 
 interface ProfileStatProps {
     icon: ReactNode;

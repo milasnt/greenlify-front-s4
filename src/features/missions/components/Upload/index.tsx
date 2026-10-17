@@ -1,8 +1,8 @@
 import { useRef } from "react";
 import type { ChangeEvent } from "react";
 import { FaVideo, FaUpload, FaCircleCheck, FaSpinner } from "react-icons/fa6";
-import Card from "../Card";
-import Button from "../Button";
+import Card from "../ui/Card";
+import Button from "../ui/Button";
 
 export type UploadStatus = "idle" | "selected" | "sending" | "success";
 

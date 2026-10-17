@@ -1,6 +1,6 @@
-import Section from "../../components/Section";
-import Card from "../../components/Card";
-import Button from "../../components/Button";
+import Section from "../../components/layout/Section";
+import Card from "../../components/ui/Card";
+import Button from "../../components/ui/Button";
 import { Link } from "react-router-dom";
 import { FaLeaf } from "react-icons/fa6";
 

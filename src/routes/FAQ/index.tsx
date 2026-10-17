@@ -1,10 +1,10 @@
-import Section from "../../components/Section";
-import Hero from "../../components/Hero";
-import FAQCard from "../../components/FAQCard";
-import Card from "../../components/Card";
+import Section from "../../components/layout/Section";
+import Hero from "../../components/layout/Hero";
+import FAQCard from "../../components/ui/FAQCard";
+import Card from "../../components/ui/Card";
 import { FaQuestion, FaSeedling, FaComments } from "react-icons/fa";
 import { Link } from "react-router";
-import Button from "../../components/Button";
+import Button from "../../components/ui/Button";
 
 export default function FAQ() {
     const soulUpFAQs = [

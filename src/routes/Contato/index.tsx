@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import Section from "../../components/Section";
-import Hero from "../../components/Hero";
-import Card from "../../components/Card";
+import Section from "../../components/layout/Section";
+import Hero from "../../components/layout/Hero";
+import Card from "../../components/ui/Card";
 import ContactForm from "../../components/Forms";
 import { FaEnvelope, FaGithub, FaLocationDot, FaSeedling, FaCircleCheck } from "react-icons/fa6";
 

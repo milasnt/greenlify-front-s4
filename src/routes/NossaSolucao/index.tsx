@@ -1,7 +1,7 @@
-import Section from "../../components/Section";
-import Hero from "../../components/Hero";
-import Card from "../../components/Card";
-import Button from "../../components/Button";
+import Section from "../../components/layout/Section";
+import Hero from "../../components/layout/Hero";
+import Card from "../../components/ui/Card";
+import Button from "../../components/ui/Button";
 import { Link } from "react-router";
 import {FaLeaf, FaListCheck, FaVideo, FaRobot, FaChartLine, FaTrophy, FaUser, FaUsers, FaFire } from "react-icons/fa6";
 

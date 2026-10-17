@@ -1,8 +1,8 @@
-import Section from "../../components/Section";
-import Hero from "../../components/Hero";
+import Section from "../../components/layout/Section";
+import Hero from "../../components/layout/Hero";
 import { FaGithub, FaLinkedinIn, FaSeedling, FaLeaf, FaLightbulb, FaUsers } from "react-icons/fa";
 import { FaUserGroup, FaShieldHeart } from "react-icons/fa6";
-import Card from "../../components/Card";
+import Card from "../../components/ui/Card";
 
 import imgCamila from "../../assets/img/integrantes/img-camila.jpeg";
 import imgLucas from "../../assets/img/integrantes/img-lucas.jpeg";

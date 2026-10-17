@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { FaBars, FaXmark } from "react-icons/fa6";
-import Menu from "../Menu";
+import Menu from "../layout/Menu";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

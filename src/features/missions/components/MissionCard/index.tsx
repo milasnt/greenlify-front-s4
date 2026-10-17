@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import Card from "../Card";
-import Button from "../Button";
+import Card from "../ui/Card";
+import Button from "../ui/Button";
 
 interface MissionCardProps {
     id: string;
