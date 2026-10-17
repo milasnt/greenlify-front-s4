@@ -8,19 +8,17 @@ import {FaLeaf, FaListCheck, FaVideo, FaRobot, FaChartLine, FaTrophy, FaUser, Fa
 export default function NossaSolucao() {
     return (
         <>
-            <Section>
-                <Hero
-                    variant="internal"
-                    badge={<FaLeaf />}
-                    title={<>Nossa <span className="font-bold text-green-primary">Solução</span></>}
-                    text="A Greenlify transforma ações sustentáveis em uma experiência de gamificação dentro da SoulUp, conectando missões, validação, pontuação e recompensas."
-                    visual={
-                        <div className="flex h-48 w-48 items-center justify-center rounded-[3rem] border border-black/5 bg-bg-card shadow-custom-md">
-                            <FaLeaf className="text-[4.5rem] text-green-primary" />
-                        </div>
-                    }
-                />
-            </Section>
+            <Hero
+                variant="internal"
+                badge={<FaLeaf />}
+                title={<>Nossa <span className="font-bold text-green-primary">Solução</span></>}
+                text="A Greenlify transforma ações sustentáveis em uma experiência de gamificação dentro da SoulUp, conectando missões, validação, pontuação e recompensas."
+                visual={
+                    <div className="flex h-30 w-30 items-center justify-center rounded-[2.5rem] border border-black/5 bg-bg-card shadow-custom-md">
+                        <FaLeaf className="text-[2.5rem] text-green-primary" />
+                    </div>
+                }
+            />
 
             <Section>
                 <div className="mx-auto w-full max-w-[140rem] px-16 py-24 max-[992px]:px-12 max-[992px]:py-20 max-[480px]:px-[1.6rem] max-[480px]:py-12">

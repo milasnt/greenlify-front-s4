@@ -10,14 +10,12 @@ import { FaBolt, FaListCheck, FaReact } from "react-icons/fa6";
 export default function Sobre() {
     return (
         <>
-            <Section>
-                <Hero
-                    badge={<FaLeaf />}
-                    title={<>Gameficação e <span className="font-bold text-green-primary">Sustentabilidade</span></>}
-                    text="Conheça a Greenlify, a solução desenvolvida para a SoulUp que transforma ações sustentáveis em desafios, pontuações e recompensas reais dentro da plataforma."
-                    visual={<div className="flex h-48 w-48 items-center justify-center rounded-[3rem] border border-black/5 bg-bg-card shadow-custom-md"><FaSeedling className="text-[4.5rem] text-green-primary" /></div>}
-                />
-            </Section>
+            <Hero
+                badge={<FaLeaf />}
+                title={<>Gameficação e <span className="font-bold text-green-primary">Sustentabilidade</span></>}
+                text="Conheça a Greenlify, a solução desenvolvida para a SoulUp que transforma ações sustentáveis em desafios, pontuações e recompensas reais dentro da plataforma."
+                visual={<div className="flex h-30 w-30 items-center justify-center rounded-[2.5rem] border border-black/5 bg-bg-card shadow-custom-md"><FaSeedling className="text-[2.5rem] text-green-primary" /></div>}
+            />
 
             <Section>
                 <div className="mx-auto w-full max-w-[140rem] px-16 py-24 max-[992px]:px-12 max-[992px]:py-20 max-[480px]:px-[1.6rem] max-[480px]:py-12">

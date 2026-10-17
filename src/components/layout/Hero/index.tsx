@@ -66,20 +66,19 @@ export default function Hero({
                 {visual && (
                     <Reveal delay={150} className="relative flex items-center justify-center">
                         {!isHome && (
-                            <div className="absolute flex h-72 w-72 items-center justify-center sm:h-80 sm:w-80" aria-hidden>
+                            <div className="absolute flex h-60 w-60 items-center justify-center sm:h-72 sm:w-72" aria-hidden>
                                 <div className="absolute h-full w-full rounded-full bg-green-primary/5" />
-                                <div className="absolute right-0 top-4 h-16 w-16 rounded-full bg-green-primary/10" />
-                                <div className="absolute bottom-4 left-2 h-12 w-12 rounded-full bg-green-primary/10" />
-                                <div className="absolute right-6 bottom-12 h-3 w-3 rounded-full bg-green-primary/30" />
-                                <div className="absolute left-8 top-10 h-2 w-2 rounded-full bg-green-primary/20" />
-                                <div className="absolute right-16 top-20 h-2 w-2 rounded-full bg-green-primary/30" />
-                                <div className="absolute h-52 w-52 rotate-12 rounded-[35%] border border-green-primary/10 sm:h-60 sm:w-60" />
-                                <div className="absolute h-60 w-60 -rotate-12 rounded-[40%] border border-green-primary/5 sm:h-72 sm:w-72" />
-                                <div className="absolute left-4 top-8 h-8 w-8 rounded-full border border-green-primary/10" />
-                                <div className="absolute right-2 bottom-10 h-6 w-6 rounded-full border border-green-primary/10" />
+                                <div className="absolute right-0 top-3 h-12 w-12 rounded-full bg-green-primary/10" />
+                                <div className="absolute bottom-3 left-2 h-9 w-9 rounded-full bg-green-primary/10" />
+                                <div className="absolute right-5 bottom-10 h-2.5 w-2.5 rounded-full bg-green-primary/30" />
+                                <div className="absolute left-7 top-8 h-1.5 w-1.5 rounded-full bg-green-primary/20" />
+                                <div className="absolute right-12 top-16 h-1.5 w-1.5 rounded-full bg-green-primary/30" />
+                                <div className="absolute h-44 w-44 rotate-12 rounded-[35%] border border-green-primary/10 sm:h-52 sm:w-52" />
+                                <div className="absolute h-52 w-52 -rotate-12 rounded-[40%] border border-green-primary/5 sm:h-60 sm:w-60" />
+                                <div className="absolute left-3 top-7 h-6 w-6 rounded-full border border-green-primary/10" />
+                                <div className="absolute right-1 bottom-8 h-5 w-5 rounded-full border border-green-primary/10" />
                             </div>
                         )}
-
                         <div className="relative z-10">
                             {visual}
                         </div>
