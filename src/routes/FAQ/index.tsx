@@ -116,14 +116,12 @@ export default function FAQ() {
 
     return (
         <>
-            <Section variant="primary">
-                <Hero
-                    badge={<FaQuestion />}
-                    title={<>Respondendo suas <span className="font-bold text-green-primary">principais dúvidas</span></>}
-                    text="Encontre informações sobre a SoulUp e o Greenlify, entendendo melhor como funciona a plataforma e as funcionalidades da solução."
-                    visual={<div className="flex h-48 w-48 items-center justify-center rounded-[3rem] border border-black/5 bg-bg-card shadow-custom-md"><FaSeedling className="text-[4.5rem] text-green-primary" /></div>}
-                />
-            </Section>
+            <Hero
+                badge={<FaQuestion />}
+                title={<>Respondendo suas <span className="font-bold text-green-primary">principais dúvidas</span></>}
+                text="Encontre informações sobre a SoulUp e o Greenlify, entendendo melhor como funciona a plataforma e as funcionalidades da solução."
+                visual={<div className="flex h-30 w-30 items-center justify-center rounded-[2.5rem] border border-black/5 bg-bg-card shadow-custom-md"><FaSeedling className="text-[2.5rem] text-green-primary" /></div>}
+            />
 
             <Section variant="secondary">
                 <div className="mx-auto grid w-full max-w-[140rem] grid-cols-2 gap-16 px-16 py-24 max-[992px]:px-12 max-[992px]:py-20 max-[768px]:grid-cols-1 max-[480px]:px-[1.6rem] max-[480px]:py-12">

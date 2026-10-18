@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Section from "../../components/layout/Section";
 import Hero from "../../components/layout/Hero";
 import Card from "../../components/ui/Card";
-import ContactForm from "../../components/Forms";
+import ContactForm from "../../components/ui/Forms";
 import { FaEnvelope, FaGithub, FaLocationDot, FaSeedling, FaCircleCheck } from "react-icons/fa6";
 
 interface ContatoLocationState {
@@ -20,14 +20,12 @@ export default function Contato() {
 
     return (
         <>
-            <Section variant="primary">
-                <Hero
-                    badge={<FaEnvelope />}
-                    title={<>Converse com a <span className="font-bold text-green-primary">nossa equipe</span></>}
-                    text="Estamos disponíveis para responder dúvidas, receber sugestões e conversar sobre a solução criada."
-                    visual={<div className="flex h-48 w-48 items-center justify-center rounded-[3rem] border border-black/5 bg-bg-card shadow-custom-md"><FaSeedling className="text-[4.5rem] text-green-primary" /></div>}
-                />
-            </Section>
+            <Hero
+                badge={<FaEnvelope />}
+                title={<>Converse com a <span className="font-bold text-green-primary">nossa equipe</span></>}
+                text="Estamos disponíveis para responder dúvidas, receber sugestões e conversar sobre a solução criada."
+                visual={<div className="flex h-30 w-30 items-center justify-center rounded-[2.5rem] border border-black/5 bg-bg-card shadow-custom-md"><FaSeedling className="text-[2.5rem] text-green-primary" /></div>}
+            />
 
             <Section variant="secondary">
                 <div className="mx-auto grid w-full max-w-[140rem] grid-cols-2 gap-12 px-16 py-24 max-[992px]:px-12 max-[992px]:py-20 max-[900px]:grid-cols-1 max-[480px]:px-[1.6rem] max-[480px]:py-12">

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { FaPaperPlane } from "react-icons/fa";
 import Field from "../Field";
-import Button from "../ui/Button";
+import Button from "../Button";
 
 export interface ContactFormData {
     nome: string;

@@ -61,15 +61,12 @@ export default function Integrantes() {
 
     return (
         <>
-            <Section>
                 <Hero
                     badge={<FaUserGroup />}
                     title={<>Conheça os <span className="font-bold text-green-primary">integrantes</span></>}
                     text="Conheça quem está por trás do desenvolvimento da Greenlify. Uma equipe que uniu tecnologia e criatividade para criar uma solução sustentável para a SoulUp."
-                    visual={<div className="flex h-48 w-48 items-center justify-center rounded-[3rem] border border-black/5 bg-bg-card shadow-custom-md"><FaSeedling className="text-[4.5rem] text-green-primary" /></div>}
+                    visual={<div className="flex h-30 w-30 items-center justify-center rounded-[2.5rem] border border-black/5 bg-bg-card shadow-custom-md"><FaSeedling className="text-[2.5rem] text-green-primary" /></div>}
                 />
-            </Section>
-
             <Section>
                 <div className="grid grid-cols-4 gap-8 max-[992px]:grid-cols-2 max-[768px]:grid-cols-2 max-[480px]:grid-cols-1">
                     {integrantes.map((integrante) => (

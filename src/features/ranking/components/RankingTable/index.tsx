@@ -1,3 +1,6 @@
+import { FaCrown, FaUsers } from "react-icons/fa6";
+import IconBox from "../../../../components/ui/IconBox";
+
 interface RankingItem {
     posicao: number;
     nome: string;
@@ -8,14 +11,89 @@ interface RankingItem {
 interface RankingTableProps {
     items: RankingItem[];
     type?: "users" | "groups";
+    variant?: "table" | "podium";
+    highlight?: string;
+    unit?: string;
+    caption?: string;
 }
 
-export default function RankingTable({ items, type = "users" }: RankingTableProps) {
+export default function RankingTable({
+    items,
+    type = "users",
+    variant = "table",
+    highlight,
+    unit = "pts",
+    caption,
+}: RankingTableProps) {
     const isGroups = type === "groups";
 
+    if (variant === "podium") {
+
+        const ordered = [items[1], items[0], items[2]].filter((item): item is RankingItem => Boolean(item));
+
+        const pedestalStyles: Record<number, string> = {
+            1: "h-36 bg-linear-to-b from-green-light to-green-primary text-white shadow-lg shadow-green-primary/25",
+            2: "h-24 bg-green-lighter text-green-dark",
+            3: "h-20 bg-purple-lighter text-purple-dark",
+        };
+
+        return (
+            <ol className="flex items-end justify-center gap-3 sm:gap-5" aria-label="Pódio">
+                {ordered.map((item) => {
+                    const position = items.indexOf(item) + 1;
+                    const isFirst = position === 1;
+
+                    return (
+                        <li key={item.nome} className="flex w-full max-w-40 flex-col items-center gap-3">
+                            <div className="relative">
+                                {isFirst && (
+                                    <FaCrown className="absolute -top-6 left-1/2 -translate-x-1/2 text-2xl text-gold" aria-hidden />
+                                )}
+
+                                {isGroups ? (
+                                    <IconBox icon={<FaUsers />} variant="purple" size={isFirst ? "xl" : "lg"} />
+                                ) : (
+                                    <IconBox name={item.nome} size={isFirst ? "xl" : "lg"} ring={isFirst} />
+                                )}
+                            </div>
+
+                            <div className="text-center">
+                                <p className="truncate font-heading text-sm font-bold text-text-main">
+                                    {item.nome}
+                                </p>
+
+                                {item.nivel && (
+                                    <p className="text-xs text-text-secondary">
+                                        {item.nivel}
+                                    </p>
+                                )}
+                            </div>
+
+                            <div className={`flex w-full flex-col items-center justify-end rounded-t-3xl pb-4 pt-5 ${pedestalStyles[position] ?? pedestalStyles[3]}`}>
+                                <span className="font-heading text-3xl font-extrabold">
+                                    {position}º
+                                </span>
+
+                                <span className="mt-1 text-xs font-bold">
+                                    {item.pontos.toLocaleString("pt-BR")} {unit}
+                                </span>
+
+                                {caption && (
+                                    <span className={`text-[10px] ${isFirst ? "text-white/70" : "text-text-secondary"}`}>
+                                        {caption}
+                                    </span>
+                                )}
+                            </div>
+                        </li>
+                    );
+                })}
+            </ol>
+        );
+    }
+
     return (
-        <div className="overflow-hidden rounded-2xl border border-border bg-bg-card">
-            <div className="grid grid-cols-[7rem_1fr_14rem] border-b border-border bg-green-ultra-light px-8 py-5 text-[1.4rem] font-semibold text-text-secondary max-[768px]:grid-cols-[5rem_1fr_9rem] max-[768px]:px-5 max-[480px]:grid-cols-[4rem_1fr_7rem] max-[480px]:px-[1.6rem]">
+        <div className="overflow-hidden rounded-3xl border border-border bg-bg-card">
+            <div className="grid grid-cols-[4rem_1fr_auto] gap-4 border-b border-border bg-bg-soft px-5 py-3 text-xs font-bold uppercase tracking-wider text-text-secondary">
                 <span>Posição</span>
 
                 <span>{isGroups ? "Grupo" : "Usuário"}</span>
@@ -25,34 +103,51 @@ export default function RankingTable({ items, type = "users" }: RankingTableProp
                 </span>
             </div>
 
-            {items.map((item) => (
-                <div
-                    key={`${item.posicao}-${item.nome}`}
-                    className={`grid grid-cols-[7rem_1fr_14rem] items-center border-b border-border px-8 py-5 last:border-b-0 max-[768px]:grid-cols-[5rem_1fr_9rem] max-[768px]:px-5 max-[480px]:grid-cols-[4rem_1fr_7rem] max-[480px]:px-[1.6rem] ${item.posicao <= 3 ? "bg-green-ultra-light/40" : ""}`}
-                >
-                    <div className="flex items-center">
-                        <span className="text-[1.5rem] font-bold text-green-primary max-[768px]:text-[1.3rem]">
+            {items.map((item) => {
+                const isCurrent = highlight === item.nome;
+
+                return (
+                    <div
+                        key={`${item.posicao}-${item.nome}`}
+                        className={`grid grid-cols-[4rem_1fr_auto] items-center gap-4 border-b border-border px-5 py-4 last:border-b-0 ${
+                            isCurrent ? "bg-green-lighter/70 ring-1 ring-inset ring-green-primary/30" : ""
+                        }`}
+                    >
+                        <span className={`text-center font-heading text-lg font-extrabold ${isCurrent ? "text-green-primary" : "text-text-secondary"}`}>
                             {item.posicao}º
                         </span>
+
+                        <div className="flex min-w-0 items-center gap-3">
+                            {isGroups ? (
+                                <IconBox icon={<FaUsers />} variant="purple" />
+                            ) : (
+                                <IconBox name={item.nome} />
+                            )}
+
+                            <div className="min-w-0">
+                                <h3 className="truncate font-heading text-sm font-bold text-text-main">
+                                    {item.nome}
+                                    {isCurrent && (
+                                        <span className="ml-2 rounded-full bg-green-primary px-2 py-0.5 text-[10px] font-bold text-white">
+                                            você
+                                        </span>
+                                    )}
+                                </h3>
+
+                                {item.nivel && (
+                                    <span className="text-xs text-text-secondary">
+                                        {item.nivel}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+
+                        <span className="text-right font-heading text-sm font-extrabold text-text-main">
+                            {item.pontos.toLocaleString("pt-BR")}
+                        </span>
                     </div>
-
-                    <div className="min-w-0">
-                        <h3 className="truncate text-[1.5rem] font-semibold text-text-main max-[768px]:text-[1.3rem]">
-                            {item.nome}
-                        </h3>
-
-                        {item.nivel && (
-                            <span className="text-[1.3rem] text-text-secondary max-[768px]:text-[1.2rem]">
-                                {item.nivel}
-                            </span>
-                        )}
-                    </div>
-
-                    <span className="text-right text-[1.5rem] font-bold text-text-main max-[768px]:text-[1.35rem]">
-                        {item.pontos.toLocaleString("pt-BR")}
-                    </span>
-                </div>
-            ))}
+                );
+            })}
         </div>
     );
 }
