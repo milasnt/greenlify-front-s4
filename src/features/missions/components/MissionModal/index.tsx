@@ -1,23 +1,28 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
-import { FaXmark, FaLeaf, FaCircleCheck, FaStar } from "react-icons/fa6";
-import Card from "../../../../components/ui/Card";
-import type { UploadStatus } from "../Upload";
-import Upload from "../Upload";
+import { Link } from "react-router-dom";
+import { FaArrowLeft, FaListCheck, FaWandMagicSparkles } from "react-icons/fa6";
+import Reveal from "../../../../components/layout/Reveal";
+import Badge, { type Impacto, type Dificuldade } from "../../../../components/ui/Badge";
+import Button from "../../../../components/ui/Button";
+import ItemList from "../../../../components/ui/ItemList";
+import Upload, { type UploadStatus } from "../Upload";
 
 
 interface MissionModalProps {
+    id?: string;
     titulo: string;
     descricao: string;
-    impacto: "Baixo" | "Médio" | "Alto";
-    dificuldade: "Fácil" | "Média" | "Difícil";
+    impacto: Impacto;
+    dificuldade: Dificuldade;
     pontos: number;
     xp: number;
     criteria: ReactNode;
-    onClose?: () => void;
+    backTo?: string;
 }
 
 export default function MissionModal({
+    id,
     titulo,
     descricao,
     impacto,
@@ -25,16 +30,10 @@ export default function MissionModal({
     pontos,
     xp,
     criteria,
-    onClose,
+    backTo = "/missoes",
 }: MissionModalProps) {
-    const [isOpen, setIsOpen] = useState(true);
     const [uploadStatus, setUploadStatus] = useState<UploadStatus>("idle");
     const [fileName, setFileName] = useState<string | null>(null);
-
-    function handleClose() {
-        setIsOpen(false);
-        onClose?.();
-    }
 
     function handleSelectFile(file: File) {
         setFileName(file.name);
@@ -48,105 +47,103 @@ export default function MissionModal({
         }, 1500);
     }
 
-    if (!isOpen) return null;
-
     return (
-        <div className="fixed inset-0 z-9999 flex items-center justify-center bg-black/40 px-6 py-10 backdrop-blur-sm max-[480px]:px-[1.6rem] max-[480px]:py-[2.5rem]">
-            <div className="relative max-h-[90vh] w-full max-w-360 overflow-y-auto rounded-4xl border border-border bg-bg p-10 shadow-custom-md max-[768px]:p-[1.8rem] max-[480px]:p-[1.6rem]">
-                
-                <button
-                    type="button"
-                    onClick={handleClose}
-                    className="absolute right-8 top-8 flex h-12 w-12 items-center justify-center rounded-full bg-green-ultra-light text-[1.8rem] text-green-primary transition duration-300 hover:bg-green-primary hover:text-bg"
-                    aria-label="Fechar missão"
+        <section className="mx-auto w-full max-w-6xl px-4 pb-20 pt-10 sm:px-6">
+            <Reveal>
+                <Link
+                    to={backTo}
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-text-secondary transition duration-300 hover:text-green-primary"
                 >
-                    <FaXmark />
-                </button>
+                    <FaArrowLeft aria-hidden />
+                    Voltar para missões
+                </Link>
+            </Reveal>
 
-                <div className="mb-10 pr-16 max-[480px]:mb-[1.6rem] max-[480px]:pr-16">
-                    <div className="mb-5 flex items-center gap-3 text-[1.4rem] font-semibold text-green-primary max-[480px]:text-[1.3rem]">
-                        <FaLeaf />
-                        Missão sustentável
-                    </div>
-
-                    <h2 className="mb-5 text-[3.2rem] font-bold leading-tight text-text-main max-[480px]:text-[2.4rem]">
-                        {titulo}
-                    </h2>
-
-                    <p className="max-w-280 text-[1.6rem] leading-[1.7] text-text-secondary max-[480px]:text-[1.4rem]">
-                        {descricao}
-                    </p>
-                </div>
-
-                <div className="mb-10 grid grid-cols-4 gap-5 max-[992px]:gap-[1.6rem] max-[768px]:grid-cols-2 max-[480px]:grid-cols-1">
-                    <Card center>
-                        <FaLeaf className="mx-auto mb-4 text-[2.5rem] text-green-primary" />
-
-                        <span className="mb-2 block text-[1.3rem] text-text-secondary">
-                            Impacto
-                        </span>
-
-                        <strong className="text-[1.7rem] font-bold text-text-main">
-                            {impacto}
-                        </strong>
-                    </Card>
-
-                    <Card center>
-                        <FaCircleCheck className="mx-auto mb-4 text-[2.5rem] text-green-primary" />
-
-                        <span className="mb-2 block text-[1.3rem] text-text-secondary">
-                            Dificuldade
-                        </span>
-
-                        <strong className="text-[1.7rem] font-bold text-text-main">
-                            {dificuldade}
-                        </strong>
-                    </Card>
-
-                    <Card center>
-                        <FaStar className="mx-auto mb-4 text-[2.5rem] text-green-primary" />
-
-                        <span className="mb-2 block text-[1.3rem] text-text-secondary">
-                            Pontuação
-                        </span>
-
-                        <strong className="text-[1.7rem] font-bold text-text-main">
-                            +{pontos} pontos
-                        </strong>
-                    </Card>
-
-                    <Card center>
-                        <FaStar className="mx-auto mb-4 text-[2.5rem] text-green-primary" />
-
-                        <span className="mb-2 block text-[1.3rem] text-text-secondary">
-                            Experiência
-                        </span>
-
-                        <strong className="text-[1.7rem] font-bold text-text-main">
-                            +{xp} XP
-                        </strong>
-                    </Card>
-                </div>
-
-                <div className="mb-10 max-[480px]:mb-[1.6rem]">
-                    <h3 className="mb-5 text-[2.2rem] font-bold text-text-main">
-                        Critérios para conclusão
-                    </h3>
-
-                    <Card>
-                        <div className="flex flex-col gap-4">
-                            {criteria}
+            <div className="mt-6 grid gap-10 lg:grid-cols-[1.5fr_1fr]">
+                <div className="space-y-10">
+                    <Reveal>
+                        <div className="flex flex-wrap items-center gap-2">
+                            <Badge type="dificuldade" value={dificuldade} />
+                            <Badge type="impacto" value={impacto} />
                         </div>
-                    </Card>
+
+                        <h1 className="mt-4 font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">
+                            {titulo}
+                        </h1>
+
+                        <p className="mt-4 leading-relaxed text-text-secondary">
+                            {descricao}
+                        </p>
+                    </Reveal>
+
+                    <Reveal delay={100}>
+                        <h2 className="mb-4 flex items-center gap-2 font-heading text-xl font-bold text-text-main">
+                            <FaListCheck className="text-green-primary" aria-hidden />
+                            Critérios para conclusão
+                        </h2>
+
+                        {criteria}
+                    </Reveal>
+
+                    <Reveal delay={160}>
+                        <Upload
+                            status={uploadStatus}
+                            fileName={fileName}
+                            onSelectFile={handleSelectFile}
+                            onSubmit={handleSubmitUpload}
+                        />
+                    </Reveal>
                 </div>
 
-                <Upload
-                    status={uploadStatus}
-                    fileName={fileName}
-                    onSelectFile={handleSelectFile}
-                    onSubmit={handleSubmitUpload}
-                />
+                <Reveal delay={120}>
+                    <aside className="sticky top-24 rounded-3xl bg-night p-7 text-night-text">
+                        <p className="font-heading text-xs font-bold uppercase tracking-[0.2em] text-green-light">
+                            Recompensa
+                        </p>
+
+                        <div className="mt-4 flex items-end gap-6">
+                            <div>
+                                <p className="font-heading text-4xl font-extrabold text-green-light">+{pontos}</p>
+                                <p className="text-xs text-night-muted">pontos</p>
+                            </div>
+
+                            <div>
+                                <p className="font-heading text-4xl font-extrabold">+{xp}</p>
+                                <p className="text-xs text-night-muted">de experiência</p>
+                            </div>
+                        </div>
+
+                        <ItemList
+                            variant="status"
+                            className="mt-6 border-t border-night-line pt-6"
+                            items={[
+                                { title: "Impacto", value: impacto },
+                                { title: "Dificuldade", value: dificuldade },
+                                { title: "Evidência", value: "Vídeo curto" },
+                            ]}
+                        />
+
+                        {id && (
+                            <Button
+                                to={`/validacao?missao=${id}`}
+                                variant="accent"
+                                size="lg"
+                                full
+                                arrow
+                                className="mt-7"
+                            >
+                                Testar validação por IA
+                            </Button>
+                        )}
+
+                        <p className="mt-3 flex items-start gap-2 text-xs leading-relaxed text-night-muted">
+                            <FaWandMagicSparkles className="mt-0.5 shrink-0 text-green-light" aria-hidden />
+                            Você enviará um vídeo como evidência. A IA auxilia na análise e as regras da
+                            Greenlify decidem a aprovação.
+                        </p>
+                    </aside>
+                </Reveal>
             </div>
-        </div>
+        </section>
     );
 }

@@ -1,19 +1,25 @@
 import type { ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
-import Button from "../../../../components/ui/Button";
+import { Link } from "react-router-dom";
+import { FaArrowRight, FaArrowUpRightFromSquare } from "react-icons/fa6";
+import Badge, { type Impacto, type Dificuldade } from "../../../../components/ui/Badge";
 import Card from "../../../../components/ui/Card";
+import ProgressBar from "../../../../components/ui/ProgressBar";
 
 interface MissionCardProps {
     id: string;
     titulo: string;
     descricao: string;
-    impacto: "Baixo" | "Médio" | "Alto";
-    dificuldade: "Fácil" | "Média" | "Difícil";
+    impacto: Impacto;
+    dificuldade: Dificuldade;
     pontos: number;
     xp: number;
     icon?: ReactNode;
+    variant?: "default" | "featured" | "row";
+    index?: number;
+    label?: string;
 }
 
+/** default: card da listagem · featured: destaque escuro · row: linha compacta (Home). */
 export function MissionCard({
     id,
     titulo,
@@ -23,77 +29,127 @@ export function MissionCard({
     pontos,
     xp,
     icon,
+    variant = "default",
+    index,
+    label = "Missão em destaque",
 }: MissionCardProps) {
-    const navigate = useNavigate();
 
-    function handleVerMissao() {
-        navigate(`/missoes/${id}`);
+    if (variant === "featured") {
+        return (
+            <Link
+                to={`/missoes/${id}`}
+                className="group relative flex flex-col justify-between gap-8 overflow-hidden rounded-3xl bg-night p-8 text-night-text transition duration-300 hover:-translate-y-1 sm:p-10 lg:flex-row lg:items-end"
+            >
+                <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-green-light/25 blur-3xl transition-transform duration-700 group-hover:scale-125" aria-hidden />
+                <div className="absolute bottom-0 left-1/3 h-44 w-44 rounded-full bg-purple-primary/30 blur-3xl" aria-hidden />
+
+                <div className="relative max-w-xl">
+                    <div className="flex flex-wrap items-center gap-2">
+                        <span className="rounded-full bg-green-light/15 px-3 py-1 text-xs font-bold text-green-light">
+                            {label}
+                        </span>
+
+                        <Badge type="dificuldade" value={dificuldade} />
+                        <Badge type="impacto" value={impacto} />
+                    </div>
+
+                    <h2 className="mt-4 font-heading text-2xl font-extrabold sm:text-3xl">
+                        {titulo}
+                    </h2>
+
+                    <p className="mt-2 text-sm leading-relaxed text-night-muted">
+                        {descricao}
+                    </p>
+                </div>
+
+                <div className="relative flex shrink-0 flex-wrap items-center gap-6">
+                    <div>
+                        <p className="font-heading text-3xl font-extrabold text-green-light">
+                            +{pontos}
+                        </p>
+
+                        <p className="text-xs text-night-muted">
+                            pontos · {xp} XP
+                        </p>
+                    </div>
+
+                    <span className="inline-flex items-center gap-2 rounded-full bg-green-light px-5 py-3 font-heading text-sm font-bold text-night">
+                        Ver missão
+                        <FaArrowUpRightFromSquare className="text-xs" aria-hidden />
+                    </span>
+                </div>
+            </Link>
+        );
+    }
+
+    if (variant === "row") {
+        return (
+            <Link
+                to={`/missoes/${id}`}
+                className="group flex items-center gap-5 rounded-3xl border border-border bg-bg-card p-6 transition duration-300 hover:-translate-y-1 hover:border-green-primary/40 hover:shadow-custom-md"
+            >
+                {index !== undefined && (
+                    <span className="hidden h-14 w-14 shrink-0 place-items-center rounded-2xl bg-green-lighter font-heading text-xl font-extrabold text-green-primary sm:grid">
+                        {String(index).padStart(2, "0")}
+                    </span>
+                )}
+
+                <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="font-heading text-lg font-bold text-text-main">
+                            {titulo}
+                        </h3>
+
+                        <Badge type="impacto" value={impacto} />
+                    </div>
+
+                    <p className="mt-1 line-clamp-2 text-sm text-text-secondary">
+                        {descricao}
+                    </p>
+                </div>
+
+                <span className="shrink-0 font-heading text-lg font-extrabold text-green-primary">
+                    +{pontos}
+                </span>
+            </Link>
+        );
     }
 
     return (
-        <Card className="flex h-full flex-col max-[480px]:p-[1.6rem]">
-            <div className="mb-6 flex items-center justify-between gap-[1.4rem] max-[480px]:mb-[1.6rem]">
-                {icon && (
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-green-ultra-light text-[2.4rem] text-green-primary max-[992px]:h-[5.5rem] max-[992px]:w-[5.5rem] max-[768px]:h-20 max-[768px]:w-20 max-[768px]:text-[2rem] max-[480px]:h-[4.6rem] max-[480px]:w-[4.6rem] max-[480px]:text-[1.8rem]">
-                        {icon}
-                    </div>
-                )}
+        <Link to={`/missoes/${id}`} className="group block h-full">
+            <Card className="flex h-full flex-col">
+                <div className="mb-4 flex items-center justify-between gap-3">
+                    {icon && (
+                        <div className="grid h-12 w-12 place-items-center rounded-2xl bg-green-lighter text-xl text-green-primary">
+                            {icon}
+                        </div>
+                    )}
 
-                <span className="rounded-full bg-green-ultra-light px-4 py-2 text-[1.2rem] font-semibold text-green-primary max-[992px]:px-[1.2rem] max-[992px]:py-[0.7rem] max-[480px]:w-full max-[480px]:text-center max-[480px]:text-[1.1rem]">
-                    {impacto}
-                </span>
-            </div>
-
-            <h3 className="mb-4 text-[1.9rem] font-bold leading-[1.3] text-text-main max-[480px]:text-[1.5rem]">
-                {titulo}
-            </h3>
-
-            <p className="mb-6 text-[1.5rem] leading-[1.7] text-text-secondary max-[480px]:text-[1.3rem]">
-                {descricao}
-            </p>
-
-            <div className="mb-8 flex gap-10 max-[768px]:flex-col max-[768px]:items-start max-[768px]:gap-[1.2rem] max-[480px]:mt-[1.6rem]">
-                <div>
-                    <span className="mb-1 block text-[1.2rem] text-text-secondary">
-                        Dificuldade
-                    </span>
-
-                    <span className="text-[1.4rem] font-semibold text-text-main">
-                        {dificuldade}
-                    </span>
+                    <Badge type="dificuldade" value={dificuldade} />
+                    <Badge type="impacto" value={impacto} />
                 </div>
 
-                <div>
-                    <span className="mb-1 block text-[1.2rem] text-text-secondary">
-                        Pontos
+                <h3 className="mb-2 font-heading text-lg font-bold leading-snug text-text-main">
+                    {titulo}
+                </h3>
+
+                <p className="mb-5 line-clamp-2 flex-1 text-sm leading-relaxed text-text-secondary">
+                    {descricao}
+                </p>
+
+                <div className="flex items-center justify-between border-t border-border pt-4 text-sm">
+                    <span className="font-heading font-extrabold text-green-primary">
+                        +{pontos} pts
                     </span>
 
-                    <span className="text-[1.4rem] font-semibold text-green-primary">
-                        +{pontos}
+                    <span className="text-xs text-text-secondary">
+                        +{xp} XP
                     </span>
+
+                    <FaArrowRight className="text-green-primary transition-transform duration-300 group-hover:translate-x-1" aria-hidden />
                 </div>
-
-                <div>
-                    <span className="mb-1 block text-[1.2rem] text-text-secondary">
-                        XP
-                    </span>
-
-                    <span className="text-[1.4rem] font-semibold text-green-primary">
-                        +{xp}
-                    </span>
-                </div>
-            </div>
-
-            <div className="mt-auto">
-                <Button
-                    variant="secondary"
-                    full
-                    onClick={handleVerMissao}
-                >
-                    Ver missão
-                </Button>
-            </div>
-        </Card>
+            </Card>
+        </Link>
     );
 }
 
@@ -112,28 +168,23 @@ export function MissaoMensal({
 
     return (
         <Card>
-            <div className="mb-5 flex items-start justify-between gap-6 max-[480px]:gap-[1.2rem]">
+            <div className="mb-4 flex items-start justify-between gap-4">
                 <div>
-                    <h3 className="mb-2 text-[1.8rem] font-bold text-text-main max-[480px]:text-[1.5rem]">
+                    <h3 className="mb-1 font-heading text-base font-bold leading-snug text-text-main">
                         {titulo}
                     </h3>
 
-                    <p className="text-[1.4rem] text-text-secondary">
+                    <p className="text-sm text-text-secondary">
                         {progresso} de {meta} concluídas
                     </p>
                 </div>
 
-                <span className="text-[1.5rem] font-bold text-green-primary">
+                <span className="font-heading text-lg font-extrabold text-green-primary">
                     {Math.round(percentage)}%
                 </span>
             </div>
 
-            <div className="h-3 w-full overflow-hidden rounded-full bg-green-ultra-light">
-                <div
-                    className="h-full rounded-full bg-green-primary transition-all duration-300"
-                    style={{ width: `${percentage}%` }}
-                />
-            </div>
+            <ProgressBar value={percentage} label={titulo} />
         </Card>
     );
 }

@@ -1,20 +1,25 @@
 import { useRef } from "react";
 import type { ChangeEvent } from "react";
-import { FaVideo, FaUpload, FaCircleCheck, FaSpinner } from "react-icons/fa6";
+import { FaVideo, FaUpload, FaCircleCheck, FaSpinner, FaCloudArrowUp } from "react-icons/fa6";
 import Button from "../../../../components/ui/Button";
 import Card from "../../../../components/ui/Card";
-
+import IconBox from "../../../../components/ui/IconBox";
 
 export type UploadStatus = "idle" | "selected" | "sending" | "success";
 
 interface UploadProofProps {
+    variant?: "mission" | "dropzone";
+    disabled?: boolean;
     status?: UploadStatus;
     fileName?: string | null;
     onSelectFile?: (file: File) => void;
     onSubmit?: () => void;
 }
 
+/** mission: envio com etapas (selecionar, enviar, sucesso) · dropzone: só a área de seleção (Validação por IA). */
 export default function UploadProof({
+    variant = "mission",
+    disabled = false,
     status = "idle",
     fileName = null,
     onSelectFile,
@@ -36,23 +41,51 @@ export default function UploadProof({
         if (file) onSelectFile?.(file);
     }
 
+    if (variant === "dropzone") {
+        const stateStyles = disabled
+            ? "border-border bg-bg-muted/50"
+            : "border-green-primary/40 bg-green-lighter/40 hover:border-green-primary hover:bg-green-lighter";
+
+        return (
+            <label
+                className={`flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-10 text-center transition duration-300 ${stateStyles}`}
+            >
+                <input
+                    type="file"
+                    accept="video/*"
+                    className="sr-only"
+                    disabled={disabled}
+                    onChange={handleFileChange}
+                />
+
+                <FaCloudArrowUp className="text-4xl text-green-primary" aria-hidden />
+
+                <p className="mt-3 font-heading text-sm font-bold text-text-main">
+                    {fileName ?? "Arraste ou selecione um vídeo"}
+                </p>
+
+                <p className="mt-1 text-xs text-text-secondary">
+                    MP4 ou MOV, até 60 segundos · o envio é simulado nesta demonstração
+                </p>
+            </label>
+        );
+    }
+
     return (
         <div>
-            <h3 className="mb-5 text-[2.2rem] font-bold text-text-main">
+            <h3 className="mb-4 font-heading text-xl font-bold text-text-main">
                 Comprovação da missão
             </h3>
 
-            <Card className="border-dashed border-green-primary/30">
-                <div className="flex flex-col items-center justify-center py-10 text-center">
-                    <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-ultra-light">
-                        {status === "success" ? (
-                            <FaCircleCheck className="text-[3rem] text-green-primary" />
-                        ) : (
-                            <FaVideo className="text-[3rem] text-green-primary" />
-                        )}
-                    </div>
+            <Card variant="dashed" hover={false}>
+                <div className="flex flex-col items-center gap-4 py-4 text-center">
+                    <IconBox
+                        size="lg"
+                        variant={status === "success" ? "solid" : "green"}
+                        icon={status === "success" ? <FaCircleCheck /> : <FaVideo />}
+                    />
 
-                    <h4 className="mb-3 text-[2rem] font-bold text-text-main">
+                    <h4 className="font-heading text-lg font-bold text-text-main">
                         {status === "success"
                             ? "Vídeo enviado com sucesso!"
                             : status === "selected"
@@ -60,7 +93,7 @@ export default function UploadProof({
                             : "Envie um vídeo da sua ação"}
                     </h4>
 
-                    <p className="mb-8 max-w-180 text-[1.5rem] leading-[1.7] text-text-secondary">
+                    <p className="max-w-md text-sm leading-relaxed text-text-secondary">
                         {status === "success"
                             ? "Seu vídeo está em análise automatizada. Você será notificado com o resultado."
                             : status === "selected"
@@ -69,19 +102,17 @@ export default function UploadProof({
                     </p>
 
                     {status !== "success" && (
-                        <Button variant="secondary" size="md" onClick={handleButtonClick}>
-                            <span className="flex items-center gap-3">
-                                {status === "sending" ? (
-                                    <FaSpinner className="animate-spin" />
-                                ) : (
-                                    <FaUpload />
-                                )}
-                                {status === "sending"
-                                    ? "Enviando..."
-                                    : status === "selected"
-                                    ? "Enviar vídeo"
-                                    : "Selecionar vídeo"}
-                            </span>
+                        <Button variant="secondary" size="md" onClick={handleButtonClick} disabled={status === "sending"}>
+                            {status === "sending" ? (
+                                <FaSpinner className="animate-spin" />
+                            ) : (
+                                <FaUpload />
+                            )}
+                            {status === "sending"
+                                ? "Enviando..."
+                                : status === "selected"
+                                ? "Enviar vídeo"
+                                : "Selecionar vídeo"}
                         </Button>
                     )}
 
@@ -94,7 +125,7 @@ export default function UploadProof({
                     />
 
                     {status === "idle" && (
-                        <span className="mt-5 text-[1.3rem] text-text-secondary">
+                        <span className="text-xs text-text-muted">
                             Formatos aceitos: MP4, MOV ou WebM
                         </span>
                     )}

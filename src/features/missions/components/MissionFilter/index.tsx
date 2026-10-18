@@ -1,23 +1,42 @@
 interface MissionFilterProps {
     selected?: string;
+    options?: string[];
+    tone?: "green" | "purple";
+    ariaLabel?: string;
+    onChange?: (option: string) => void;
 }
 
-export default function MissionFilter({ selected = "Todas" }: MissionFilterProps) {
-    const filters = ["Todas", "Mensais", "Contínuas"];
+export default function MissionFilter({
+    selected = "Todas",
+    options = ["Todas", "Mensais", "Contínuas"],
+    tone = "green",
+    ariaLabel = "Filtro",
+    onChange,
+}: MissionFilterProps) {
+
+    const activeStyles = {
+        green: "border-green-primary bg-green-primary text-white",
+        purple: "border-purple-primary bg-purple-primary text-white",
+    };
+
+    const idleStyles = {
+        green: "border-border text-text-secondary hover:border-green-primary/50 hover:text-text-main",
+        purple: "border-border text-text-secondary hover:border-purple-primary/50 hover:text-text-main",
+    };
 
     return (
-        <div className="flex flex-wrap gap-4 max-[992px]:gap-8 max-[768px]:gap-[1.6rem] max-[768px]:overflow-x-auto max-[768px]:flex-nowrap max-[768px]:pb-[1.2rem] max-[480px]:gap-[1.2rem]">
-            {filters.map((filter) => (
+        <div role="group" aria-label={ariaLabel} className="flex flex-wrap gap-2">
+            {options.map((option) => (
                 <button
-                    key={filter}
+                    key={option}
                     type="button"
-                    className={`shrink-0 whitespace-nowrap rounded-full border px-6 py-3 text-[1.4rem] font-semibold transition duration-300 max-[768px]:text-[1.4rem] max-[480px]:text-[1.3rem] max-[480px]:pb-4 ${
-                        selected === filter
-                            ? "border-green-primary bg-green-primary text-bg"
-                            : "border-border bg-bg-card text-text-secondary hover:border-green-primary hover:text-green-primary"
+                    aria-pressed={selected === option}
+                    onClick={() => onChange?.(option)}
+                    className={`shrink-0 whitespace-nowrap rounded-full border px-3.5 py-1.5 text-xs font-semibold transition duration-300 ${
+                        selected === option ? activeStyles[tone] : idleStyles[tone]
                     }`}
                 >
-                    {filter}
+                    {option}
                 </button>
             ))}
         </div>
