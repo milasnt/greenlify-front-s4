@@ -14,6 +14,10 @@ import NossaSolucao from './routes/NossaSolucao';
 import Missoes from './routes/Missoes';
 import MissaoDetalhe from './routes/MissaoDetalhe';
 import Perfil from './routes/Perfil';
+import Grupos from './routes/Grupos';
+import Rankings from './routes/Rankings';
+import Resumo from './routes/Resumo';
+import Validacao from './routes/Validacao';
 
 export const router = createBrowserRouter([
   { path: "/", element: <App />, errorElement: <Error/>, children: [
@@ -23,6 +27,10 @@ export const router = createBrowserRouter([
         { path: "missoes", element: <Missoes /> },
         { path: "missoes/:id", element: <MissaoDetalhe /> },
         { path: "perfil", element: <Perfil /> },
+        { path: "grupos", element: <Grupos /> },
+        { path: "validacao", element: <Validacao /> },
+        { path: "resumo", element: <Resumo /> },
+        { path: "rankings", element: <Rankings /> },
         { path: "integrantes", element: <Integrantes /> },
         { path: "contato", element: <Contato /> },
         { path: "faq", element: <FAQ /> },  
