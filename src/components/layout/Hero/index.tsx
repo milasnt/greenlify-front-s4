@@ -13,7 +13,6 @@ interface HeroProps {
 export default function Hero({
     children,
     visual,
-    badge,
     title,
     text,
     variant = "internal",
@@ -40,11 +39,6 @@ export default function Hero({
 
             <div className={`relative mx-auto grid max-w-6xl items-center gap-14 px-4 sm:px-6 ${containerStyles} ${spacingStyles}`}>
                 <Reveal>
-                    {badge && (
-                        <span className="inline-flex items-center gap-2 rounded-full border border-purple-primary/25 bg-purple-lighter px-3.5 py-1.5 text-xs font-semibold text-purple-dark">
-                            {badge}
-                        </span>
-                    )}
 
                     <h1 className={`mt-6 max-w-3xl font-heading font-extrabold leading-[1.08] tracking-tight ${titleStyles}`}>
                         {title}
