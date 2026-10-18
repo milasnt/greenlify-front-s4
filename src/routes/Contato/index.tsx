@@ -1,9 +1,15 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import Section from "../../components/layout/Section";
+import { useLocation, useNavigate } from "react-router-dom";
+import { FaCircleCheck, FaEnvelope, FaGithub, FaLocationDot} from "react-icons/fa6";
+import { FaSeedling } from "react-icons/fa";
+import Grid from "../../components/layout/Grid";
 import Hero from "../../components/layout/Hero";
+import Reveal from "../../components/layout/Reveal";
+import Section from "../../components/layout/Section";
 import Card from "../../components/ui/Card";
+import IconBox from "../../components/ui/IconBox";
+import ItemList from "../../components/ui/ItemList";
 import ContactForm from "../../components/ui/Forms";
-import { FaEnvelope, FaGithub, FaLocationDot, FaSeedling, FaCircleCheck } from "react-icons/fa6";
+
 
 interface ContatoLocationState {
     submitted?: boolean;
@@ -12,6 +18,7 @@ interface ContatoLocationState {
 export default function Contato() {
     const navigate = useNavigate();
     const location = useLocation();
+
     const submitted = Boolean((location.state as ContatoLocationState | null)?.submitted);
 
     function handleSubmitSuccess() {
@@ -21,119 +28,77 @@ export default function Contato() {
     return (
         <>
             <Hero
-                badge={<FaEnvelope />}
-                title={<>Converse com a <span className="font-bold text-green-primary">nossa equipe</span></>}
+                badge={<><FaEnvelope /> Contato</>}
+                title={<>Converse com a <span className="textGradient">nossa equipe</span></>}
                 text="Estamos disponíveis para responder dúvidas, receber sugestões e conversar sobre a solução criada."
                 visual={<div className="flex h-30 w-30 items-center justify-center rounded-[2.5rem] border border-black/5 bg-bg-card shadow-custom-md"><FaSeedling className="text-[2.5rem] text-green-primary" /></div>}
             />
 
-            <Section variant="secondary">
-                <div className="mx-auto grid w-full max-w-[140rem] grid-cols-2 gap-12 px-16 py-24 max-[992px]:px-12 max-[992px]:py-20 max-[900px]:grid-cols-1 max-[480px]:px-[1.6rem] max-[480px]:py-12">
-                    <div className="flex flex-col gap-8">
-                        <Card>
-                            <h2 className="mb-8 text-[2.2rem] font-bold text-text-main">
-                                Informações de Contato
-                            </h2>
+            <Section variant="secondary" size="sm">
+                <Grid split="even">
+                    <div className="flex flex-col gap-6">
+                        <Reveal>
+                            <Card hover={false}>
+                                <h2 className="mb-6 font-heading text-xl font-bold text-text-main">
+                                    Informações de Contato
+                                </h2>
 
-                            <div className="flex flex-col gap-8">
-                                <div className="flex items-start gap-5">
-                                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-green-ultra-light text-[1.8rem] text-green-primary">
-                                        <FaEnvelope />
-                                    </div>
+                                <ItemList
+                                    variant="contact"
+                                    items={[
+                                        { icon: <FaEnvelope />, title: "Email", text: "greenlify@gmail.com" },
+                                        { icon: <FaLocationDot />, title: "Localização", text: "Av. Paulista, 1106 - Bela Vista, São Paulo - SP." },
+                                        { icon: <FaGithub />, title: "GitHub", text: "github.com/greenlify", href: "https://github.com/" },
+                                    ]}
+                                />
+                            </Card>
+                        </Reveal>
 
-                                    <div>
-                                        <h3 className="mb-2 text-[1.5rem] font-semibold text-text-main">
-                                            Email
-                                        </h3>
-                                        <p className="text-[1.4rem] leading-[1.6] text-text-secondary">
-                                            greenlify@gmail.com
-                                        </p>
-                                    </div>
-                                </div>
+                        <Reveal delay={100}>
+                            <Card hover={false}>
+                                <h2 className="mb-6 font-heading text-xl font-bold text-text-main">
+                                    Horário de Atendimento
+                                </h2>
 
-                                <div className="flex items-start gap-5">
-                                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-green-ultra-light text-[1.8rem] text-green-primary">
-                                        <FaLocationDot />
-                                    </div>
-
-                                    <div>
-                                        <h3 className="mb-2 text-[1.5rem] font-semibold text-text-main">
-                                            Localização
-                                        </h3>
-                                        <p className="text-[1.4rem] leading-[1.6] text-text-secondary">
-                                            Av. Paulista, 1106 - Bela Vista, São Paulo - SP.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="flex items-start gap-5">
-                                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-green-ultra-light text-[1.8rem] text-green-primary">
-                                        <FaGithub />
-                                    </div>
-
-                                    <div>
-                                        <h3 className="mb-2 text-[1.5rem] font-semibold text-text-main">
-                                            GitHub
-                                        </h3>
-                                        <a href="https://github.com/" target="_blank" rel="noopener noreferrer" className="text-[1.4rem] leading-[1.6] text-text-secondary transition duration-300 hover:text-green-primary">
-                                            github.com/greenlify
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </Card>
-
-                        <Card>
-                            <h2 className="mb-8 text-[2.2rem] font-bold text-text-main">
-                                Horário de Atendimento
-                            </h2>
-
-                            <div className="flex flex-col gap-4">
-                                <div className="flex items-center justify-between border-b border-border pb-4 text-[1.4rem] max-[768px]:flex-col max-[768px]:items-start max-[768px]:gap-[0.6rem]">
-                                    <span className="text-text-secondary">Segunda - Sexta</span>
-                                    <span className="font-semibold text-text-main">9h - 18h</span>
-                                </div>
-
-                                <div className="flex items-center justify-between border-b border-border pb-4 text-[1.4rem] max-[768px]:flex-col max-[768px]:items-start max-[768px]:gap-[0.6rem]">
-                                    <span className="text-text-secondary">Sábado</span>
-                                    <span className="font-semibold text-text-main">9h - 13h</span>
-                                </div>
-
-                                <div className="flex items-center justify-between text-[1.4rem]">
-                                    <span className="text-text-secondary">Domingo</span>
-                                    <span className="font-semibold text-text-main">Fechado</span>
-                                </div>
-                            </div>
-                        </Card>
+                                <ItemList
+                                    variant="rows"
+                                    items={[
+                                        { title: "Segunda - Sexta", value: "9h - 18h" },
+                                        { title: "Sábado", value: "9h - 13h" },
+                                        { title: "Domingo", value: "Fechado" },
+                                    ]}
+                                />
+                            </Card>
+                        </Reveal>
                     </div>
 
-                    <Card>
-                        {submitted ? (
-                            <div className="flex flex-col items-center justify-center py-10 text-center">
-                                <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-ultra-light">
-                                    <FaCircleCheck className="text-[3rem] text-green-primary" />
+                    <Reveal delay={150}>
+                        <Card hover={false} className="p-8">
+                            {submitted ? (
+                                <div className="flex flex-col items-center gap-4 py-10 text-center">
+                                    <IconBox icon={<FaCircleCheck />} variant="solid" size="lg" />
+
+                                    <h2 className="font-heading text-2xl font-bold text-text-main">
+                                        Mensagem enviada!
+                                    </h2>
+
+                                    <p className="max-w-sm text-sm leading-relaxed text-text-secondary">
+                                        Obrigado por entrar em contato. Nossa equipe responderá em
+                                        até 24 horas úteis.
+                                    </p>
                                 </div>
+                            ) : (
+                                <>
+                                    <h2 className="mb-6 font-heading text-xl font-bold text-text-main">
+                                        Envie sua Mensagem
+                                    </h2>
 
-                                <h2 className="mb-4 text-[2.2rem] font-bold text-text-main">
-                                    Mensagem enviada!
-                                </h2>
-
-                                <p className="max-w-120 text-[1.4rem] leading-[1.6] text-text-secondary">
-                                    Obrigado por entrar em contato. Nossa equipe responderá em
-                                    até 24 horas úteis.
-                                </p>
-                            </div>
-                        ) : (
-                            <>
-                                <h2 className="mb-8 text-[2.2rem] font-bold text-text-main">
-                                    Envie sua Mensagem
-                                </h2>
-
-                                <ContactForm onSubmitSuccess={handleSubmitSuccess} />
-                            </>
-                        )}
-                    </Card>
-                </div>
+                                    <ContactForm onSubmitSuccess={handleSubmitSuccess} />
+                                </>
+                            )}
+                        </Card>
+                    </Reveal>
+                </Grid>
             </Section>
         </>
     );
