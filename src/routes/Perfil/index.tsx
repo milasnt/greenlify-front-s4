@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import Section from "../../components/Section";
-import Hero from "../../components/Hero";
-import Card from "../../components/Card";
-import Button from "../../components/Button";
-import ProfileHeader from "../../components/ProfileHeader";
-import ProfileStat from "../../components/ProfileStat";
-import RankingTabs from "../../components/RankingTabs";
-import type { RankingTab } from "../../components/RankingTabs";
-import RankingTable from "../../components/RankingTable";
+import Section from "../../components/layout/Section";
+import Hero from "../../components/layout/Hero";
+import Card from "../../components/ui/Card";
+import Button from "../../components/ui/Button";
+import ProfileHeader from "../../features/profile/components/ProfileHeader";
+import ProfileStat from "../../features/profile/components/ProfileStat";
+import RankingTabs from "../../features/ranking/components/RankingTabs";
+import type { RankingTab } from "../../features/ranking/components/RankingTabs";
+import RankingTable from "../../features/ranking/components/RankingTable";
 import { Link } from "react-router";
 import { FaLeaf, FaTrophy, FaStar, FaListCheck, FaFire, FaChartLine, FaUsers, FaCircleCheck } from "react-icons/fa6";
 

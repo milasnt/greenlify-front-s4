@@ -1,9 +1,10 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
 import { FaXmark, FaLeaf, FaCircleCheck, FaStar } from "react-icons/fa6";
-import Card from "../Card";
-import Upload from "../Upload";
+import Card from "../../../../components/ui/Card";
 import type { UploadStatus } from "../Upload";
+import Upload from "../Upload";
+
 
 interface MissionModalProps {
     titulo: string;
