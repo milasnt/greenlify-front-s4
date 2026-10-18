@@ -1,4 +1,6 @@
-import Card from "../../../../components/ui/Card";
+import Reveal from "../../../../components/layout/Reveal";
+import IconBox from "../../../../components/ui/IconBox";
+import ProgressBar from "../../../../components/ui/ProgressBar";
 
 interface ProfileHeaderProps {
     nome: string;
@@ -6,6 +8,7 @@ interface ProfileHeaderProps {
     xp: number;
     proximoNivelXp: number;
     pontos: number;
+    missoes?: number;
 }
 
 export default function ProfileHeader({
@@ -14,47 +17,71 @@ export default function ProfileHeader({
     xp,
     proximoNivelXp,
     pontos,
+    missoes,
 }: ProfileHeaderProps) {
 
     const progress = Math.min((xp / proximoNivelXp) * 100, 100);
 
     return (
-        <Card className="flex items-center gap-10 max-[992px]:items-start max-[768px]:flex-col max-[768px]:items-start max-[480px]:flex-col max-[480px]:items-start">
-            <div className="flex h-28 w-28 shrink-0 items-center justify-center rounded-full bg-green-ultra-light text-[3rem] font-bold text-green-primary max-[480px]:h-24 max-[480px]:w-24 max-[480px]:text-[2.4rem]">
-                {nome.charAt(0)}
-            </div>
+        <Reveal>
+            <div className="relative overflow-hidden rounded-3xl bg-night p-7 text-night-text sm:p-8">
+                <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-green-light/20 blur-3xl" aria-hidden />
 
-            <div className="flex-1">
-                <h2 className="mb-2 text-[2.4rem] font-bold text-text-main">
-                    {nome}
-                </h2>
+                <div className="relative flex flex-wrap items-center gap-8">
+                    <div className="relative grid h-28 w-28 shrink-0 place-items-center">
+                        <svg viewBox="0 0 100 100" className="absolute inset-0 -rotate-90" aria-hidden>
+                            <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255, 255, 255, 0.1)" strokeWidth="8" />
+                            <circle
+                                cx="50"
+                                cy="50"
+                                r="44"
+                                fill="none"
+                                stroke="var(--color-green-light)"
+                                strokeWidth="8"
+                                strokeLinecap="round"
+                                strokeDasharray={`${progress * 2.764} 276.4`}
+                                className="transition-[stroke-dasharray] duration-1000"
+                            />
+                        </svg>
 
-                <p className="mb-6 text-[1.5rem] text-green-primary">
-                    {nivel}
-                </p>
+                        <IconBox name={nome} size="lg" variant="gradientPurple" />
+                    </div>
 
-                <div className="mb-3 flex items-center justify-between text-[1.4rem] text-text-secondary">
-                    <span>XP</span>
-                    <span>{xp} / {proximoNivelXp}</span>
+                    <div className="min-w-0 flex-1">
+                        <h2 className="font-heading text-xl font-bold">
+                            {nome}
+                        </h2>
+
+                        <p className="mt-1 text-sm text-night-muted">
+                            {nivel}
+                        </p>
+
+                        <div className="mt-4 flex justify-between text-xs text-night-muted">
+                            <span>XP</span>
+                            <span>{xp.toLocaleString("pt-BR")} / {proximoNivelXp.toLocaleString("pt-BR")}</span>
+                        </div>
+
+                        <ProgressBar value={progress} label="Progresso de XP" className="mt-2" />
+                    </div>
+
+                    <div className="flex gap-8">
+                        <div>
+                            <p className="font-heading text-3xl font-extrabold text-green-light">
+                                {pontos.toLocaleString("pt-BR")}
+                            </p>
+
+                            <p className="text-xs text-night-muted">pontos totais</p>
+                        </div>
+
+                        {missoes !== undefined && (
+                            <div>
+                                <p className="font-heading text-3xl font-extrabold">{missoes}</p>
+                                <p className="text-xs text-night-muted">missões concluídas</p>
+                            </div>
+                        )}
+                    </div>
                 </div>
-
-                <div className="h-3 w-full overflow-hidden rounded-full bg-green-ultra-light">
-                    <div
-                        className="h-full rounded-full bg-gradient-green transition-all duration-300"
-                        style={{ width: `${progress}%` }}
-                    />
-                </div>
             </div>
-
-            <div className="min-w-32 text-center max-[480px]:text-center">
-                <span className="block text-[1.4rem] text-text-secondary">
-                    Pontos
-                </span>
-
-                <strong className="text-[2.8rem] font-bold text-green-primary max-[480px]:text-[2rem]">
-                    {pontos}
-                </strong>
-            </div>
-        </Card>
+        </Reveal>
     );
 }
