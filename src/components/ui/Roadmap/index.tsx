@@ -23,13 +23,13 @@ const roadmapItems = [
         title: "Etapa 4 - Evolução com React",
         text: "Planejamento futuro da interface utilizando React e integração com funcionalidades mais dinâmicas e escaláveis.",
         icon: <FaReact />,
-        status: "active",
+        status: "done",
     },
     {
         title: "Etapa 5 - Integração com a SoulUp",
         text: "Estruturação da integração do módulo com a plataforma SoulUp, incluindo APIs, validação automatizada e recursos de segurança.",
         icon: <FaLink />,
-        status: "default",
+        status: "active",
     },
 ];
 

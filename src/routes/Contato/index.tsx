@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Section from "../../components/layout/Section";
 import Hero from "../../components/layout/Hero";
 import Card from "../../components/ui/Card";
-import ContactForm from "../../components/Forms";
+import ContactForm from "../../components/ui/Forms";
 import { FaEnvelope, FaGithub, FaLocationDot, FaSeedling, FaCircleCheck } from "react-icons/fa6";
 
 interface ContatoLocationState {
