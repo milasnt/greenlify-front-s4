@@ -1,6 +1,19 @@
+import type { ReactNode } from "react";
 import { FaCheck, FaLaptopCode, FaLink, FaReact } from "react-icons/fa";
 
-const roadmapItems = [
+export interface RoadmapItem {
+    title: string;
+    text: string;
+    icon: ReactNode;
+    status: "done" | "active" | "default";
+}
+
+interface RoadmapProps {
+    items?: RoadmapItem[];
+    boxed?: boolean;
+}
+
+const roadmapItems: RoadmapItem[] = [
     {
         title: "Etapa 1 - Pesquisa",
         text: "Estudo dos requisitos propostos pela SoulUp e levantamento dos principais desafios relacionados à gamificação sustentável.",
@@ -23,35 +36,41 @@ const roadmapItems = [
         title: "Etapa 4 - Evolução com React",
         text: "Planejamento futuro da interface utilizando React e integração com funcionalidades mais dinâmicas e escaláveis.",
         icon: <FaReact />,
-        status: "done",
+        status: "active",
     },
     {
         title: "Etapa 5 - Integração com a SoulUp",
         text: "Estruturação da integração do módulo com a plataforma SoulUp, incluindo APIs, validação automatizada e recursos de segurança.",
         icon: <FaLink />,
-        status: "active",
+        status: "default",
     },
 ];
 
-export default function Roadmap() {
+export default function Roadmap({ items = roadmapItems, boxed = false }: RoadmapProps) {
+    const statusStyles: Record<string, string> = {
+        done: "bg-green-primary text-white shadow-md shadow-green-primary/25",
+        active: "bg-purple-primary text-white shadow-md shadow-purple-primary/25 animate-pulse",
+        default: "bg-bg-muted text-text-secondary",
+    };
+
     return (
-        <div className="flex flex-col gap-12 max-[992px]:gap-10 max-[768px]:gap-[2.2rem] max-[480px]:gap-8">
-            {roadmapItems.map((item, index) => (
-                <div key={item.title} className="relative flex gap-8 max-[992px]:gap-[1.6rem] max-[768px]:gap-[1.4rem] max-[480px]:gap-[1.2rem] max-[480px]:items-start">
-                    {index < roadmapItems.length - 1 && (
-                        <div className={`absolute left-[1.1rem] top-12 h-[calc(100%+3rem)] w-[0.2rem] max-[768px]:left-4 max-[480px]:left-[0.9rem] max-[480px]:top-[2.6rem] max-[480px]:h-[calc(100%+2rem)] ${item.status === "done" ? "bg-green-primary/30" : item.status === "active" ? "bg-linear-to-b from-purple-primary to-transparent animate-pulse" : "bg-border"}`} />
+        <div className={`flex flex-col ${boxed ? "rounded-3xl border border-border bg-bg-card p-6" : ""}`}>
+            {items.map((item, index) => (
+                <div key={item.title} className="relative flex gap-5 pb-8 last:pb-0">
+                    {index < items.length - 1 && (
+                        <div className={`absolute left-5 top-12 h-full w-px ${item.status === "done" ? "bg-green-light" : "bg-border"}`} />
                     )}
 
-                    <div className={`relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[1rem] leading-none text-bg max-[768px]:h-8 max-[768px]:w-8 max-[768px]:text-[0.9rem] max-[480px]:h-[1.8rem] max-[480px]:w-[1.8rem] max-[480px]:text-[0.8rem] ${item.status === "done" ? "bg-green-primary" : item.status === "active" ? "bg-purple-primary" : "bg-text-muted"}`}>
+                    <div className={`relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full text-sm ${statusStyles[item.status]}`}>
                         {item.icon}
                     </div>
 
-                    <div className="min-w-0 pt-0.5">
-                        <h3 className="mb-2 text-[2rem] font-bold leading-[1.3] text-text-main max-[992px]:text-[1.8rem] max-[768px]:text-[1.7rem] max-[768px]:leading-[1.4] max-[480px]:text-[1.5rem] max-[480px]:mb-[0.6rem]">
+                    <div className="pt-1.5">
+                        <h3 className="font-heading text-base font-bold text-text-main">
                             {item.title}
                         </h3>
 
-                        <p className="text-[1.5rem] leading-[1.7] text-text-secondary max-[768px]:text-[1.4rem] max-[768px]:leading-[1.6] max-[480px]:text-[1.3rem] max-[480px]:leading-[1.6]">
+                        <p className="mt-1 text-sm leading-relaxed text-text-secondary">
                             {item.text}
                         </p>
                     </div>
