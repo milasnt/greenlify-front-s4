@@ -142,34 +142,41 @@ export default function Missoes() {
             <Hero
                 variant="internal"
                 badge={<FaLeaf />}
-                title={<>Missões <span className="font-bold text-green-primary">Greenlify</span></>}
+                title={
+                    <>
+                        Missões{" "}
+                        <span className="font-bold text-green-primary">
+                            Greenlify
+                        </span>
+                    </>
+                }
                 text="Realize ações sustentáveis, comprove sua participação e acumule pontos e XP para evoluir dentro da SoulUp."
                 visual={
-                        <div className="flex h-30 w-30 items-center justify-center rounded-[2.5rem] border border-black/5 bg-bg-card shadow-custom-md">
-                            <FaListCheck className="text-[2.5rem] text-green-primary" />
-                        </div>
-                    }
-                />
-
+                    <div className="flex h-30 w-30 items-center justify-center rounded-[2.5rem] border border-black/5 bg-bg-card shadow-custom-md">
+                        <FaListCheck className="text-[2.5rem] text-green-primary" />
+                    </div>
+                }
+            />
 
             <Section variant="primary">
-                <div className="mx-auto w-full max-w-[140rem] px-16 py-24 max-[992px]:px-12 max-[992px]:py-20 max-[480px]:px-[1.6rem] max-[480px]:py-12">
-                    <div className="flex items-start gap-8">
-                        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-green-ultra-light text-[2rem] font-bold text-green-primary">
+                <div className="mx-auto w-full max-w-[140rem] px-16 py-20 max-[992px]:px-12 max-[992px]:py-16 max-[480px]:px-[1.6rem] max-[480px]:py-10">
+                    <div className="flex items-start gap-8 max-[640px]:gap-5">
+                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-green-ultra-light text-[1.8rem] font-bold text-green-primary max-[480px]:h-11 max-[480px]:w-11 max-[480px]:text-[1.5rem]">
                             1
                         </div>
 
-                        <div className="w-full">
-                            <h2 className="mb-6 text-[2.8rem] font-bold text-text-main max-[992px]:text-[2.6rem] max-[480px]:text-[2rem]">
+                        <div className="min-w-0 flex-1">
+                            <h2 className="mb-4 text-[2.6rem] font-bold text-text-main max-[992px]:text-[2.3rem] max-[480px]:text-[2rem]">
                                 Missões mensais
                             </h2>
 
-                            <p className="mb-12 max-w-280 text-[1.6rem] leading-[1.7] text-text-secondary">
-                                As missões mensais acompanham o desempenho do usuário durante o mês
-                                e são cumpridas a partir das missões contínuas realizadas.
+                            <p className="mb-10 max-w-280 text-[1.6rem] leading-[1.7] text-text-secondary">
+                                As missões mensais acompanham o desempenho do
+                                usuário durante o mês e são cumpridas a partir
+                                das missões contínuas realizadas.
                             </p>
 
-                            <div className="grid grid-cols-2 gap-6 max-[768px]:grid-cols-2 max-[480px]:grid-cols-1">
+                            <div className="grid grid-cols-2 gap-6 max-[768px]:gap-4 max-[480px]:grid-cols-1">
                                 {missoesMensais.map((missao) => (
                                     <MissaoMensal
                                         key={missao.titulo}
@@ -185,24 +192,25 @@ export default function Missoes() {
             </Section>
 
             <Section variant="secondary">
-                <div className="mx-auto w-full max-w-[140rem] px-16 py-24 max-[992px]:px-12 max-[992px]:py-20 max-[480px]:px-[1.6rem] max-[480px]:py-12">
-                    <div className="flex items-start gap-8">
-                        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-green-ultra-light text-[2rem] font-bold text-green-primary">
+                <div className="mx-auto w-full max-w-[140rem] px-16 py-20 max-[992px]:px-12 max-[992px]:py-16 max-[480px]:px-[1.6rem] max-[480px]:py-10">
+                    <div className="flex items-start gap-8 max-[640px]:gap-5">
+                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-green-ultra-light text-[1.8rem] font-bold text-green-primary max-[480px]:h-11 max-[480px]:w-11 max-[480px]:text-[1.5rem]">
                             2
                         </div>
 
-                        <div className="w-full">
-                            <h2 className="mb-6 text-[2.8rem] font-bold text-text-main max-[992px]:text-[2.6rem] max-[480px]:text-[2rem]">
+                        <div className="min-w-0 flex-1">
+                            <h2 className="mb-4 text-[2.6rem] font-bold text-text-main max-[992px]:text-[2.3rem] max-[480px]:text-[2rem]">
                                 Missões disponíveis
                             </h2>
 
-                            <p className="mb-12 max-w-280 text-[1.6rem] leading-[1.7] text-text-secondary">
-                                Escolha uma missão contínua para realizar uma ação sustentável,
-                                acumular pontos e XP e contribuir para suas metas mensais.
+                            <p className="mb-10 max-w-280 text-[1.6rem] leading-[1.7] text-text-secondary">
+                                Escolha uma missão contínua para realizar uma
+                                ação sustentável, acumular pontos e XP e
+                                contribuir para suas metas mensais.
                             </p>
 
                             {isLoading ? (
-                                <div className="grid grid-cols-3 gap-6 max-[992px]:grid-cols-3 max-[768px]:grid-cols-2 max-[480px]:grid-cols-1">
+                                <div className="grid grid-cols-3 gap-6 max-[768px]:grid-cols-2 max-[480px]:grid-cols-1">
                                     {[1, 2, 3, 4, 5, 6].map((item) => (
                                         <div
                                             key={item}
@@ -211,7 +219,7 @@ export default function Missoes() {
                                     ))}
                                 </div>
                             ) : (
-                                <div className="grid grid-cols-3 gap-6 max-[992px]:grid-cols-3 max-[768px]:grid-cols-2 max-[480px]:grid-cols-1">
+                                <div className="grid grid-cols-3 gap-6 max-[768px]:grid-cols-2 max-[480px]:grid-cols-1">
                                     {missoes.map((missao) => (
                                         <MissionCard
                                             key={missao.id}
@@ -232,15 +240,19 @@ export default function Missoes() {
             </Section>
 
             <Section>
-                <div className="mx-auto w-full max-w-[140rem] px-16 py-24 max-[992px]:px-12 max-[992px]:py-20 max-[480px]:px-[1.6rem] max-[480px]:py-12">
+                <div className="mx-auto w-full max-w-[140rem] px-16 py-20 max-[992px]:px-12 max-[992px]:py-16 max-[480px]:px-[1.6rem] max-[480px]:py-10">
                     <Card center full>
-                        <h2 className="mb-6 text-[2.8rem] font-bold text-text-main max-[992px]:text-[2.6rem] max-[480px]:text-[2rem]">
-                            Acompanhe sua <span className="text-green-primary">evolução</span>
+                        <h2 className="mb-5 text-[2.6rem] font-bold text-text-main max-[992px]:text-[2.3rem] max-[480px]:text-[2rem]">
+                            Acompanhe sua{" "}
+                            <span className="text-green-primary">
+                                evolução
+                            </span>
                         </h2>
 
                         <p className="mx-auto mb-10 max-w-280 text-[1.6rem] leading-[1.7] text-text-secondary">
-                            Acesse seu perfil para acompanhar seus pontos, XP, conquistas,
-                            nível de contribuição e posição nos rankings.
+                            Acesse seu perfil para acompanhar seus pontos, XP,
+                            conquistas, nível de contribuição e posição nos
+                            rankings.
                         </p>
 
                         <div className="flex justify-center gap-6 max-[480px]:flex-col">

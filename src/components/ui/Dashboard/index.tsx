@@ -1,8 +1,9 @@
 import { FaBolt, FaBullseye, FaDroplet, FaFire, FaLightbulb, FaMedal, FaRoute, FaTrophy, FaWandMagicSparkles } from "react-icons/fa6";
-import heroLeaf from "../../assets/img/home/hero-leaf.png";
+import heroLeaf from "../../../assets/img/home/hero-leaf.png";
 import IconBox from "../IconBox";
 import ProgressBar from "../ProgressBar";
 import VideoFrames from "../../../features/validation/components/VideoFrames";
+
 
 interface DashboardProps {
     variant?: "phone" | "window";

@@ -1,10 +1,11 @@
-import Section from "../../components/layout/Section";
+import { FaComments, FaQuestion, FaSeedling } from "react-icons/fa";
+import CtaBanner from "../../components/layout/CtaBanner";
 import Hero from "../../components/layout/Hero";
-import FAQCard from "../../components/ui/FAQCard";
-import Card from "../../components/ui/Card";
-import { FaQuestion, FaSeedling, FaComments } from "react-icons/fa";
-import { Link } from "react-router";
+import Section from "../../components/layout/Section";
+import SectionHeading from "../../components/layout/SectionHeading";
 import Button from "../../components/ui/Button";
+import { ScoreTable, FAQList } from "../../components/ui/FAQCard";
+
 
 export default function FAQ() {
     const soulUpFAQs = [
@@ -38,50 +39,15 @@ export default function FAQ() {
         {
             question: "Como funciona a pontuação da Greenlify?",
             answer: (
-                <div className="space-y-6">
-                    <p>A pontuação é calculada considerando o impacto ambiental da missão e a dificuldade da atividade.</p>
-
-                    <div className="overflow-x-auto">
-                        <table className="w-full min-w-130 border-collapse text-center">
-                            <thead>
-                                <tr className="bg-green-ultra-light">
-                                    <th className="border border-border px-5 py-4 text-left font-semibold text-text-main">Impacto/Dificuldade</th>
-                                    <th className="border border-border px-5 py-4 font-semibold text-text-main">Fácil</th>
-                                    <th className="border border-border px-5 py-4 font-semibold text-text-main">Médio</th>
-                                    <th className="border border-border px-5 py-4 font-semibold text-text-main">Difícil</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th className="border border-border px-5 py-4 text-left font-semibold text-text-main">Baixo</th>
-                                    <td className="border border-border px-5 py-4">20</td>
-                                    <td className="border border-border px-5 py-4">40</td>
-                                    <td className="border border-border px-5 py-4">60</td>
-                                </tr>
-                                <tr>
-                                    <th className="border border-border px-5 py-4 text-left font-semibold text-text-main">Médio</th>
-                                    <td className="border border-border px-5 py-4">40</td>
-                                    <td className="border border-border px-5 py-4">60</td>
-                                    <td className="border border-border px-5 py-4">80</td>
-                                </tr>
-                                <tr>
-                                    <th className="border border-border px-5 py-4 text-left font-semibold text-text-main">Alto</th>
-                                    <td className="border border-border px-5 py-4">60</td>
-                                    <td className="border border-border px-5 py-4">80</td>
-                                    <td className="border border-border px-5 py-4">100</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <p>Para a atribuição de pontos, também são considerados os critérios de comprovação do arquivo enviado.</p>
-
-                    <div className="space-y-2">
-                        <p><strong>Aprovado:</strong> × 1.0</p>
-                        <p><strong>Parcialmente aprovado:</strong> × 0.7</p>
-                        <p><strong>Reprovado:</strong> × 0.0</p>
-                    </div>
-                </div>
+                <ScoreTable
+                    intro="A pontuação é calculada considerando o impacto ambiental da missão e a dificuldade da atividade."
+                    columns={["Fácil", "Médio", "Difícil"]}
+                    rows={[
+                        { label: "Baixo", values: [20, 40, 60] },
+                        { label: "Médio", values: [40, 60, 80] },
+                        { label: "Alto", values: [60, 80, 100] },
+                    ]}
+                />
             ),
         },
         {
@@ -117,92 +83,47 @@ export default function FAQ() {
     return (
         <>
             <Hero
-                badge={<FaQuestion />}
-                title={<>Respondendo suas <span className="font-bold text-green-primary">principais dúvidas</span></>}
+                badge={<><FaQuestion /> FAQ</>}
+                title={<>Respondendo suas <span className="textGradient">principais dúvidas</span></>}
                 text="Encontre informações sobre a SoulUp e o Greenlify, entendendo melhor como funciona a plataforma e as funcionalidades da solução."
                 visual={<div className="flex h-30 w-30 items-center justify-center rounded-[2.5rem] border border-black/5 bg-bg-card shadow-custom-md"><FaSeedling className="text-[2.5rem] text-green-primary" /></div>}
             />
 
-            <Section variant="secondary">
-                <div className="mx-auto grid w-full max-w-[140rem] grid-cols-2 gap-16 px-16 py-24 max-[992px]:px-12 max-[992px]:py-20 max-[768px]:grid-cols-1 max-[480px]:px-[1.6rem] max-[480px]:py-12">
-                    <div className="flex flex-col justify-start">
-                        <div className="flex items-start gap-6">
-                            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-green-ultra-light text-[2rem] font-bold text-green-primary">
-                                1
-                            </div>
-                            <div>
-                                <h2 className="mb-4 text-[2.8rem] font-bold text-text-main max-[992px]:text-[2.6rem] max-[480px]:text-[2rem]">Perguntas sobre a SoulUp</h2>
-                                <p className="max-w-2xl text-[1.5rem] leading-[1.7] text-text-secondary">Perguntas frequentes sobre a SoulUp e suas funcionalidades.</p>
-                            </div>
-                        </div>
-                    </div>
+            <Section variant="secondary" size="sm">
+                <SectionHeading
+                    align="center"
+                    label="SoulUp"
+                    title="Perguntas sobre a SoulUp"
+                    text="Perguntas frequentes sobre a SoulUp e suas funcionalidades."
+                />
 
-                    <div className="space-y-5">
-                        {soulUpFAQs.map((faq) => (
-                            <Card key={faq.question}>
-                                <FAQCard question={faq.question} answer={faq.answer} />
-                            </Card>
-                        ))}
-                    </div>
-                </div>
+                <FAQList items={soulUpFAQs} />
             </Section>
 
-            <Section variant="primary">
-                <div className="mx-auto grid w-full max-w-[140rem] grid-cols-2 gap-16 px-16 py-24 max-[992px]:px-12 max-[992px]:py-20 max-[768px]:grid-cols-1 max-[480px]:px-[1.6rem] max-[480px]:py-12">
-                    <div className="flex flex-col justify-start">
-                        <div className="flex items-start gap-6">
-                            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-green-ultra-light text-[2rem] font-bold text-green-primary">
-                                2
-                            </div>
-                            <div>
-                                <h2 className="mb-4 text-[2.8rem] font-bold text-text-main max-[992px]:text-[2.6rem] max-[480px]:text-[2rem]">Perguntas sobre a Greenlify</h2>
-                                <p className="max-w-2xl text-[1.5rem] leading-[1.7] text-text-secondary">Perguntas frequentes sobre nossa solução.</p>
-                            </div>
-                        </div>
-                    </div>
+            <Section size="sm">
+                <SectionHeading
+                    align="center"
+                    label="Greenlify"
+                    title="Perguntas sobre a Greenlify"
+                    text="Perguntas frequentes sobre nossa solução."
+                />
 
-                    <div className="space-y-5">
-                        {greenlifyFAQs.map((faq) => (
-                            <Card key={faq.question}>
-                                <FAQCard question={faq.question} answer={faq.answer} />
-                            </Card>
-                        ))}
-                    </div>
-                </div>
+                <FAQList items={greenlifyFAQs} />
             </Section>
 
-            <Section variant="secondary">
-                <div className="mx-auto w-full max-w-[140rem] px-16 py-24 max-[992px]:px-12 max-[992px]:py-20 max-[480px]:px-[1.6rem] max-[480px]:py-12">
-                    <Card center full>
-                        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-green-ultra-light text-[2.4rem] text-green-primary">
-                            <FaComments />
-                        </div>
+            <CtaBanner
+                title={<>Ainda possui dúvidas?</>}
+                text="Nossa equipe está pronta para te ajudar! Entre em contato conosco e retornaremos o mais rápido possível."
+            >
+                <Button to="/contato" variant="dark" size="lg" arrow>
+                    <FaComments aria-hidden />
+                    Fale Conosco
+                </Button>
 
-                        <h2 className="mb-4 text-[2.8rem] font-bold text-text-main max-[992px]:text-[2.6rem] max-[480px]:text-[2rem]">
-                            Ainda possui <span className="text-green-primary">dúvidas</span>?
-                        </h2>
-
-                        <p className="mx-auto mb-8 max-w-3xl text-[1.5rem] leading-[1.7] text-text-secondary">
-                            Nossa equipe está pronta para te ajudar! Entre em contato conosco e retornaremos o mais rápido possível.
-                        </p>
-
-                        <div className="flex justify-center gap-5">
-
-                            <Button size="md">
-                                <Link to="/contato">
-                                    Fale Conosco
-                                </Link>
-                            </Button>
-                            
-                            <Button size="md" variant="secondary">
-                                <Link to="/">
-                                    Voltar ao início
-                                </Link>
-                            </Button>
-                        </div>
-                    </Card>
-                </div>
-            </Section>
+                <Button to="/" variant="outline" size="lg">
+                    Voltar ao início
+                </Button>
+            </CtaBanner>
         </>
     );
 }

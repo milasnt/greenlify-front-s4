@@ -1,46 +1,39 @@
 import Hero from "../../components/layout/Hero";
 import Button from "../../components/ui/Button";
-import Dashboard from "../../components/Dashboard";
-import Section from "../../components/layout/Section";
-import { FaLeaf } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaMicrochip } from "react-icons/fa";
+import ItemList from "../../components/ui/ItemList";
+import Dashboard from "../../components/ui/Dashboard";
 
 export default function Home() {
     return (
-        <Section>
             <Hero
                 variant="home"
-                badge={
-                    <>
-                        <FaLeaf/>
-                        Gamificação + IA + Sustentabilidade
-                    </>
-                }
-                title={
-                    <>
-                        O próximo nível do{" "}
-                        <span className="text-green-primary">
-                            impacto ambiental
-                        </span>
-                    </>
-                }
+                badge={<><FaMicrochip /> Gamificação + IA + Sustentabilidade</>}
+                title={<>O próximo nível do <span className="textGradient">impacto ambiental</span></>}
                 text="Uma experiência sustentável onde missões interativas transformam atitudes conscientes em evolução, recompensas e impacto positivo."
                 visual={<Dashboard />}
             >
-                <div className="flex gap-8 max-[992px]:gap-[1.6rem] max-[768px]:gap-[1.2rem] max-[480px]:flex-col max-[480px]:items-stretch max-[480px]:gap-4">
-                    <Button size="lg">
-                        <Link to="/sobre">
-                            Conhecer Projeto
-                        </Link>
-                    </Button>
+                <Button to="/nossasolucao#demonstracao" size="lg" arrow>
+                    Testar interface
+                </Button>
 
-                    <Button variant="secondary" size="lg">
-                        <Link to="/nossasolucao">
-                            Testar Interface
-                        </Link>
-                    </Button>
-                </div>
+                <Button to="/sobre" variant="secondary" size="lg">
+                    Conhecer projeto
+                </Button>
+
+                <a href="#como-funciona" className="px-2 py-3.5 font-heading text-sm font-bold text-green-primary underline-offset-4 hover:underline">
+                    Como funciona
+                </a>
+
+                <ItemList
+                    variant="stats"
+                    className="mt-4 w-full border-t border-border pt-6"
+                    items={[
+                        { value: "18", title: "missões concluídas" },
+                        { value: "Contribuidora", title: "nível de contribuição" },
+                        { value: "#3", title: "no ranking do mês" },
+                    ]}
+                />
             </Hero>
-        </Section>
 );
 }
