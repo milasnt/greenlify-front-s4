@@ -27,7 +27,6 @@ interface CardProps {
     nivel: string;
     stats: SummaryStat[];
     categorias: SummaryCategory[];
-    conquistas: string[];
     sequencia: string;
     posicao: string;
 }
@@ -70,7 +69,7 @@ export default function SummaryCard(props: SummaryCardProps) {
         );
     }
 
-    const { mes, nome, nivel, stats, categorias, conquistas, sequencia, posicao } = props;
+    const { mes, nome, nivel, stats, categorias, sequencia, posicao } = props;
     const maxCategory = Math.max(...categorias.map((item) => item.valor), 1);
 
     return (
@@ -147,15 +146,6 @@ export default function SummaryCard(props: SummaryCardProps) {
                 </div>
 
                 <div className="mt-8 flex flex-wrap items-center gap-2">
-                    {conquistas.map((item) => (
-                        <span
-                            key={item}
-                            className="inline-flex items-center gap-1.5 rounded-full bg-purple-primary/30 px-3 py-1.5 text-xs font-semibold text-white"
-                        >
-                            <FaMedal aria-hidden />
-                            {item}
-                        </span>
-                    ))}
 
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-green-light/15 px-3 py-1.5 text-xs font-semibold text-green-light">
                         <FaFire aria-hidden />
