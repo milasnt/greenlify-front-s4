@@ -1,7 +1,7 @@
 import { FaArrowRight, FaCircleCheck, FaCircleExclamation, FaCircleXmark, FaMicrochip } from "react-icons/fa6";
 import Button from "../../../../components/ui/Button";
 
-export type AnalysisStatus = "waiting" | "processing" | "approved" | "rejected";
+export type AnalysisStatus = "waiting" | "processing" | "approved" | "partially_approved" | "rejected";
 
 interface AnalysisResultProps {
     status: AnalysisStatus;
@@ -80,6 +80,28 @@ export default function AnalysisResult({
                         Ver meu perfil
                         <FaArrowRight aria-hidden />
                     </Button>
+                </div>
+            )}
+
+            {status === "partially_approved" && (
+                <div className="rounded-3xl border border-yellow-500/30 bg-bg-card p-6">
+                    <div className="flex items-center gap-3">
+                        <span className="grid h-11 w-11 place-items-center rounded-full bg-yellow-500 text-xl text-white">
+                            <FaCircleExclamation aria-hidden />
+                        </span>
+                        <div>
+                            <p className="font-heading font-bold text-text-main">
+                                Evidência parcialmente aprovada
+                            </p>
+                            <p className="text-xs text-text-secondary">Resultado demonstrativo</p>
+                        </div>
+                    </div>
+                    <p className="mt-4 text-sm text-text-secondary">
+                        Parte dos critérios de “{missionTitle}” foi atendida, mas é necessário complementar a evidência para confirmar a ação completa.
+                    </p>
+                    <p className="mt-4 text-sm font-medium text-text-main">
+                        Envie uma nova evidência que demonstre os critérios restantes.
+                    </p>
                 </div>
             )}
 
