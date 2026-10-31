@@ -1,4 +1,4 @@
-import type { UsuarioResumoAPI } from "../../auth/types/auth";
+import type { UsuarioResumoAPI } from "../../usuario/types/usuario";
 
 /** SeloResponseDTO */
 export interface SeloAPI {

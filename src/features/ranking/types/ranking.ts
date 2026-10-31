@@ -1,4 +1,4 @@
-import type { UsuarioResumoAPI } from "../../auth/types/auth";
+import type { UsuarioResumoAPI } from "../../usuario/types/usuario";
 import type { GrupoAPI } from "../../groups/types/group";
 
 export interface RankingAPI {

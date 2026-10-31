@@ -1,5 +1,5 @@
 import type { Impacto, Dificuldade } from "../../../components/ui/Badge";
-import type { UsuarioResumoAPI } from "../../auth/types/auth";
+import type { UsuarioResumoAPI } from "../../usuario/types/usuario";
 
 export type CategoriaAPI =
     | "RECICLAGEM" | "PLANTIO" | "AGUA" | "ENERGIA"

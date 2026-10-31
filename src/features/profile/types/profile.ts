@@ -1,4 +1,4 @@
-import type { UsuarioResumoAPI } from "../../auth/types/auth";
+import type { UsuarioResumoAPI } from "../../usuario/types/usuario";
 
 /** NivelContribuicao */
 export interface NivelContribuicaoAPI {
