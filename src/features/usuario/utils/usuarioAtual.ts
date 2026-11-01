@@ -1,4 +1,4 @@
-import { buscarUsuarios } from "../../features/profile/services/profileService";
+import { buscarUsuarios } from "../../profile/services/profileService";
 
 const CHAVE_USUARIO = "greenlify-usuario-teste";
 
