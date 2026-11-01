@@ -6,6 +6,10 @@ export async function buscarUsuario(idUsuario: number): Promise<UsuarioAPI> {
     return apiRequest<UsuarioAPI>(`/usuarios/${idUsuario}`);
 }
 
+export async function buscarUsuarios(): Promise<UsuarioAPI[]> {
+    return apiRequest<UsuarioAPI[]>("/usuarios");
+}
+
 export async function buscarPerfil(idUsuario: number): Promise<PerfilSustentavelAPI> {
     return apiRequest<PerfilSustentavelAPI>(`/perfis-sustentaveis/${idUsuario}`);
 }
