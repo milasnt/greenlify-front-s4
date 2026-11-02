@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { FaCheck, FaCopy, FaFire, FaLeaf, FaMedal, FaShareNodes, FaTrophy, FaWandMagicSparkles } from "react-icons/fa6";
+import { FaCheck, FaCopy, FaFire, FaLeaf, FaShareNodes, FaTrophy, FaWandMagicSparkles } from "react-icons/fa6";
 import Button from "../../../../components/ui/Button";
 
 interface SummaryStat {
@@ -26,7 +26,7 @@ interface CardProps {
     nome: string;
     nivel: string;
     stats: SummaryStat[];
-    categorias: SummaryCategory[];
+    categorias?: SummaryCategory[];
     sequencia: string;
     posicao: string;
 }
@@ -69,7 +69,7 @@ export default function SummaryCard(props: SummaryCardProps) {
         );
     }
 
-    const { mes, nome, nivel, stats, categorias, sequencia, posicao } = props;
+    const { mes, nome, nivel, stats, categorias = [], sequencia, posicao } = props;
     const maxCategory = Math.max(...categorias.map((item) => item.valor), 1);
 
     return (
@@ -104,9 +104,9 @@ export default function SummaryCard(props: SummaryCardProps) {
                     {nome} · {nivel}
                 </p>
 
-                <dl className="mt-8 grid grid-cols-3 gap-4">
+                <dl className="mt-8 grid grid-cols-3 gap-2 sm:gap-4">
                     {stats.map((stat) => (
-                        <div key={stat.label} className="nightGlass rounded-2xl p-4">
+                        <div key={stat.label} className="nightGlass rounded-2xl p-3 sm:p-4">
                             <dt className="sr-only">{stat.label}</dt>
 
                             <dd className="font-heading text-2xl font-extrabold text-green-light sm:text-3xl">
@@ -120,6 +120,7 @@ export default function SummaryCard(props: SummaryCardProps) {
                     ))}
                 </dl>
 
+                {categorias.length > 0 && (
                 <div className="mt-8">
                     <p className="text-xs font-semibold uppercase tracking-wider text-night-muted">
                         Ações por categoria
@@ -144,6 +145,7 @@ export default function SummaryCard(props: SummaryCardProps) {
                         ))}
                     </div>
                 </div>
+                )}
 
                 <div className="mt-8 flex flex-wrap items-center gap-2">
 
