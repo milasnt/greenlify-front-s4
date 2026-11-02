@@ -71,6 +71,7 @@ export interface ResumoMissoesAPI {
 /** Formato que os componentes já esperam */
 
 export interface Missao {
+    xp: number;
     id: string;
     titulo: string;
     descricao: string;

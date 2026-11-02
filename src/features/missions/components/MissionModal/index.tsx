@@ -17,6 +17,7 @@ interface MissionModalProps {
     dificuldade: Dificuldade;
     pontos: number;
     xp: number;
+    limiteRealizacoes?: number;
     criteria: ReactNode;
     backTo?: string;
 }

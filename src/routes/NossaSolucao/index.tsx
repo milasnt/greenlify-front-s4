@@ -15,7 +15,6 @@ import {
     FaUser,
     FaUsers,
     FaVideo,
-    FaShieldHalved,
     FaClipboardList,
 } from "react-icons/fa6";
 
@@ -34,10 +33,16 @@ import ItemList from "../../components/ui/ItemList";
 import MediaCard from "../../components/ui/MediaCard";
 import DemoShowcase, { type DemoScreen, DemoOverview } from "../../features/demo/DemoShowcase";
 import Grupos from "../Grupos";
-import Missoes, { missoes } from "../Missoes";
+import MissaoDetalhe from "../MissaoDetalhe";
+import Missoes from "../Missoes";
 import Perfil from "../Perfil";
 import Rankings from "../Rankings";
 import Resumo from "../Resumo";
+import Validacao from "../Validacao";
+import { useMissoesContinuas } from "../../features/missions/hooks/useMissoes";
+import { useGrupos } from "../../features/groups/hooks/useGroups";
+import { usePerfil } from "../../features/profile/hooks/useProfile";
+
 
 const passos = [
     { icon: <FaListCheck />, title: "Escolha uma missão", text: "O usuário escolhe entre missões mensais e contínuas, considerando seus diferentes níveis de impacto e dificuldade." },
@@ -65,30 +70,27 @@ const funcionalidades = [
 const visaoGeral = [
     { to: "/missoes", label: "Missões", text: "Filtre por dificuldade e impacto ambiental.", icon: <FaCompass /> },
     { to: "/missoes/:id", label: "Detalhes da missão", text: "Critérios, recompensa e comprovação.", icon: <FaClipboardList /> },
-    { to: "/validacao", label: "Validação por IA", text: "Simule o envio e acompanhe a análise.", icon: <FaMagnifyingGlassChart /> },
+    { to: "/validacao", label: "Validação por IA", text: "Envie o vídeo e acompanhe a análise.", icon: <FaMagnifyingGlassChart /> },
     { to: "/perfil", label: "Perfil sustentável", text: "Nível, XP, streak e histórico.", icon: <FaUser /> },
     { to: "/rankings", label: "Rankings", text: "Pódio, listagem e período.", icon: <FaTrophy /> },
     { to: "/grupos", label: "Grupos", text: "Comunidades para entrar e acompanhar.", icon: <FaUsers /> },
-    { to: "/conquistas", label: "Conquistas", text: "Selos colecionáveis e marcos.", icon: <FaMedal /> },
     { to: "/resumo", label: "Resumo mensal", text: "Cartão de evolução para compartilhar.", icon: <FaCalendarDays /> },
-    { to: "/admin", label: "Administração", text: "Criar, editar e excluir missões.", icon: <FaShieldHalved /> },
 ];
 
 export default function NossaSolucao() {
     const { hash } = useLocation();
+    const { missoes } = useMissoesContinuas();
+    const { perfil } = usePerfil();
+    const { grupos } = useGrupos();
 
-    // Links como /nossasolucao#demonstracao rolam direto até a área de demonstração.
     useEffect(() => {
         if (hash !== "#demonstracao") return;
-
         const timer = setTimeout(() => {
             document.getElementById("demonstracao")?.scrollIntoView({ block: "start", behavior: "smooth" });
         }, 80);
-
         return () => clearTimeout(timer);
     }, [hash]);
 
-    // Cada tela reaproveita a própria página (routes) dentro da demonstração.
     const telas: DemoScreen[] = [
         {
             id: "visao-geral",
@@ -96,17 +98,18 @@ export default function NossaSolucao() {
             path: "/nossasolucao",
             render: () => (
                 <DemoOverview
-                    items={visaoGeral.map((item) => ({ ...item, to: item.to.replace(":id", missoes[0].id) }))}
+                    items={visaoGeral.map((item) => ({ ...item, to: item.to.replace(":id", missoes[0]?.id ?? "") }))}
                     stats={[
-                        { value: String(missoes.length), title: "missões de exemplo" },
-                        { value: "9", title: "conquistas para colecionar" },
-                        { value: "6", title: "grupos de comunidade" },
-                        { value: "780 XP", title: "no perfil demonstrativo" },
+                        { value: String(missoes.length), title: "missões disponíveis" },
+                        { value: String(grupos.length), title: "grupos de comunidade" },
+                        { value: perfil ? `${perfil.xpSustentavel} XP` : "—", title: "no seu perfil" },
                     ]}
                 />
             ),
         },
         { id: "missoes", label: "Missões", path: "/missoes", render: () => <Missoes /> },
+        { id: "detalhe", label: "Detalhes da missão", shortLabel: "Detalhe", path: "/missoes/:id", render: (missaoId) => <MissaoDetalhe missaoId={missaoId} /> },
+        { id: "validacao", label: "Validação por IA", shortLabel: "Validação", path: "/validacao", render: (missaoId) => <Validacao missaoId={missaoId} /> },
         { id: "perfil", label: "Perfil sustentável", shortLabel: "Perfil", path: "/perfil", render: () => <Perfil /> },
         { id: "rankings", label: "Rankings", path: "/rankings", render: () => <Rankings /> },
         { id: "grupos", label: "Grupos", path: "/grupos", render: () => <Grupos /> },
@@ -133,7 +136,6 @@ export default function NossaSolucao() {
                 <Button href="#demonstracao" size="lg" arrow>
                     Explorar a demonstração
                 </Button>
-
                 <Button href="#como-funciona" variant="secondary" size="lg">
                     Conhecer o funcionamento
                 </Button>
@@ -146,13 +148,11 @@ export default function NossaSolucao() {
                     title="Navegue pelo produto, tela por tela"
                     text="Cada aba abre uma tela real da plataforma, sem sair desta página."
                 />
-
                 <div className="mt-4 flex justify-center">
                     <Badge variant="purple">
-                        <FaLock aria-hidden /> Dados e ações simulados — ainda sem conexão com o backend
+                        <FaLock aria-hidden /> Telas reais conectadas ao back-end da Greenlify
                     </Badge>
                 </div>
-
                 <div className="mt-10">
                     <DemoShowcase
                         screens={telas}
@@ -167,7 +167,6 @@ export default function NossaSolucao() {
                     title="Um módulo integrado à SoulUp, em quatro passos"
                     text="O usuário participa de missões sustentáveis, comprova suas ações e acompanha sua evolução dentro da plataforma."
                 />
-
                 <Grid columns={4} className="mt-12">
                     {passos.map((passo, index) => (
                         <Reveal key={passo.title} delay={index * 110}>
@@ -186,7 +185,6 @@ export default function NossaSolucao() {
                             title="Evidências analisadas, benefícios dentro da SoulUp"
                             text="O conteúdo enviado passa por análise automatizada e pelas regras de cada missão. Com a validação concluída, a pontuação do usuário é atualizada e os pontos acumulados podem gerar benefícios dentro da SoulUp."
                         />
-
                         <ul className="mt-6 space-y-3">
                             {[
                                 "Análise automatizada dos vídeos enviados",
@@ -200,12 +198,10 @@ export default function NossaSolucao() {
                                 </li>
                             ))}
                         </ul>
-
                         <Button to="/nossasolucao?tela=validacao#demonstracao" variant="accent" size="lg" arrow className="mt-8">
                             Testar a validação
                         </Button>
                     </Reveal>
-
                     <Reveal delay={150}>
                         <MediaCard
                             variant="partner"
@@ -224,7 +220,6 @@ export default function NossaSolucao() {
                     title="Mecanismos para manter a constância"
                     text="O streak acompanha a sequência de participação, enquanto os rankings, níveis e recompensas incentivam o usuário a continuar evoluindo dentro da plataforma."
                 />
-
                 <Grid split="wide-left" className="mt-12">
                     <Grid columns={2}>
                         {engajamento.map((item, index) => (
@@ -233,7 +228,6 @@ export default function NossaSolucao() {
                             </Reveal>
                         ))}
                     </Grid>
-
                     <Reveal delay={120}>
                         <ItemList variant="definition" title="Principais funcionalidades" items={funcionalidades} />
                     </Reveal>
@@ -241,19 +235,14 @@ export default function NossaSolucao() {
             </Section>
 
             <CtaBanner
-                title="Conheça a solução na prática"
-                text="Volte à demonstração interativa ou abra as páginas de Missões e Perfil."
+                title="Conheça a solução"
+                text="Volte à demonstração interativa ou leia um pouco sobre nossa proposta"
             >
                 <Button href="#demonstracao" variant="dark" size="lg" arrow>
                     Voltar à demonstração
                 </Button>
-
                 <Button to="/missoes" variant="outline" size="lg">
-                    Ver Missões
-                </Button>
-
-                <Button to="/perfil" variant="outline" size="lg">
-                    Ver Perfil
+                    Conhecer projeto
                 </Button>
             </CtaBanner>
         </>
