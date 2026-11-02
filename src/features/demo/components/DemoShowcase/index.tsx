@@ -2,13 +2,12 @@ import { useCallback, useEffect, useRef } from "react";
 import type { MouseEvent, ReactNode } from "react";
 import { Link, matchPath, useSearchParams } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
-import Reveal from "../../../components/layout/Reveal";
-import Button from "../../../components/ui/Button";
-import Dashboard from "../../../components/ui/Dashboard";
-import IconBox from "../../../components/ui/IconBox";
-import ItemList from "../../../components/ui/ItemList";
-import Tabs from "../../../components/ui/Tabs";
-
+import Reveal from "../../../../components/layout/Reveal";
+import Button from "../../../../components/ui/Button";
+import Dashboard from "../../../../components/ui/Dashboard";
+import IconBox from "../../../../components/ui/IconBox";
+import ItemList from "../../../../components/ui/ItemList";
+import Tabs from "../../../../components/ui/Tabs";
 
 export interface DemoScreen {
     id: string;

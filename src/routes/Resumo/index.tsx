@@ -1,38 +1,22 @@
 import { useRef, useState } from "react";
 import { toBlob } from "html-to-image";
-import { FaChartLine, FaWandMagicSparkles } from "react-icons/fa6";
 import Grid from "../../components/layout/Grid";
-import Hero from "../../components/layout/Hero";
 import Reveal from "../../components/layout/Reveal";
 import Section from "../../components/layout/Section";
-import ItemList from "../../components/ui/ItemList";
+import Card from "../../components/ui/Card";
+import Feedback from "../../components/ui/Feedback";
 import Toast, { type ToastType } from "../../components/ui/Toast";
 import SummaryCard from "../../features/profile/components/SummaryCard";
+import { usePerfil } from "../../features/profile/hooks/useProfile";
 
-const resumoMensal = {
-    mes: "Outubro de 2026",
-    nome: "Camila",
-    nivel: "Contribuidora",
-    pontos: 420,
-    missoesConcluidas: 7,
-    xpGanho: 310,
-    streak: "4 meses de streak",
-    posicao: "3º no ranking",
-    categorias: [
-        { nome: "Reciclagem", valor: 3 },
-        { nome: "Reuso", valor: 2 },
-        { nome: "Consumo", valor: 1 },
-        { nome: "Coleta", valor: 1 },
-    ],
-    comparativo: [
-        { label: "Missões concluídas", value: "+2" },
-        { label: "Pontos conquistados", value: "+18%" },
-        { label: "Posição no ranking", value: "5º → 3º" },
-    ],
-};
+function mesAtual() {
+    const texto = new Date().toLocaleDateString("pt-BR", { month: "long", year: "numeric" });
+    return texto.charAt(0).toUpperCase() + texto.slice(1).replace(" de ", " de ");
+}
 
 export default function Resumo() {
     const cardRef = useRef<HTMLDivElement>(null);
+    const { usuario, perfil, impacto, carregando, erro } = usePerfil();
     const [copiado, setCopiado] = useState(false);
     const [aviso, setAviso] = useState<{ mensagem: string; tipo: ToastType } | null>(null);
 
@@ -48,7 +32,7 @@ export default function Resumo() {
     }
 
     async function compartilhar() {
-        if (!cardRef.current) {
+        if (!cardRef.current || !impacto) {
             setAviso({ mensagem: "Não foi possível gerar a imagem do resumo.", tipo: "error" });
             return;
         }
@@ -71,7 +55,7 @@ export default function Resumo() {
             if (navigator.share && navigator.canShare?.({ files: [arquivo] })) {
                 await navigator.share({
                     title: "Meu mês na Greenlify",
-                    text: `Em ${resumoMensal.mes}, concluí ${resumoMensal.missoesConcluidas} missões sustentáveis e somei ${resumoMensal.pontos} pontos na Greenlify.`,
+                    text: `Em ${mesAtual()}, concluí ${impacto.missoesConcluidas} missões sustentáveis e tenho ${impacto.pontos} pontos na Greenlify.`,
                     files: [arquivo],
                 });
 
@@ -104,46 +88,35 @@ export default function Resumo() {
 
     return (
         <>
-            <Hero
-                badge={<><FaWandMagicSparkles /> Compartilhe seu impacto</>}
-                title={<>Seu mês em uma <span className="textGradient">peça visual</span></>}
-                text={`O resumo transforma seus resultados em uma imagem para compartilhar na SoulUp e onde mais você quiser. Dados demonstrativos do perfil de ${resumoMensal.nome}.`}
-            />
-
             <Section size="sm">
-                <Grid split="wide-left">
-                    <Reveal delay={100}>
-                        <div ref={cardRef}>
-                            <SummaryCard
-                                mes={resumoMensal.mes}
-                                nome={resumoMensal.nome}
-                                nivel={resumoMensal.nivel}
-                                stats={[
-                                    { value: resumoMensal.missoesConcluidas, label: "missões concluídas" },
-                                    { value: resumoMensal.pontos, label: "pontos" },
-                                    { value: `+${resumoMensal.xpGanho}`, label: "de XP" },
-                                ]}
-                                categorias={resumoMensal.categorias}
-                                sequencia={resumoMensal.streak}
-                                posicao={resumoMensal.posicao}
-                            />
-                        </div>
-                    </Reveal>
+                {erro ? (
+                    <Feedback tipo="erro" mensagem={erro} />
+                ) : carregando || !usuario || !perfil || !impacto ? (
+                    <Card hover={false} className="h-96" children={undefined} />
+                ) : (
+                    <Grid split="wide-left">
+                        <Reveal delay={100}>
+                            <div ref={cardRef}>
+                                <SummaryCard
+                                    mes={mesAtual()}
+                                    nome={usuario.nome}
+                                    nivel={perfil.nivel.nome}
+                                    stats={[
+                                        { value: impacto.missoesConcluidas, label: "missões concluídas" },
+                                        { value: impacto.pontos, label: "pontos" },
+                                        { value: perfil.xpSustentavel, label: "de XP" },
+                                    ]}
+                                    sequencia={`${impacto.mesesDeStreak} ${impacto.mesesDeStreak === 1 ? "mês" : "meses"} de streak`}
+                                    posicao={impacto.posicaoRanking > 0 ? `${impacto.posicaoRanking}º no ranking` : "Fora do ranking"}
+                                />
+                            </div>
+                        </Reveal>
 
-                    <Reveal delay={180}>
-                        <SummaryCard variant="share" onShare={compartilhar} onCopy={copiarLink} copied={copiado}>
-                            <h3 className="mb-3 flex items-center gap-2 font-heading text-sm font-bold text-text-main">
-                                <FaChartLine className="text-green-primary" aria-hidden />
-                                Comparativo com setembro
-                            </h3>
-
-                            <ItemList
-                                variant="status"
-                                items={resumoMensal.comparativo.map((item) => ({ title: item.label, value: item.value }))}
-                            />
-                        </SummaryCard>
-                    </Reveal>
-                </Grid>
+                        <Reveal delay={180}>
+                            <SummaryCard variant="share" onShare={compartilhar} onCopy={copiarLink} copied={copiado} />
+                        </Reveal>
+                    </Grid>
+                )}
             </Section>
 
             <Toast message={aviso?.mensagem ?? null} type={aviso?.tipo} onClose={() => setAviso(null)} />
