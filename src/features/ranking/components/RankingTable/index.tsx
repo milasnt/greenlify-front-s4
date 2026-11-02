@@ -14,6 +14,7 @@ interface RankingTableProps {
     variant?: "table" | "podium";
     highlight?: string;
     unit?: string;
+    columnLabel?: string;
     caption?: string;
 }
 
@@ -23,7 +24,9 @@ export default function RankingTable({
     variant = "table",
     highlight,
     unit = "pts",
+    columnLabel,
     caption,
+
 }: RankingTableProps) {
     const isGroups = type === "groups";
 
@@ -93,13 +96,13 @@ export default function RankingTable({
 
     return (
         <div className="overflow-hidden rounded-3xl border border-border bg-bg-card">
-            <div className="grid grid-cols-[4rem_1fr_auto] gap-4 border-b border-border bg-bg-soft px-5 py-3 text-xs font-bold uppercase tracking-wider text-text-secondary">
+            <div className="grid grid-cols-[2.5rem_1fr_auto] gap-3 border-b border-border bg-bg-soft px-4 py-3 sm:grid-cols-[4rem_1fr_auto] sm:gap-4 sm:px-5 text-xs font-bold uppercase tracking-wider text-text-secondary">
                 <span>Posição</span>
 
                 <span>{isGroups ? "Grupo" : "Usuário"}</span>
 
                 <span className="text-right">
-                    {isGroups ? "Selos Verdes" : "Pontos"}
+                    { columnLabel ?? (isGroups ? "Selos Verdes" : "Pontos")}
                 </span>
             </div>
 
@@ -109,7 +112,7 @@ export default function RankingTable({
                 return (
                     <div
                         key={`${item.posicao}-${item.nome}`}
-                        className={`grid grid-cols-[4rem_1fr_auto] items-center gap-4 border-b border-border px-5 py-4 last:border-b-0 ${
+                        className={`grid grid-cols-[2.5rem_1fr_auto] items-center gap-3 border-b border-border px-4 py-3.5 last:border-b-0 sm:grid-cols-[4rem_1fr_auto] sm:gap-4 sm:px-5 sm:py-4 ${
                             isCurrent ? "bg-green-lighter/70 ring-1 ring-inset ring-green-primary/30" : ""
                         }`}
                     >

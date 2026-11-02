@@ -2,13 +2,12 @@ import { useCallback, useEffect, useRef } from "react";
 import type { MouseEvent, ReactNode } from "react";
 import { Link, matchPath, useSearchParams } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
-import Reveal from "../../../components/layout/Reveal";
-import Button from "../../../components/ui/Button";
-import Dashboard from "../../../components/ui/Dashboard";
-import IconBox from "../../../components/ui/IconBox";
-import ItemList from "../../../components/ui/ItemList";
-import Tabs from "../../../components/ui/Tabs";
-
+import Reveal from "../../../../components/layout/Reveal";
+import Button from "../../../../components/ui/Button";
+import Dashboard from "../../../../components/ui/Dashboard";
+import IconBox from "../../../../components/ui/IconBox";
+import ItemList from "../../../../components/ui/ItemList";
+import Tabs from "../../../../components/ui/Tabs";
 
 export interface DemoScreen {
     id: string;
@@ -37,7 +36,7 @@ export default function DemoShowcase({ screens, missions }: DemoShowcaseProps) {
 
     const screen = screens.find((item) => item.id === params.get("tela")) ?? screens[0]!;
     const missionParam = params.get("missao");
-    const missionId = missions.find((item) => item.id === missionParam)?.id ?? missions[0]!.id;
+    const missionId = missions.find((item) => item.id === missionParam)?.id ?? missions[0]?.id ?? "";
 
     const index = screens.indexOf(screen);
     const previous = index > 0 ? screens[index - 1] : null;
@@ -210,12 +209,12 @@ export function DemoOverview({ items, stats }: DemoOverviewProps) {
                         </p>
 
                         <h3 className="mt-3 font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">
-                            O Greenlify em <span className="textGradient">nove telas</span>
+                            O Greenlify em <span className="textGradient">{items.length} telas</span>
                         </h3>
 
                         <p className="mt-4 max-w-xl leading-relaxed text-text-secondary">
                             Escolha uma missão, envie a evidência, acompanhe a validação e veja o progresso virar
-                            nível, ranking e conquistas. Toque em qualquer tela — tudo com dados demonstrativos.
+                            nível, ranking e conquistas. Toque em qualquer tela — os dados vêm do back-end.
                         </p>
                     </Reveal>
 

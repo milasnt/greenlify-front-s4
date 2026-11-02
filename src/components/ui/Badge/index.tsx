@@ -28,15 +28,15 @@ export default function Badge({
     };
 
     const dificuldadeStyles = {
-        Fácil: variantStyles.green,
-        Média: variantStyles.purple,
-        Difícil: variantStyles.muted,
+        Fácil: "bg-green-100 text-green-800",
+        Média: "bg-yellow-100 text-yellow-800",
+        Difícil: "bg-red-100 text-red-800",
     };
 
     const impactoStyles = {
-        Baixo: variantStyles.outline,
-        Médio: "border border-green-light/50 text-green-primary",
-        Alto: "border border-green-primary bg-green-primary text-white",
+        Baixo: "bg-green-100 text-green-800",
+        Médio: "bg-yellow-100 text-yellow-800",
+        Alto: "bg-red-100 text-red-800",
     };
 
     let styles = variantStyles[variant];

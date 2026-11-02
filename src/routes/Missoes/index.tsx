@@ -1,274 +1,181 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Section from "../../components/layout/Section";
-import Hero from "../../components/layout/Hero";
-
-import { FaLeaf, FaListCheck } from "react-icons/fa6";
 import Card from "../../components/ui/Card";
-import { Link } from "react-router-dom";
 import Button from "../../components/ui/Button";
 import { MissaoMensal, MissionCard } from "../../features/missions/components/MissionCard";
+import { OPCOES_DIFICULDADE, OPCOES_IMPACTO, useFiltroMissoes, usePaginacao } from "../../features/missions/hooks/useFiltroMissoes";
+import { useMissoesContinuas, useMissoesMensais } from "../../features/missions/hooks/useMissoes";
+import Pagination from "../../components/ui/Pagination";
+import SectionHeading from "../../components/layout/SectionHeading";
+import Grid from "../../components/layout/Grid";
+import Tabs from "../../components/ui/Tabs";
+import FilterBar from "../../features/missions/components/FilterBar";
+import Feedback from "../../components/ui/Feedback";
 
-export interface Missao {
-    id: string;
-    titulo: string;
-    descricao: string;
-    impacto: "Baixo" | "Médio" | "Alto";
-    dificuldade: "Fácil" | "Média" | "Difícil";
-    pontos: number;
-    xp: number;
-    criterios: string[];
-}
+const MISSOES_POR_PAGINA = 6;
+const MENSAIS_POR_PAGINA = 4;
 
-export const missoes: Missao[] = [
-    {
-        id: "separar-materiais-reciclaveis",
-        titulo: "Separar materiais recicláveis",
-        descricao: "Separe materiais recicláveis e organize-os corretamente para descarte.",
-        impacto: "Médio",
-        dificuldade: "Fácil",
-        pontos: 40,
-        xp: 30,
-        criterios: [
-            "A ação deve ser realizada pelo próprio usuário.",
-            "O vídeo deve mostrar claramente a realização da ação.",
-            "O conteúdo enviado deve corresponder à missão selecionada.",
-        ],
-    },
-    {
-        id: "utilizar-alternativa-reutilizavel",
-        titulo: "Utilizar uma alternativa reutilizável",
-        descricao: "Substitua um produto descartável por uma alternativa reutilizável durante sua rotina.",
-        impacto: "Baixo",
-        dificuldade: "Fácil",
-        pontos: 30,
-        xp: 20,
-        criterios: [
-            "A ação deve ser realizada pelo próprio usuário.",
-            "O vídeo deve mostrar claramente a realização da ação.",
-            "O conteúdo enviado deve corresponder à missão selecionada.",
-        ],
-    },
-    {
-        id: "levar-residuos-ponto-coleta",
-        titulo: "Levar resíduos a um ponto de coleta",
-        descricao: "Leve materiais recicláveis ou resíduos específicos a um ponto de coleta adequado.",
-        impacto: "Alto",
-        dificuldade: "Média",
-        pontos: 70,
-        xp: 50,
-        criterios: [
-            "A ação deve ser realizada pelo próprio usuário.",
-            "O vídeo deve mostrar claramente a realização da ação.",
-            "O conteúdo enviado deve corresponder à missão selecionada.",
-        ],
-    },
-    {
-        id: "reutilizar-embalagem",
-        titulo: "Reutilizar uma embalagem",
-        descricao: "Dê uma nova utilidade a uma embalagem que seria descartada.",
-        impacto: "Médio",
-        dificuldade: "Fácil",
-        pontos: 40,
-        xp: 30,
-        criterios: [
-            "A ação deve ser realizada pelo próprio usuário.",
-            "O vídeo deve mostrar claramente a realização da ação.",
-            "O conteúdo enviado deve corresponder à missão selecionada.",
-        ],
-    },
-    {
-        id: "compra-consciente",
-        titulo: "Realizar uma compra consciente",
-        descricao: "Escolha uma alternativa de compra que reduza o uso de materiais descartáveis.",
-        impacto: "Médio",
-        dificuldade: "Média",
-        pontos: 50,
-        xp: 40,
-        criterios: [
-            "A ação deve ser realizada pelo próprio usuário.",
-            "O vídeo deve mostrar claramente a realização da ação.",
-            "O conteúdo enviado deve corresponder à missão selecionada.",
-        ],
-    },
-    {
-        id: "acao-de-reciclagem",
-        titulo: "Participar de uma ação de reciclagem",
-        descricao: "Participe de uma ação relacionada à coleta, separação ou reciclagem de resíduos.",
-        impacto: "Alto",
-        dificuldade: "Difícil",
-        pontos: 90,
-        xp: 70,
-        criterios: [
-            "A ação deve ser realizada pelo próprio usuário.",
-            "O vídeo deve mostrar claramente a realização da ação.",
-            "O conteúdo enviado deve corresponder à missão selecionada.",
-        ],
-    },
-];
+type AbaMissoes = "continuas" | "mensais";
 
-const missoesMensais = [
-    {
-        titulo: "Faça 5 missões fáceis",
-        progresso: 3,
-        meta: 5,
-    },
-    {
-        titulo: "Faça 10 missões de impacto baixo",
-        progresso: 7,
-        meta: 10,
-    },
-    {
-        titulo: "Complete 3 missões de impacto alto",
-        progresso: 2,
-        meta: 3,
-    },
-    {
-        titulo: "Complete 5 missões diferentes",
-        progresso: 4,
-        meta: 5,
-    },
+const abas = [
+    { id: "continuas", label: "Missões contínuas", shortLabel: "Contínuas" },
+    { id: "mensais", label: "Missões mensais", shortLabel: "Mensais" },
 ];
 
 export default function Missoes() {
-    const [isLoading, setIsLoading] = useState(true);
+    const [aba, setAba] = useState<AbaMissoes>("continuas");
+    const { missoes, carregando, erro } = useMissoesContinuas();
+    const mensais = useMissoesMensais();
+
+    const filtro = useFiltroMissoes(missoes, MISSOES_POR_PAGINA);
+    const paginaMensais = usePaginacao(mensais.missoes, MENSAIS_POR_PAGINA);
+
+    const listaRef = useRef<HTMLDivElement>(null);
+    const primeiraRenderizacao = useRef(true);
 
     useEffect(() => {
-        const timer = setTimeout(() => setIsLoading(false), 800);
-        return () => clearTimeout(timer);
-    }, []);
+        if (primeiraRenderizacao.current) {
+            primeiraRenderizacao.current = false;
+            return;
+        }
+
+        const topo = listaRef.current?.getBoundingClientRect().top ?? 0;
+        if (topo < 80) listaRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+    }, [filtro.pagina, paginaMensais.pagina]);
 
     return (
         <>
-            <Hero
-                variant="internal"
-                badge={<FaLeaf />}
-                title={
-                    <>
-                        Missões{" "}
-                        <span className="font-bold text-green-primary">
-                            Greenlify
-                        </span>
-                    </>
-                }
-                text="Realize ações sustentáveis, comprove sua participação e acumule pontos e XP para evoluir dentro da SoulUp."
-                visual={
-                    <div className="flex h-30 w-30 items-center justify-center rounded-[2.5rem] border border-black/5 bg-bg-card shadow-custom-md">
-                        <FaListCheck className="text-[2.5rem] text-green-primary" />
-                    </div>
-                }
-            />
+        
+            <Section size="sm">
+                <Tabs
+                    items={abas}
+                    active={aba}
+                    onChange={(id) => setAba(id as AbaMissoes)}
+                    ariaLabel="Tipo de missão"
+                    panelId="painel-missoes"
+                    variant="segmented"
+                />
 
-            <Section variant="primary">
-                <div className="mx-auto w-full max-w-[140rem] px-16 py-20 max-[992px]:px-12 max-[992px]:py-16 max-[480px]:px-[1.6rem] max-[480px]:py-10">
-                    <div className="flex items-start gap-8 max-[640px]:gap-5">
-                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-green-ultra-light text-[1.8rem] font-bold text-green-primary max-[480px]:h-11 max-[480px]:w-11 max-[480px]:text-[1.5rem]">
-                            1
-                        </div>
+                <div
+                    id="painel-missoes"
+                    role="tabpanel"
+                    aria-labelledby={`tab-${aba}`}
+                    ref={listaRef}
+                    className="mt-8 scroll-mt-24"
+                >
+                    {aba === "continuas" ? (
+                        <>
+                            <SectionHeading
+                                label="Missões disponíveis"
+                                title="Escolha uma missão contínua"
+                                text="Realize uma ação sustentável, acumule pontos e XP e contribua para suas metas mensais."
+                            />
 
-                        <div className="min-w-0 flex-1">
-                            <h2 className="mb-4 text-[2.6rem] font-bold text-text-main max-[992px]:text-[2.3rem] max-[480px]:text-[2rem]">
-                                Missões mensais
-                            </h2>
+                            <div className="mt-8">
+                                <FilterBar
+                                    search={filtro.busca}
+                                    onSearchChange={filtro.setBusca}
+                                    groups={[
+                                        { id: "impacto", label: "Impacto ambiental", options: OPCOES_IMPACTO, selected: filtro.impacto, onChange: filtro.setImpacto },
+                                        { id: "dificuldade", label: "Dificuldade", options: OPCOES_DIFICULDADE, selected: filtro.dificuldade, onChange: filtro.setDificuldade, tone: "purple" },
+                                    ]}
+                                    resultCount={carregando || erro ? undefined : filtro.total}
+                                    onClear={filtro.limpar}
+                                />
 
-                            <p className="mb-10 max-w-280 text-[1.6rem] leading-[1.7] text-text-secondary">
-                                As missões mensais acompanham o desempenho do
-                                usuário durante o mês e são cumpridas a partir
-                                das missões contínuas realizadas.
-                            </p>
+                                <div className="mt-6">
+                                    {carregando ? (
+                                        <Grid>
+                                            {[1, 2, 3].map((item) => (
+                                                <div key={item} className="h-64 animate-pulse rounded-3xl border border-border bg-bg-card" />
+                                            ))}
+                                        </Grid>
+                                    ) : erro ? (
+                                        <Feedback tipo="erro" mensagem={erro} />
+                                    ) : missoes.length === 0 ? (
+                                        <Feedback tipo="vazio" mensagem="Nenhuma missão disponível no momento." />
+                                    ) : filtro.total === 0 ? (
+                                        <Card variant="dashed" hover={false} className="flex flex-col items-center gap-4 py-10 text-center">
+                                            <p className="text-sm text-text-secondary">
+                                                Nenhuma missão combina com esses filtros. Que tal ampliar a busca?
+                                            </p>
 
-                            <div className="grid grid-cols-2 gap-6 max-[768px]:gap-4 max-[480px]:grid-cols-1">
-                                {missoesMensais.map((missao) => (
-                                    <MissaoMensal
-                                        key={missao.titulo}
-                                        titulo={missao.titulo}
-                                        progresso={missao.progresso}
-                                        meta={missao.meta}
-                                    />
-                                ))}
+                                            <Button variant="secondary" onClick={filtro.limpar}>
+                                                Limpar filtros
+                                            </Button>
+                                        </Card>
+                                    ) : (
+                                        <>
+                                            <Grid key={`${filtro.pagina}-${filtro.impacto}-${filtro.dificuldade}-${filtro.busca}`} className="animate-enter">
+                                                {filtro.visiveis.map((missao) => (
+                                                    <MissionCard
+                                                        key={missao.id}
+                                                        id={missao.id}
+                                                        titulo={missao.titulo}
+                                                        descricao={missao.descricao}
+                                                        impacto={missao.impacto}
+                                                        dificuldade={missao.dificuldade}
+                                                        pontos={missao.pontos} 
+                                                        xp={missao.xp}                                                    />
+                                                ))}
+                                            </Grid>
+
+                                            <Pagination
+                                                pagina={filtro.pagina}
+                                                totalPaginas={filtro.totalPaginas}
+                                                onChange={filtro.setPagina}
+                                                ariaLabel="Paginação das missões disponíveis"
+                                                className="mt-10"
+                                            />
+                                        </>
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </Section>
+                        </>
+                    ) : (
+                        <>
+                            <SectionHeading
+                                label="Missões mensais"
+                                title="Metas do mês"
+                                text="As missões mensais acompanham seu desempenho durante o mês e avançam conforme você conclui missões contínuas."
+                            />
 
-            <Section variant="secondary">
-                <div className="mx-auto w-full max-w-[140rem] px-16 py-20 max-[992px]:px-12 max-[992px]:py-16 max-[480px]:px-[1.6rem] max-[480px]:py-10">
-                    <div className="flex items-start gap-8 max-[640px]:gap-5">
-                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-green-ultra-light text-[1.8rem] font-bold text-green-primary max-[480px]:h-11 max-[480px]:w-11 max-[480px]:text-[1.5rem]">
-                            2
-                        </div>
+                            <div className="mt-8">
+                                {mensais.carregando ? (
+                                    <Grid columns={2}>
+                                        {[1, 2].map((item) => (
+                                            <div key={item} className="h-32 animate-pulse rounded-3xl border border-border bg-bg-card" />
+                                        ))}
+                                    </Grid>
+                                ) : mensais.erro ? (
+                                    <Feedback tipo="erro" mensagem={mensais.erro} />
+                                ) : mensais.missoes.length === 0 ? (
+                                    <Feedback tipo="vazio" mensagem="Nenhuma missão mensal vigente no momento." />
+                                ) : (
+                                    <>
+                                        <Grid columns={2} className="animate-enter">
+                                            {paginaMensais.visiveis.map((missao) => (
+                                                <MissaoMensal
+                                                    key={missao.id}
+                                                    titulo={missao.titulo}
+                                                    progresso={missao.progresso}
+                                                    meta={missao.meta}
+                                                />
+                                            ))}
+                                        </Grid>
 
-                        <div className="min-w-0 flex-1">
-                            <h2 className="mb-4 text-[2.6rem] font-bold text-text-main max-[992px]:text-[2.3rem] max-[480px]:text-[2rem]">
-                                Missões disponíveis
-                            </h2>
-
-                            <p className="mb-10 max-w-280 text-[1.6rem] leading-[1.7] text-text-secondary">
-                                Escolha uma missão contínua para realizar uma
-                                ação sustentável, acumular pontos e XP e
-                                contribuir para suas metas mensais.
-                            </p>
-
-                            {isLoading ? (
-                                <div className="grid grid-cols-3 gap-6 max-[768px]:grid-cols-2 max-[480px]:grid-cols-1">
-                                    {[1, 2, 3, 4, 5, 6].map((item) => (
-                                        <div
-                                            key={item}
-                                            className="h-80 animate-pulse rounded-2xl border border-border bg-bg-card"
+                                        <Pagination
+                                            pagina={paginaMensais.pagina}
+                                            totalPaginas={paginaMensais.totalPaginas}
+                                            onChange={paginaMensais.setPagina}
+                                            ariaLabel="Paginação das missões mensais"
+                                            className="mt-8"
                                         />
-                                    ))}
-                                </div>
-                            ) : (
-                                <div className="grid grid-cols-3 gap-6 max-[768px]:grid-cols-2 max-[480px]:grid-cols-1">
-                                    {missoes.map((missao) => (
-                                        <MissionCard
-                                            key={missao.id}
-                                            id={missao.id}
-                                            titulo={missao.titulo}
-                                            descricao={missao.descricao}
-                                            impacto={missao.impacto}
-                                            dificuldade={missao.dificuldade}
-                                            pontos={missao.pontos}
-                                            xp={missao.xp}
-                                        />
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            </Section>
-
-            <Section>
-                <div className="mx-auto w-full max-w-[140rem] px-16 py-20 max-[992px]:px-12 max-[992px]:py-16 max-[480px]:px-[1.6rem] max-[480px]:py-10">
-                    <Card center full>
-                        <h2 className="mb-5 text-[2.6rem] font-bold text-text-main max-[992px]:text-[2.3rem] max-[480px]:text-[2rem]">
-                            Acompanhe sua{" "}
-                            <span className="text-green-primary">
-                                evolução
-                            </span>
-                        </h2>
-
-                        <p className="mx-auto mb-10 max-w-280 text-[1.6rem] leading-[1.7] text-text-secondary">
-                            Acesse seu perfil para acompanhar seus pontos, XP,
-                            conquistas, nível de contribuição e posição nos
-                            rankings.
-                        </p>
-
-                        <div className="flex justify-center gap-6 max-[480px]:flex-col">
-                            <Link to="/perfil">
-                                <Button size="lg">
-                                    Ver meu perfil
-                                </Button>
-                            </Link>
-
-                            <Link to="/nossasolucao">
-                                <Button variant="secondary" size="lg">
-                                    Conhecer a solução
-                                </Button>
-                            </Link>
-                        </div>
-                    </Card>
+                                    </>
+                                )}
+                            </div>
+                        </>
+                    )}
                 </div>
             </Section>
         </>

@@ -19,7 +19,6 @@ interface MissionCardProps {
     label?: string;
 }
 
-/** default: card da listagem · featured: destaque escuro · row: linha compacta (Home). */
 export function MissionCard({
     id,
     titulo,
