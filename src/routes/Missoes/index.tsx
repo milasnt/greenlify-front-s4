@@ -115,8 +115,8 @@ export default function Missoes() {
                                                         descricao={missao.descricao}
                                                         impacto={missao.impacto}
                                                         dificuldade={missao.dificuldade}
-                                                        pontos={missao.pontos}
-                                                    />
+                                                        pontos={missao.pontos} 
+                                                        xp={missao.xp}                                                    />
                                                 ))}
                                             </Grid>
 
