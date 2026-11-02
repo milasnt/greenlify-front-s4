@@ -1,114 +1,95 @@
 import { useState } from "react";
-import { FaArrowTrendUp, FaTrophy } from "react-icons/fa6";
-import CtaBanner from "../../components/layout/CtaBanner";
-import Hero from "../../components/layout/Hero";
+import { FaArrowTrendUp } from "react-icons/fa6";
 import Reveal from "../../components/layout/Reveal";
 import Section from "../../components/layout/Section";
-import Button from "../../components/ui/Button";
 import Card from "../../components/ui/Card";
+import Feedback from "../../components/ui/Feedback";
+import { useRankings } from "../../features/ranking/hooks/useRankings";
 import RankingTable from "../../features/ranking/components/RankingTable";
 import RankingTabs, { type RankingTab } from "../../features/ranking/components/RankingTabs";
-
-export interface RankingRow {
-    posicao: number;
-    nome: string;
-    pontos: number;
-    nivel?: string;
-}
-
-export const usuarioAtual = "Camila";
-
-export const rankingData: Record<RankingTab, RankingRow[]> = {
-    mensal: [
-        { posicao: 1, nome: "Ana Paula", pontos: 980, nivel: "Especialista" },
-        { posicao: 2, nome: "Bruno Costa", pontos: 860, nivel: "Contribuidor" },
-        { posicao: 3, nome: "Camila", pontos: 780, nivel: "Contribuidora" },
-        { posicao: 4, nome: "Diego Alves", pontos: 640, nivel: "Iniciante" },
-        { posicao: 5, nome: "Elisa Moura", pontos: 590, nivel: "Iniciante" },
-        { posicao: 6, nome: "Felipe Nunes", pontos: 540, nivel: "Iniciante" },
-        { posicao: 7, nome: "Gabriela Rocha", pontos: 480, nivel: "Iniciante" },
-    ],
-    allTime: [
-        { posicao: 1, nome: "Camila", pontos: 6420, nivel: "Especialista" },
-        { posicao: 2, nome: "Ana Paula", pontos: 5890, nivel: "Especialista" },
-        { posicao: 3, nome: "Bruno Costa", pontos: 5210, nivel: "Contribuidor" },
-        { posicao: 4, nome: "Diego Alves", pontos: 4380, nivel: "Contribuidor" },
-        { posicao: 5, nome: "Elisa Moura", pontos: 3950, nivel: "Contribuidora" },
-        { posicao: 6, nome: "Felipe Nunes", pontos: 3600, nivel: "Iniciante" },
-    ],
-    grupos: [
-        { posicao: 1, nome: "Eco Warriors", pontos: 340 },
-        { posicao: 2, nome: "Verde Vida", pontos: 290 },
-        { posicao: 3, nome: "Recicla+", pontos: 210 },
-        { posicao: 4, nome: "Pedal Sustentável", pontos: 180 },
-        { posicao: 5, nome: "Água em Foco", pontos: 120 },
-    ],
-};
 
 export default function Rankings() {
     const [rankingTab, setRankingTab] = useState<RankingTab>("mensal");
 
+    const { mensal, grupos, allTime, idUsuario, carregando, erro, carregandoAllTime, erroAllTime } = useRankings();
+
     const isGroups = rankingTab === "grupos";
-    const items = rankingData[rankingTab];
+    const isAllTime = rankingTab === "allTime";
+    const items = isGroups ? grupos : isAllTime ? allTime : mensal;
     const demais = items.slice(3);
 
-    const indiceAtual = items.findIndex((item) => item.nome === usuarioAtual);
-    const acima = indiceAtual > 0 ? items[indiceAtual - 1] : undefined;
-    const faltam = acima ? acima.pontos - items[indiceAtual].pontos : 0;
+    const aguardando = isAllTime ? carregandoAllTime : carregando;
+    const falha = isAllTime ? erroAllTime : erro;
 
+    const unidade = isGroups ? "selos" : "pts";
+    const colunaValores = isGroups ? "Selos Verdes" : "Pontos";
+    const explicacao = isGroups
+        ? "Soma dos Selos Verdes coletados pelos integrantes de cada grupo."
+        : isAllTime
+          ? "Pontos ganhos em missões desde o início. Gastar pontos na carteira não derruba sua posição."
+                    : "Pontos ganhos no mês.";
+
+    const indiceAtual = idUsuario !== null ? items.findIndex((item) => item.id === idUsuario) : -1;
+    const atual = indiceAtual >= 0 ? items[indiceAtual] : undefined;
+    const acima = indiceAtual > 0 ? items[indiceAtual - 1] : undefined;
+    const faltam = acima && atual ? acima.pontos - atual.pontos : 0;
+    const nomeAtual = atual?.nome;
     return (
         <>
-            <Hero
-                badge={<><FaTrophy /> Competição saudável</>}
-                title={<>Ranking da <span className="textGradient">comunidade</span></>}
-                text="Dados demonstrativos. O ranking celebra a constância — cada ponto é uma ação real pelo planeta."
-            />
-
             <Section size="sm">
                 <RankingTabs defaultTab={rankingTab} onChange={setRankingTab} />
 
-                <Reveal key={rankingTab}>
-                    <RankingTable
-                        variant="podium"
-                        items={items}
-                        unit={isGroups ? "selos" : "pts"}
-                        caption={rankingTab === "mensal" ? "neste mês" : undefined}
-                    />
-                </Reveal>
+                <p className="mt-4 text-center text-sm text-text-secondary">{explicacao}</p>
 
-                {demais.length > 0 && (
-                    <Reveal key={`tabela-${rankingTab}`} className="mt-10">
-                        <RankingTable
-                            items={demais}
-                            type={isGroups ? "groups" : "users"}
-                            highlight={isGroups ? undefined : usuarioAtual}
-                        />
-                    </Reveal>
+                {aguardando ? (
+                    <Card hover={false} className="mt-6 h-64" children={undefined} />
+                ) : falha ? (
+                    <Feedback tipo="erro" mensagem={falha} className="mt-6" />
+                ) : items.length === 0 ? (
+                    <Feedback tipo="vazio" mensagem="O ranking ainda não foi calculado." />
+                ) : (
+                    <>
+                        <Reveal key={rankingTab} className="pt-10">
+                            <RankingTable
+                                variant="podium"
+                                items={items}
+                                unit={unidade}
+                                caption={rankingTab === "mensal" ? "neste mês" : undefined}
+                            />
+                        </Reveal>
+
+                        {demais.length > 0 && (
+                            <Reveal key={`tabela-${rankingTab}`} className="mt-10">
+                                <RankingTable
+                                    items={demais}
+                                    type={isGroups ? "groups" : "users"}
+                                    columnLabel={colunaValores}
+                                    highlight={isGroups ? undefined : nomeAtual}
+                                />
+                            </Reveal>
+                        )}
+                    </>
                 )}
 
-                {!isGroups && indiceAtual >= 0 && (
+                {!isGroups && !aguardando && !falha && atual && (
                     <Reveal className="mt-6">
                         <Card variant="dashed" hover={false} className="flex items-center justify-center gap-2 p-4 text-center text-sm text-green-dark">
                             <FaArrowTrendUp className="shrink-0 text-green-primary" aria-hidden />
 
                             <span>
-                                Você está em <strong>{indiceAtual + 1}º lugar</strong> no ranking{" "}
-                                {rankingTab === "mensal" ? "deste mês" : "geral"}
-                                {faltam > 0 && <> — faltam {faltam.toLocaleString("pt-BR")} pontos para subir uma posição.</>}
+                                Você está em <strong>{atual.posicao}º lugar</strong> no ranking{" "}
+                                {isAllTime ? "geral" : "deste mês"}
+                                {faltam > 0 && (
+                                    <>
+                                        {" "}
+                                         — faltam {faltam.toLocaleString("pt-BR")} pontos para ultrapassar <strong>{acima?.nome}</strong>
+                                    </>
+                                )}
                             </span>
                         </Card>
                     </Reveal>
                 )}
             </Section>
-
-            <CtaBanner
-                title="Suba no ranking com novas missões"
-                text="Cada missão validada soma pontos e XP e aproxima você do pódio."
-            >
-                <Button to="/missoes" variant="dark" size="lg" arrow>
-                    Ver missões
-                </Button>
-            </CtaBanner>
         </>
     );
 }
