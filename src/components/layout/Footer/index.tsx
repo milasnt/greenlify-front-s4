@@ -34,7 +34,7 @@ export default function Footer() {
                                 <FaLinkedin size={18} />
                             </a>
 
-                            <a href="#" aria-label="GitHub da Greenlify" className={socialStyles}>
+                            <a href="https://github.com/milasnt/greenlify-front-s4" target="_blank" rel="noopener noreferrer" aria-label="GitHub da Greenlify" className={socialStyles}>
                                 <FaGithub size={18} />
                             </a>
 
@@ -70,16 +70,6 @@ export default function Footer() {
                     <p className="text-xs text-night-muted">
                         © 2026 Greenlify. Todos os direitos reservados.
                     </p>
-
-                    <div className="flex gap-6">
-                        <a href="#" className="text-xs text-night-muted transition duration-300 hover:text-green-light">
-                            Política de Privacidade
-                        </a>
-
-                        <a href="#" className="text-xs text-night-muted transition duration-300 hover:text-green-light">
-                            Termos de Uso
-                        </a>
-                    </div>
                 </div>
             </div>
         </footer>
