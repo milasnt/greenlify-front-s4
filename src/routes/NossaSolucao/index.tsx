@@ -31,7 +31,7 @@ import Dashboard from "../../components/ui/Dashboard";
 import FeatureCard from "../../components/ui/FeatureCard";
 import ItemList from "../../components/ui/ItemList";
 import MediaCard from "../../components/ui/MediaCard";
-import DemoShowcase, { type DemoScreen, DemoOverview } from "../../features/demo/DemoShowcase";
+import DemoShowcase, { type DemoScreen, DemoOverview } from "../../features/demo/components/DemoShowcase";
 import Grupos from "../Grupos";
 import MissaoDetalhe from "../MissaoDetalhe";
 import Missoes from "../Missoes";
