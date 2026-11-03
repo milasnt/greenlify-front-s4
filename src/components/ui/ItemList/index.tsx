@@ -49,10 +49,10 @@ export default function ItemList({
             <section aria-label="Números da plataforma" className={`border-y border-border bg-bg-card ${className}`}>
                 <div className="mx-auto grid max-w-6xl grid-cols-2 lg:grid-cols-4">
                     {items.map((item, index) => (
-                        <Reveal key={item.title} delay={index * 90} className="px-6 py-8">
+                        <Reveal key={item.title} delay={index * 90} className="px-4 py-6 sm:px-6 sm:py-8">
                             <span className="text-xl text-green-primary" aria-hidden>{item.icon}</span>
 
-                            <p className="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text-main">
+                            <p className="mt-3 font-heading text-2xl font-extrabold tracking-tight text-text-main sm:text-3xl">
                                 {item.value}
                             </p>
 
@@ -90,7 +90,7 @@ export default function ItemList({
                     <div key={item.title} className="flex items-start gap-4">
                         <IconBox icon={item.icon} />
 
-                        <div>
+                        <div className="min-w-0 wrap-break-word">
                             <h3 className="font-heading text-sm font-bold text-text-main">{item.title}</h3>
 
                             {item.href ? (
@@ -116,7 +116,7 @@ export default function ItemList({
         return (
             <div className={`divide-y divide-border ${className}`}>
                 {items.map((item) => (
-                    <div key={item.title} className="flex items-center justify-between py-3 text-sm first:pt-0 last:pb-0">
+                    <div key={item.title} className="flex items-center justify-between gap-3 py-3 text-sm first:pt-0 last:pb-0">
                         <span className="text-text-secondary">{item.title}</span>
                         <span className="font-semibold text-text-main">{item.value}</span>
                     </div>

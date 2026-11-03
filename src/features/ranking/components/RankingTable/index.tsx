@@ -41,13 +41,13 @@ export default function RankingTable({
         };
 
         return (
-            <ol className="flex items-end justify-center gap-3 sm:gap-5" aria-label="Pódio">
+            <ol className="flex items-end justify-center gap-2 sm:gap-5" aria-label="Pódio">
                 {ordered.map((item) => {
                     const position = items.indexOf(item) + 1;
                     const isFirst = position === 1;
 
                     return (
-                        <li key={item.nome} className="flex w-full max-w-40 flex-col items-center gap-3">
+                        <li key={item.nome} className="flex min-w-0 w-full max-w-40 flex-col items-center gap-3">
                             <div className="relative">
                                 {isFirst && (
                                     <FaCrown className="absolute -top-6 left-1/2 -translate-x-1/2 text-2xl text-gold" aria-hidden />
@@ -60,8 +60,8 @@ export default function RankingTable({
                                 )}
                             </div>
 
-                            <div className="text-center">
-                                <p className="truncate font-heading text-sm font-bold text-text-main">
+                            <div className="w-full min-w-0 text-center">
+                                <p className="truncate font-heading text-xs sm:text-sm font-bold text-text-main">
                                     {item.nome}
                                 </p>
 
@@ -73,7 +73,7 @@ export default function RankingTable({
                             </div>
 
                             <div className={`flex w-full flex-col items-center justify-end rounded-t-3xl pb-4 pt-5 ${pedestalStyles[position] ?? pedestalStyles[3]}`}>
-                                <span className="font-heading text-3xl font-extrabold">
+                                <span className="font-heading text-2xl font-extrabold sm:text-3xl">
                                     {position}º
                                 </span>
 
