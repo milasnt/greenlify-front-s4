@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { obterIdUsuarioAtual } from "../../../utils/usuarioAtual";
 import { enviarVideo } from "../services/uploadService";
 import type { EstadoEnvio } from "../types/upload";
+import { obterIdUsuarioAtual } from "../../usuario/utils/usuarioAtual";
 
 export const TOTAL_ETAPAS = 4;
 
@@ -24,7 +24,7 @@ export function useEnviarEvidencia() {
         const temporizadores: number[] = [];
 
         try {
-            const idUsuario = obterIdUsuarioAtual();
+            const idUsuario = await obterIdUsuarioAtual();
 
             setEstado({ tipo: "processando", etapa: 0 });
             AVANCO_DAS_ETAPAS_MS.forEach((ms, i) => {

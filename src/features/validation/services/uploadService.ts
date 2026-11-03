@@ -1,4 +1,4 @@
-import { api } from "../../../services/api";
+import { apiRequest } from "../../../shared/services/api";
 import type { UploadAPI, UploadRequestAPI } from "../types/upload";
 
 /**
@@ -17,7 +17,7 @@ export async function enviarVideo(arquivo: File, idMissao: number, idUsuario: nu
     form.append("idMissao", String(idMissao));
     form.append("video", arquivo);
 
-    return api<UploadAPI>("/uploads/validar", {
+    return apiRequest<UploadAPI>("/uploads/validar", {
         method: "POST",
         body: form,
         signal: AbortSignal.timeout(TEMPO_LIMITE_MS),
@@ -26,12 +26,12 @@ export async function enviarVideo(arquivo: File, idMissao: number, idUsuario: nu
 
 /** Fluxo antigo (hash e frames calculados no navegador). O Java grava o upload, compara os frames com os envios anteriores e já devolve status e parecer. */
 export async function enviarUpload(upload: UploadRequestAPI): Promise<UploadAPI> {
-    return api<UploadAPI>("/uploads", {
+    return apiRequest<UploadAPI>("/uploads", {
         method: "POST",
         body: JSON.stringify(upload),
     });
 }
 
 export async function buscarUploads(): Promise<UploadAPI[]> {
-    return api<UploadAPI[]>("/uploads");
+    return apiRequest<UploadAPI[]>("/uploads");
 }

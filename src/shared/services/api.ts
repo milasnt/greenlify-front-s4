@@ -10,15 +10,44 @@ export class ApiError extends Error {
     }
 }
 
+/**
+ * O back-end abre uma conexão nova com o Oracle a cada consulta e o usuário do banco tem limite de sessões
+ * (ORA-02391). Para não estourar o limite, o front faz no máximo MAX_SIMULTANEAS requisições ao mesmo tempo;
+ * as demais esperam na fila. Pode ser removido quando o back-end passar a usar pool de conexões.
+ */
+const MAX_SIMULTANEAS = 2;
+let emAndamento = 0;
+const fila: (() => void)[] = [];
+
+async function esperarVez(): Promise<void> {
+    if (emAndamento < MAX_SIMULTANEAS) {
+        emAndamento++;
+        return;
+    }
+    await new Promise<void>((resolve) => fila.push(resolve));
+}
+
+function liberarVez(): void {
+    const proximo = fila.shift();
+
+    if (proximo) {
+        proximo();
+    } else {
+        emAndamento--;
+    }
+}
+
 export async function apiRequest<T>(
     endpoint: string,
     options: RequestInit = {}
 ): Promise<T> {
     if (!API_URL) {
-        throw new Error("A URL da API não foi configurada.");
+        throw new Error("VITE_API_URL não configurada. Copie .env.example para .env.");
     }
 
     const headers = new Headers(options.headers);
+
+    headers.set("Accept", "application/json");
 
     if (
         options.body !== undefined &&
@@ -28,13 +57,21 @@ export async function apiRequest<T>(
         headers.set("Content-Type", "application/json");
     }
 
-    const response = await fetch(`${API_URL}${endpoint}`, {
-        ...options,
-        headers,
-    });
+    await esperarVez();
+
+    let response: Response;
+
+    try {
+        response = await fetch(`${API_URL}${endpoint}`, {
+            ...options,
+            headers,
+        });
+    } finally {
+        liberarVez();
+    }
 
     if (!response.ok) {
-        const mensagem = await response.text();
+        const mensagem = await response.text().catch(() => "");
 
         throw new ApiError(
             response.status,
@@ -46,9 +83,9 @@ export async function apiRequest<T>(
         return undefined as T;
     }
 
-    const contentType = response.headers.get("content-type");
+    const contentType = response.headers.get("content-type") ?? "";
 
-    if (contentType?.includes("application/json")) {
+    if (contentType.includes("application/json")) {
         return (await response.json()) as T;
     }
 
