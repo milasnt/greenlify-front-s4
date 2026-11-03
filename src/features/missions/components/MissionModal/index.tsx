@@ -1,4 +1,3 @@
-import { useState } from "react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowLeft, FaListCheck, FaWandMagicSparkles } from "react-icons/fa6";
@@ -6,8 +5,6 @@ import Reveal from "../../../../components/layout/Reveal";
 import Badge, { type Impacto, type Dificuldade } from "../../../../components/ui/Badge";
 import Button from "../../../../components/ui/Button";
 import ItemList from "../../../../components/ui/ItemList";
-import Upload, { type UploadStatus } from "../Upload";
-
 
 interface MissionModalProps {
     id?: string;
@@ -33,20 +30,6 @@ export default function MissionModal({
     criteria,
     backTo = "/missoes",
 }: MissionModalProps) {
-    const [uploadStatus, setUploadStatus] = useState<UploadStatus>("idle");
-    const [fileName, setFileName] = useState<string | null>(null);
-
-    function handleSelectFile(file: File) {
-        setFileName(file.name);
-        setUploadStatus("selected");
-    }
-
-    function handleSubmitUpload() {
-        setUploadStatus("sending");
-        setTimeout(() => {
-            setUploadStatus("success");
-        }, 1500);
-    }
 
     return (
         <section className="mx-auto w-full max-w-6xl px-4 pb-20 pt-10 sm:px-6">
@@ -84,15 +67,6 @@ export default function MissionModal({
                         </h2>
 
                         {criteria}
-                    </Reveal>
-
-                    <Reveal delay={160}>
-                        <Upload
-                            status={uploadStatus}
-                            fileName={fileName}
-                            onSelectFile={handleSelectFile}
-                            onSubmit={handleSubmitUpload}
-                        />
                     </Reveal>
                 </div>
 
