@@ -8,6 +8,8 @@ interface AnalysisResultProps {
     step?: number;
     totalSteps?: number;
     missionTitle: string;
+    parecer?: string;
+    limiteRealizacoes: number;
     pontos: number;
     xp: number;
 }
