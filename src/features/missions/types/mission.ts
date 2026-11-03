@@ -28,6 +28,7 @@ export interface MissaoContinuaAPI {
     tipoMetrica: TipoMetricaAPI;
     valorMetrica: number;
     pontuacao: PontuacaoAPI;
+    xp: number;
 }
 
 /** MissaoMensalCompletaResponseDTO */
