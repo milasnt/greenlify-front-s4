@@ -11,7 +11,6 @@ import {
     FaCheck,
 } from "react-icons/fa6";
 import Grid from "../../components/layout/Grid";
-import Hero from "../../components/layout/Hero";
 import Reveal from "../../components/layout/Reveal";
 import Section from "../../components/layout/Section";
 import Button from "../../components/ui/Button";
@@ -73,18 +72,6 @@ export default function Validacao({ missaoId }: ValidacaoProps) {
 
     return (
         <>
-            <Hero
-                badge={<><FaMicrochip /> Validação da evidência</>}
-                title="Envie a evidência. Acompanhe a análise."
-                text={
-                    <>
-                        O vídeo é comparado com os envios anteriores para evitar duplicidade e{" "}
-                        <strong className="text-text-main">as regras da missão decidem a aprovação</strong>. Depois,
-                        a IA confere se o vídeo mostra a missão sendo realizada.
-                    </>
-                }
-            />
-
             <Section size="sm">
                 {!idMissao ? (
                     <Card hover={false} className="flex flex-wrap items-center justify-between gap-4 p-5">

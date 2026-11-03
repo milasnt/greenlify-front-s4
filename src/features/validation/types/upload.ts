@@ -1,4 +1,4 @@
-import type { UsuarioResumoAPI } from "../../../types/usuario";
+import type { UsuarioResumoAPI } from "../../usuario/types/usuario";
 
 /** FingerprintFrameRequestDTO */
 export interface FrameRequestAPI {
