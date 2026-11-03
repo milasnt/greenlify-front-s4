@@ -31,7 +31,7 @@ export default function Button({
 }: ButtonProps) {
 
     const baseStyles =
-        "group inline-flex w-fit items-center justify-center gap-2 whitespace-nowrap rounded-full text-center font-heading font-bold no-underline transition duration-300 hover:-translate-y-0.5 disabled:pointer-events-none disabled:opacity-60 max-[480px]:w-full";
+        "group inline-flex w-fit items-center justify-center gap-2 whitespace-nowrap rounded-full text-center font-heading font-bold no-underline transition duration-300 hover:-translate-y-0.5 disabled:pointer-events-none disabled:opacity-60 max-xs:w-full";
 
     const variantStyles = {
         primary: "bg-green-primary text-white shadow-lg shadow-green-primary/30 hover:shadow-xl hover:shadow-green-primary/30",

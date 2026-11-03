@@ -73,7 +73,7 @@ export default function Contato() {
                     </div>
 
                     <Reveal delay={150}>
-                        <Card hover={false} className="p-8">
+                        <Card hover={false} className="p-6 sm:p-8">
                             {submitted ? (
                                 <div className="flex flex-col items-center gap-4 py-10 text-center">
                                     <IconBox icon={<FaCircleCheck />} variant="solid" size="lg" />

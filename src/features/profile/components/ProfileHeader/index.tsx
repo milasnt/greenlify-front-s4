@@ -24,10 +24,10 @@ export default function ProfileHeader({
 
     return (
         <Reveal>
-            <div className="relative overflow-hidden rounded-3xl bg-night p-7 text-night-text sm:p-8">
+            <div className="relative overflow-hidden rounded-3xl bg-night p-5 text-night-text xs:p-7 sm:p-8">
                 <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-green-light/20 blur-3xl" aria-hidden />
 
-                <div className="relative flex flex-wrap items-center gap-8">
+                <div className="relative flex flex-wrap items-center gap-6 sm:gap-8">
                     <div className="relative grid h-28 w-28 shrink-0 place-items-center">
                         <svg viewBox="0 0 100 100" className="absolute inset-0 -rotate-90" aria-hidden>
                             <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255, 255, 255, 0.1)" strokeWidth="8" />
@@ -64,7 +64,7 @@ export default function ProfileHeader({
                         <ProgressBar value={progress} label="Progresso de XP" className="mt-2" />
                     </div>
 
-                    <div className="flex gap-8">
+                    <div className="flex flex-wrap gap-x-8 gap-y-3">
                         <div>
                             <p className="font-heading text-3xl font-extrabold text-green-light">
                                 {pontos.toLocaleString("pt-BR")}

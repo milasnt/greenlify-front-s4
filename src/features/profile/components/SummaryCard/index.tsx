@@ -38,7 +38,7 @@ export default function SummaryCard(props: SummaryCardProps) {
         const { onShare, onCopy, copied = false, children } = props;
 
         return (
-            <div className="rounded-3xl border border-border bg-bg-card p-7">
+            <div className="rounded-3xl border border-border bg-bg-card p-5 xs:p-7">
                 <h2 className="flex items-center gap-2 font-heading text-xl font-bold text-text-main">
                     <FaWandMagicSparkles className="text-purple-primary" aria-hidden />
                     Compartilhar resumo
@@ -75,14 +75,14 @@ export default function SummaryCard(props: SummaryCardProps) {
     return (
         <article
             aria-label={`Resumo de ${mes}`}
-            className="relative overflow-hidden rounded-[2.5rem] bg-night p-8 text-night-text shadow-2xl shadow-green-primary/20 sm:p-10"
+            className="relative overflow-hidden rounded-4xl bg-night p-5 text-night-text shadow-2xl shadow-green-primary/20 xs:p-8 sm:rounded-[2.5rem] sm:p-10"
         >
             <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-green-light/25 blur-3xl" aria-hidden />
             <div className="absolute -bottom-16 -left-16 h-56 w-56 rounded-full bg-purple-primary/30 blur-3xl" aria-hidden />
             <FaLeaf className="absolute right-8 top-8 animate-float text-6xl text-green-light/20" aria-hidden />
 
             <div className="relative">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="flex items-center gap-2">
                         <span className="grid h-8 w-8 place-items-center rounded-lg bg-linear-to-br from-green-light to-green-primary text-white">
                             <FaLeaf aria-hidden />
@@ -96,7 +96,7 @@ export default function SummaryCard(props: SummaryCardProps) {
                     </span>
                 </div>
 
-                <p className="mt-8 font-heading text-3xl font-extrabold leading-tight sm:text-4xl">
+                <p className="mt-8 font-heading text-2xl font-extrabold leading-tight xs:text-3xl sm:text-4xl">
                     Meu mês de <span className="textGradient">impacto</span>
                 </p>
 
@@ -109,7 +109,7 @@ export default function SummaryCard(props: SummaryCardProps) {
                         <div key={stat.label} className="nightGlass rounded-2xl p-3 sm:p-4">
                             <dt className="sr-only">{stat.label}</dt>
 
-                            <dd className="font-heading text-2xl font-extrabold text-green-light sm:text-3xl">
+                            <dd className="font-heading text-xl font-extrabold text-green-light xs:text-2xl sm:text-3xl">
                                 {stat.value}
                             </dd>
 

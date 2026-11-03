@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
     FaClapperboard,
     FaFileVideo,
@@ -19,7 +19,6 @@ import Card from "../../components/ui/Card";
 import IconBox from "../../components/ui/IconBox";
 import Roadmap, { type RoadmapItem } from "../../components/ui/Roadmap";
 import Upload from "../../features/missions/components/Upload";
-import AnalysisResult, { type AnalysisStatus } from "../../features/validation/components/AnalysisResult";
 import VideoFrames from "../../features/validation/components/VideoFrames";
 
 
@@ -43,13 +42,13 @@ const etapas = [
 
 const INTERVALO_ETAPA = 1400;
 
-export default function Validacao({ missaoId }: ValidacaoProps) {
-    const [searchParams] = useSearchParams();
+export default function Validacao({ }: ValidacaoProps) {
+   //  const [searchParams] = useSearchParams();
     const [estado, setEstado] = useState<Estado>({ tipo: "aguardando" });
     const [arquivo, setArquivo] = useState<string | null>(null);
     const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
 
-    const missao = missoes.find((item) => item.id === (missaoId ?? searchParams.get("missao"))) ?? missoes[0];
+    // const missao = missoes.find((item) => item.id === (missaoId ?? searchParams.get("missao"))) ?? missoes[0];
 
     useEffect(() => {
         const pending = timers.current;
@@ -87,17 +86,6 @@ export default function Validacao({ missaoId }: ValidacaoProps) {
     const processando = estado.tipo === "processando";
     const etapaAtual = processando ? estado.etapa : estado.tipo === "resultado" ? etapas.length : -1;
 
-    const status: AnalysisStatus =
-        estado.tipo === "aguardando"
-            ? "waiting"
-            : estado.tipo === "processando"
-            ? "processing"
-            : estado.resultado === "aprovada"
-            ? "approved"
-            : estado.resultado === "parcialmente_aprovada"
-            ? "partially_approved"
-            : "rejected";
-
     const itensAnalise: RoadmapItem[] = etapas.map((etapa, index) => ({
         title: etapa.titulo,
         text: etapa.descricao,
@@ -127,7 +115,7 @@ export default function Validacao({ missaoId }: ValidacaoProps) {
 
                             <div>
                                 <p className="text-xs text-text-secondary">Missão selecionada</p>
-                                <p className="font-heading font-bold text-text-main">{missao.titulo}</p>
+                            {/*    <p className="font-heading font-bold text-text-main">{missao.titulo}</p> */}
                             </div>
                         </div>
 
@@ -185,14 +173,14 @@ export default function Validacao({ missaoId }: ValidacaoProps) {
                     <Reveal delay={160} className="flex flex-col gap-6">
                         <Roadmap boxed items={itensAnalise} />
 
-                        <AnalysisResult
+                       {/* <AnalysisResult
                             status={status}
                             step={processando ? estado.etapa : 0}
                             totalSteps={etapas.length}
                             missionTitle={missao.titulo}
                             pontos={missao.pontos}
                             xp={missao.xp}
-                        />
+                        />*/ }
                     </Reveal>
                 </Grid>
             </Section>

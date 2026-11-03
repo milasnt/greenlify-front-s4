@@ -31,8 +31,8 @@ export default function Card({
 
     const hoverStyles = hover ? "hover:-translate-y-1 hover:border-green-primary/40 hover:shadow-custom-md" : "";
     const centerStyles = center ? "text-center" : "";
-    const widthStyles = full ? "w-full p-10 max-[480px]:p-6" : "";
-    const memberStyles = member ? "text-center p-8 max-[480px]:p-6" : "";
+    const widthStyles = full ? "w-full sm:p-10" : "";
+    const memberStyles = member ? "text-center sm:p-8" : "";
 
     return (
         <div

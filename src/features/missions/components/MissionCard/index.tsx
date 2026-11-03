@@ -37,7 +37,7 @@ export function MissionCard({
         return (
             <Link
                 to={`/missoes/${id}`}
-                className="group relative flex flex-col justify-between gap-8 overflow-hidden rounded-3xl bg-night p-8 text-night-text transition duration-300 hover:-translate-y-1 sm:p-10 lg:flex-row lg:items-end"
+                className="group relative flex flex-col justify-between gap-8 overflow-hidden rounded-3xl bg-night p-6 text-night-text transition duration-300 hover:-translate-y-1 sm:p-10 lg:flex-row lg:items-end"
             >
                 <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-green-light/25 blur-3xl transition-transform duration-700 group-hover:scale-125" aria-hidden />
                 <div className="absolute bottom-0 left-1/3 h-44 w-44 rounded-full bg-purple-primary/30 blur-3xl" aria-hidden />
@@ -117,7 +117,7 @@ export function MissionCard({
     return (
         <Link to={`/missoes/${id}`} className="group block h-full">
             <Card className="flex h-full flex-col">
-                <div className="mb-4 flex items-center justify-between gap-3">
+                <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
                     {icon && (
                         <div className="grid h-12 w-12 place-items-center rounded-2xl bg-green-lighter text-xl text-green-primary">
                             {icon}

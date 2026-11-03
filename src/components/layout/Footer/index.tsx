@@ -11,9 +11,9 @@ export default function Footer() {
         <footer className="relative w-full overflow-hidden bg-night text-night-text">
             <div className="absolute -top-24 right-1/4 h-64 w-64 rounded-full bg-purple-primary/20 blur-3xl" aria-hidden />
 
-            <div className="relative mx-auto max-w-6xl px-4 pb-8 pt-16 sm:px-6">
-                <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
-                    <div>
+            <div className="relative mx-auto max-w-6xl px-4 pb-8 pt-12 sm:px-6 sm:pt-16">
+                <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]">
+                    <div className="sm:col-span-2 lg:col-span-1">
                         <Link to="/" className="inline-flex items-center" aria-label="Greenlify — página inicial">
                             <span className="font-heading text-2xl font-extrabold tracking-tight text-night-text">
                                 Green<span className="textGradient">lify</span>
@@ -61,7 +61,7 @@ export default function Footer() {
 
                         <ul className="space-y-3">
                             <li><Link to="/contato" className={linkStyles}>Fale Conosco</Link></li>
-                            <li><a href="mailto:greenlify@gmail.com" className={linkStyles}>greenlify@gmail.com</a></li>
+                            <li><a href="mailto:greenlify@gmail.com" className={`${linkStyles} break-all`}>greenlify@gmail.com</a></li>
                         </ul>
                     </div>
                 </div>
