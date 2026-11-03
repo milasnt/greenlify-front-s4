@@ -11,7 +11,6 @@ import {
     FaCheck,
 } from "react-icons/fa6";
 import Grid from "../../components/layout/Grid";
-import Hero from "../../components/layout/Hero";
 import Reveal from "../../components/layout/Reveal";
 import Section from "../../components/layout/Section";
 import Button from "../../components/ui/Button";
