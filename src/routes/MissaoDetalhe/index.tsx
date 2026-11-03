@@ -38,7 +38,6 @@ export default function MissaoDetalhe({ missaoId }: { missaoId?: string }) {
             impacto={missao.impacto}
             dificuldade={missao.dificuldade}
             pontos={missao.pontos}
-            xp={missao.xp}
             limiteRealizacoes={missao.limiteRealizacoes}
             criteria={
                 <>

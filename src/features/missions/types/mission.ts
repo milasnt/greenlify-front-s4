@@ -28,7 +28,6 @@ export interface MissaoContinuaAPI {
     tipoMetrica: TipoMetricaAPI;
     valorMetrica: number;
     pontuacao: PontuacaoAPI;
-    xp: number;
 }
 
 /** MissaoMensalCompletaResponseDTO */
@@ -72,7 +71,6 @@ export interface ResumoMissoesAPI {
 /** Formato que os componentes já esperam */
 
 export interface Missao {
-    xp: number;
     id: string;
     titulo: string;
     descricao: string;

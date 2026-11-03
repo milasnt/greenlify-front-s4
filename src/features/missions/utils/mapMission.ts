@@ -44,7 +44,6 @@ export function mapMissaoContinua(missao: MissaoContinuaAPI): Missao {
         impacto: lerImpacto(missao),
         dificuldade: lerDificuldade(missao),
         pontos: missao.pontuacao?.valorBase ?? 0,
-        xp: missao.xp, 
         criterios: [missao.comoComprovar, missao.requisitos].filter((texto) => texto && texto.trim() !== ""),
         limiteRealizacoes: missao.limiteRealizacoes,
     };

@@ -12,7 +12,6 @@ interface MissionCardProps {
     impacto: Impacto;
     dificuldade: Dificuldade;
     pontos: number;
-    xp: number;
     icon?: ReactNode;
     variant?: "default" | "featured" | "row";
     index?: number;
@@ -26,7 +25,6 @@ export function MissionCard({
     impacto,
     dificuldade,
     pontos,
-    xp,
     icon,
     variant = "default",
     index,
@@ -65,10 +63,6 @@ export function MissionCard({
                     <div>
                         <p className="font-heading text-3xl font-extrabold text-green-light">
                             +{pontos}
-                        </p>
-
-                        <p className="text-xs text-night-muted">
-                            pontos · {xp} XP
                         </p>
                     </div>
 
@@ -140,11 +134,6 @@ export function MissionCard({
                     <span className="font-heading font-extrabold text-green-primary">
                         +{pontos} pts
                     </span>
-
-                    <span className="text-xs text-text-secondary">
-                        +{xp} XP
-                    </span>
-
                     <FaArrowRight className="text-green-primary transition-transform duration-300 group-hover:translate-x-1" aria-hidden />
                 </div>
             </Card>
