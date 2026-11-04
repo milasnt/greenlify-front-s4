@@ -48,7 +48,7 @@ export default function Contato() {
                                     items={[
                                         { icon: <FaEnvelope />, title: "Email", text: "greenlify@gmail.com" },
                                         { icon: <FaLocationDot />, title: "Localização", text: "Av. Paulista, 1106 - Bela Vista, São Paulo - SP." },
-                                        { icon: <FaGithub />, title: "GitHub", text: "github.com/greenlify", href: "https://github.com/" },
+                                        { icon: <FaGithub />, title: "GitHub", text: "greenlify", href: "https://github.com/milasnt/greenlify-front-s4" },
                                     ]}
                                 />
                             </Card>
