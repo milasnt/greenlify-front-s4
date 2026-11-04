@@ -156,7 +156,6 @@ export default function Validacao({ missaoId }: ValidacaoProps) {
                                     parecer={estado.tipo === "resultado" ? estado.upload.analise : undefined}
                                     limiteRealizacoes={missao.limiteRealizacoes}
                                     pontos={missao.pontos}
-                                    xp={missao.xp}
                                 />
                             </Reveal>
                         </Grid>

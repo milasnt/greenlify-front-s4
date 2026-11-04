@@ -279,7 +279,7 @@ export default function NossaSolucao() {
                     Voltar à demonstração
                 </Button>
 
-                <Button to="/missoes" variant="outline" size="lg">
+                <Button to="/sobre" variant="outline" size="lg">
                     Conhecer projeto
                 </Button>
             </CtaBanner>

@@ -13,7 +13,6 @@ interface MissionModalProps {
     impacto: Impacto;
     dificuldade: Dificuldade;
     pontos: number;
-    xp: number;
     limiteRealizacoes?: number;
     criteria: ReactNode;
     backTo?: string;
@@ -26,7 +25,6 @@ export default function MissionModal({
     impacto,
     dificuldade,
     pontos,
-    xp,
     criteria,
     backTo = "/missoes",
 }: MissionModalProps) {
@@ -80,11 +78,6 @@ export default function MissionModal({
                             <div>
                                 <p className="font-heading text-4xl font-extrabold text-green-light">+{pontos}</p>
                                 <p className="text-xs text-night-muted">pontos</p>
-                            </div>
-
-                            <div>
-                                <p className="font-heading text-4xl font-extrabold">+{xp}</p>
-                                <p className="text-xs text-night-muted">de experiência</p>
                             </div>
                         </div>
 
