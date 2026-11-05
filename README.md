@@ -453,7 +453,7 @@ Para facilitar a avaliação da validação por IA, disponibilizamos vídeos de 
  
 | Missão | Vídeo |
 |---|---|
-| Plante uma árvore nativa | [📥 Baixar](./exemplo/plantando-arvore.mp4)
+| Plante uma árvore nativa | [📥 Baixar](./exemplo/plantando_arvore.mp4)
  
 > Envie o vídeo na missão indicada na tabela. Cada vídeo só pode ser usado uma vez, pois o sistema bloqueia duplicatas (SHA-256 e pHash). Além disso, a validação pode falhar em momentos de alta demanda (veja o aviso na seção [Funcionalidades](#-funcionalidades)).
  
