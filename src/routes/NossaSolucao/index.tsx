@@ -16,6 +16,7 @@ import {
     FaUsers,
     FaVideo,
     FaClipboardList,
+    FaMobileScreen,
 } from "react-icons/fa6";
 
 import soulup from "../../assets/img/sobre/img-soulup.png";
@@ -32,6 +33,7 @@ import FeatureCard from "../../components/ui/FeatureCard";
 import ItemList from "../../components/ui/ItemList";
 import MediaCard from "../../components/ui/MediaCard";
 import DemoShowcase, { type DemoScreen, DemoOverview } from "../../features/demo/components/DemoShowcase";
+import PhoneDemo from "../../features/demo/components/PhoneDemo";
 import Grupos from "../Grupos";
 import MissaoDetalhe from "../MissaoDetalhe";
 import Missoes from "../Missoes";
@@ -42,7 +44,7 @@ import Validacao from "../Validacao";
 import { useMissoesContinuas } from "../../features/missions/hooks/useMissoes";
 import { useGrupos } from "../../features/groups/hooks/useGroups";
 import { usePerfil } from "../../features/profile/hooks/useProfile";
-
+import { useIsMobile } from "../../shared/hooks/useMediaQuery";
 
 const passos = [
     { icon: <FaListCheck />, title: "Escolha uma missão", text: "O usuário escolhe entre missões mensais e contínuas, considerando seus diferentes níveis de impacto e dificuldade." },
@@ -82,12 +84,15 @@ export default function NossaSolucao() {
     const { missoes } = useMissoesContinuas();
     const { perfil } = usePerfil();
     const { grupos } = useGrupos();
+    const isMobile = useIsMobile();
 
     useEffect(() => {
         if (hash !== "#demonstracao") return;
+
         const timer = setTimeout(() => {
             document.getElementById("demonstracao")?.scrollIntoView({ block: "start", behavior: "smooth" });
         }, 80);
+
         return () => clearTimeout(timer);
     }, [hash]);
 
@@ -136,30 +141,56 @@ export default function NossaSolucao() {
                 <Button href="#demonstracao" size="lg" arrow>
                     Explorar a demonstração
                 </Button>
+
                 <Button href="#como-funciona" variant="secondary" size="lg">
                     Conhecer o funcionamento
                 </Button>
             </Hero>
 
-            <Section variant="secondary" id="demonstracao">
-                <SectionHeading
-                    align="center"
-                    label="Demonstração interativa"
-                    title="Navegue pelo produto, tela por tela"
-                    text="Cada aba abre uma tela real da plataforma, sem sair desta página."
-                />
-                <div className="mt-4 flex justify-center">
-                    <Badge variant="purple">
-                        <FaLock aria-hidden /> Telas reais conectadas ao back-end da Greenlify
-                    </Badge>
-                </div>
-                <div className="mt-10">
-                    <DemoShowcase
-                        screens={telas}
-                        missions={missoes.map((missao) => ({ id: missao.id, titulo: missao.titulo }))}
+            {isMobile ? (
+                <Section id="demonstracao" size="sm">
+                    <div className="text-center">
+                        <Badge variant="purple">
+                            <FaMobileScreen aria-hidden /> Simulação do app da SoulUp
+                        </Badge>
+
+                        <h2 className="mt-4 font-heading text-2xl font-extrabold tracking-tight">
+                            Experimente a Greenlify dentro do app da SoulUp
+                        </h2>
+
+                        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-text-secondary">
+                            Toque nas telas para escolher missões, filtrar por impacto e dificuldade, enviar um vídeo
+                            e acompanhar o ranking, como se estivesse usando o app. Os dados vêm do nosso back-end.
+                        </p>
+                    </div>
+
+                    <div className="mt-6 w-full overflow-visible bg-white">
+                        <PhoneDemo />
+                    </div>
+                </Section>
+            ) : (
+                <Section variant="secondary" id="demonstracao">
+                    <SectionHeading
+                        align="center"
+                        label="Demonstração interativa"
+                        title="Navegue pelo produto, tela por tela"
+                        text="Cada aba abre uma tela real da plataforma, sem sair desta página."
                     />
-                </div>
-            </Section>
+
+                    <div className="mt-4 flex justify-center">
+                        <Badge variant="purple">
+                            <FaLock aria-hidden /> Telas reais conectadas ao back-end da Greenlify
+                        </Badge>
+                    </div>
+
+                    <div className="mt-10">
+                        <DemoShowcase
+                            screens={telas}
+                            missions={missoes.map((missao) => ({ id: missao.id, titulo: missao.titulo }))}
+                        />
+                    </div>
+                </Section>
+            )}
 
             <Section variant="mint" id="como-funciona">
                 <SectionHeading
@@ -167,6 +198,7 @@ export default function NossaSolucao() {
                     title="Um módulo integrado à SoulUp, em quatro passos"
                     text="O usuário participa de missões sustentáveis, comprova suas ações e acompanha sua evolução dentro da plataforma."
                 />
+
                 <Grid columns={4} className="mt-12">
                     {passos.map((passo, index) => (
                         <Reveal key={passo.title} delay={index * 110}>
@@ -185,6 +217,7 @@ export default function NossaSolucao() {
                             title="Evidências analisadas, benefícios dentro da SoulUp"
                             text="O conteúdo enviado passa por análise automatizada e pelas regras de cada missão. Com a validação concluída, a pontuação do usuário é atualizada e os pontos acumulados podem gerar benefícios dentro da SoulUp."
                         />
+
                         <ul className="mt-6 space-y-3">
                             {[
                                 "Análise automatizada dos vídeos enviados",
@@ -198,10 +231,12 @@ export default function NossaSolucao() {
                                 </li>
                             ))}
                         </ul>
+
                         <Button to="/nossasolucao?tela=validacao#demonstracao" variant="accent" size="lg" arrow className="mt-8">
                             Testar a validação
                         </Button>
                     </Reveal>
+
                     <Reveal delay={150}>
                         <MediaCard
                             variant="partner"
@@ -220,6 +255,7 @@ export default function NossaSolucao() {
                     title="Mecanismos para manter a constância"
                     text="O streak acompanha a sequência de participação, enquanto os rankings, níveis e recompensas incentivam o usuário a continuar evoluindo dentro da plataforma."
                 />
+
                 <Grid split="wide-left" className="mt-12">
                     <Grid columns={2}>
                         {engajamento.map((item, index) => (
@@ -228,6 +264,7 @@ export default function NossaSolucao() {
                             </Reveal>
                         ))}
                     </Grid>
+
                     <Reveal delay={120}>
                         <ItemList variant="definition" title="Principais funcionalidades" items={funcionalidades} />
                     </Reveal>
@@ -241,10 +278,11 @@ export default function NossaSolucao() {
                 <Button href="#demonstracao" variant="dark" size="lg" arrow>
                     Voltar à demonstração
                 </Button>
-                <Button to="/missoes" variant="outline" size="lg">
+
+                <Button to="/sobre" variant="outline" size="lg">
                     Conhecer projeto
                 </Button>
             </CtaBanner>
         </>
     );
-} 
+}

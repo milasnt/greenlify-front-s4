@@ -15,12 +15,12 @@ export default function FAQCard({
 
     return (
         <details className="group overflow-hidden rounded-2xl border border-border bg-bg-card transition duration-300 hover:border-green-primary/40 hover:shadow-custom-md open:border-green-primary/40">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-6 px-6 py-5 font-heading text-sm font-bold text-text-main [&::-webkit-details-marker]:hidden">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-4 font-heading text-sm sm:gap-6 sm:px-6 sm:py-5 font-bold text-text-main [&::-webkit-details-marker]:hidden">
                 <span>{question}</span>
                 <FaChevronDown className="shrink-0 text-xs text-green-primary transition duration-300 group-open:rotate-180"/>
             </summary>
 
-            <div className="border-t border-border bg-bg-soft px-6 py-5 text-sm leading-relaxed text-text-secondary">
+            <div className="border-t border-border bg-bg-soft px-4 py-4 text-sm sm:px-6 sm:py-5 leading-relaxed text-text-secondary">
                 {answer}
             </div>
         </details>
@@ -55,7 +55,7 @@ interface ScoreTableProps {
 }
 
 export function ScoreTable({ intro, columns, rows }: ScoreTableProps) {
-    const cellStyles = "border border-border px-4 py-3";
+    const cellStyles = "border border-border px-3 py-2.5 sm:px-4 sm:py-3";
 
     return (
         <div className="space-y-4">

@@ -65,7 +65,7 @@ export default function FeatureCard({
             </div>
 
             {isStat && (
-                <strong className="mt-4 block font-heading text-2xl font-extrabold text-text-main">
+                <strong className="mt-4 block wrap-break-word font-heading text-2xl font-extrabold text-text-main">
                     {value}
                 </strong>
             )}

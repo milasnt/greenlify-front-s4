@@ -12,7 +12,6 @@ interface MissionCardProps {
     impacto: Impacto;
     dificuldade: Dificuldade;
     pontos: number;
-    xp: number;
     icon?: ReactNode;
     variant?: "default" | "featured" | "row";
     index?: number;
@@ -26,7 +25,6 @@ export function MissionCard({
     impacto,
     dificuldade,
     pontos,
-    xp,
     icon,
     variant = "default",
     index,
@@ -37,7 +35,7 @@ export function MissionCard({
         return (
             <Link
                 to={`/missoes/${id}`}
-                className="group relative flex flex-col justify-between gap-8 overflow-hidden rounded-3xl bg-night p-8 text-night-text transition duration-300 hover:-translate-y-1 sm:p-10 lg:flex-row lg:items-end"
+                className="group relative flex flex-col justify-between gap-8 overflow-hidden rounded-3xl bg-night p-6 text-night-text transition duration-300 hover:-translate-y-1 sm:p-10 lg:flex-row lg:items-end"
             >
                 <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-green-light/25 blur-3xl transition-transform duration-700 group-hover:scale-125" aria-hidden />
                 <div className="absolute bottom-0 left-1/3 h-44 w-44 rounded-full bg-purple-primary/30 blur-3xl" aria-hidden />
@@ -65,10 +63,6 @@ export function MissionCard({
                     <div>
                         <p className="font-heading text-3xl font-extrabold text-green-light">
                             +{pontos}
-                        </p>
-
-                        <p className="text-xs text-night-muted">
-                            pontos · {xp} XP
                         </p>
                     </div>
 
@@ -117,7 +111,7 @@ export function MissionCard({
     return (
         <Link to={`/missoes/${id}`} className="group block h-full">
             <Card className="flex h-full flex-col">
-                <div className="mb-4 flex items-center justify-between gap-3">
+                <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
                     {icon && (
                         <div className="grid h-12 w-12 place-items-center rounded-2xl bg-green-lighter text-xl text-green-primary">
                             {icon}
@@ -140,11 +134,6 @@ export function MissionCard({
                     <span className="font-heading font-extrabold text-green-primary">
                         +{pontos} pts
                     </span>
-
-                    <span className="text-xs text-text-secondary">
-                        +{xp} XP
-                    </span>
-
                     <FaArrowRight className="text-green-primary transition-transform duration-300 group-hover:translate-x-1" aria-hidden />
                 </div>
             </Card>

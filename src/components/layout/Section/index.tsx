@@ -27,8 +27,8 @@ export default function Section({
     };
 
     const sizeStyles = {
-        md: "py-20 lg:py-28",
-        sm: "py-12 lg:py-16",
+        md: "py-14 sm:py-20 lg:py-28",
+        sm: "py-10 sm:py-12 lg:py-16",
     };
 
     return (

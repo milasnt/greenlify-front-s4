@@ -36,13 +36,13 @@ const roadmapItems: RoadmapItem[] = [
         title: "Etapa 4 - Evolução com React",
         text: "Planejamento futuro da interface utilizando React e integração com funcionalidades mais dinâmicas e escaláveis.",
         icon: <FaReact />,
-        status: "active",
+        status: "done",
     },
     {
         title: "Etapa 5 - Integração com a SoulUp",
         text: "Estruturação da integração do módulo com a plataforma SoulUp, incluindo APIs, validação automatizada e recursos de segurança.",
         icon: <FaLink />,
-        status: "default",
+        status: "active",
     },
 ];
 
@@ -54,7 +54,7 @@ export default function Roadmap({ items = roadmapItems, boxed = false }: Roadmap
     };
 
     return (
-        <div className={`flex flex-col ${boxed ? "rounded-3xl border border-border bg-bg-card p-6" : ""}`}>
+        <div className={`flex flex-col ${boxed ? "rounded-3xl border border-border bg-bg-card p-5 sm:p-6" : ""}`}>
             {items.map((item, index) => (
                 <div key={item.title} className="relative flex gap-5 pb-8 last:pb-0">
                     {index < items.length - 1 && (
@@ -65,7 +65,7 @@ export default function Roadmap({ items = roadmapItems, boxed = false }: Roadmap
                         {item.icon}
                     </div>
 
-                    <div className="pt-1.5">
+                    <div className="min-w-0 pt-1.5">
                         <h3 className="font-heading text-base font-bold text-text-main">
                             {item.title}
                         </h3>

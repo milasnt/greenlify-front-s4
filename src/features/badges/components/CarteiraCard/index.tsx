@@ -13,7 +13,7 @@ export default function CarteiraCard({ saldo }: { saldo: number }) {
 
                 <div>
                     <p className="text-sm font-semibold text-text-secondary">Saldo da carteira</p>
-                    <p className="font-heading text-3xl font-extrabold tracking-tight text-text-main">
+                    <p className="font-heading text-2xl font-extrabold tracking-tight sm:text-3xl text-text-main">
                         {saldo.toLocaleString("pt-BR")} <span className="text-base font-bold text-text-secondary">pts</span>
                     </p>
                     <p className="mt-1 max-w-md text-sm leading-relaxed text-text-secondary">

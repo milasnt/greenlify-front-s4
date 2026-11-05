@@ -58,24 +58,24 @@ export default function Dashboard({
                     </div>
                 </div>
 
-                <div className="glassPanel absolute -left-4 top-10 z-10 hidden animate-float items-center gap-2 rounded-2xl px-3.5 py-2.5 sm:flex">
+                <div className="glassPanel absolute -left-2 top-10 z-10 hidden animate-float items-center gap-2 rounded-2xl px-3.5 py-2.5 sm:flex">
                     <FaWandMagicSparkles className="text-green-primary" />
                     <span className="font-heading text-xs font-bold text-text-main">Validação por IA</span>
                 </div>
 
-                <div className="absolute -right-3 bottom-24 z-10 hidden animate-float-slow items-center gap-2 rounded-full bg-night px-3.5 py-2 text-night-text shadow-xl sm:flex">
+                <div className="absolute -right-2 bottom-24 z-10 hidden animate-float-slow items-center gap-2 rounded-full bg-night px-3.5 py-2 text-night-text shadow-xl sm:flex">
                     <FaFire className="text-green-light" />
                     <span className="font-heading text-xs font-bold">Streak ativo</span>
                 </div>
 
-                <img src={heroLeaf} alt="" className="absolute -bottom-10 -left-8 z-10 w-24 animate-drift drop-shadow-xl sm:w-32" loading="lazy" />
+                <img src={heroLeaf} alt="" className="absolute -bottom-10 -left-3 z-10 w-20 animate-drift drop-shadow-xl xs:-left-8 xs:w-24 sm:w-32" loading="lazy" />
             </div>
         );
     }
 
     return (
-        <div className="relative mx-auto w-fit" aria-hidden>
-            <div className="glassPanel absolute -left-10 top-16 z-20 hidden animate-float items-center gap-2 rounded-2xl px-3.5 py-2.5 sm:flex">
+        <div className="relative mx-auto w-full max-w-72.5 sm:max-w-77.5" aria-hidden>
+            <div className="glassPanel absolute -left-6 top-16 z-20 hidden lg:-left-10 animate-float items-center gap-2 rounded-2xl px-3.5 py-2.5 sm:flex">
                 <span className="grid h-8 w-8 place-items-center rounded-xl bg-purple-primary text-white">
                     <FaMedal />
                 </span>
@@ -86,7 +86,7 @@ export default function Dashboard({
                 </div>
             </div>
 
-            <div className="glassPanel absolute -right-8 top-40 z-20 hidden animate-float-slow rounded-2xl px-4 py-3 sm:block">
+            <div className="glassPanel absolute -right-4 top-40 z-20 hidden lg:-right-8 animate-float-slow rounded-2xl px-4 py-3 sm:block">
                 <p className="textGradient font-heading text-lg font-extrabold">+60 XP</p>
                 <p className="text-[10px] font-medium text-text-secondary">hoje</p>
             </div>
@@ -94,16 +94,16 @@ export default function Dashboard({
             <img
                 src={heroLeaf}
                 alt=""
-                className="absolute -bottom-8 -right-14 z-20 w-28 animate-drift drop-shadow-xl sm:w-36"
+                className="absolute -bottom-8 -right-3 z-20 w-20 animate-drift drop-shadow-xl xs:-right-14 xs:w-28 sm:w-36"
                 loading="lazy"
             />
 
-            <div className="absolute -left-6 bottom-24 z-20 hidden animate-float-slow items-center gap-2 rounded-full bg-night px-3.5 py-2 text-night-text shadow-xl sm:flex">
+            <div className="absolute -left-4 bottom-24 z-20 hidden lg:-left-6 animate-float-slow items-center gap-2 rounded-full bg-night px-3.5 py-2 text-night-text shadow-xl sm:flex">
                 <FaFire className="text-green-light" />
                 <span className="font-heading text-xs font-bold">4 meses de streak</span>
             </div>
 
-            <div className="relative z-10 w-72.5 rounded-[3rem] border-10 border-night bg-night shadow-2xl shadow-green-primary/20 sm:w-77.5">
+            <div className="relative z-10 w-full rounded-[3rem] border-10 border-night bg-night shadow-2xl shadow-green-primary/20">
                 <div className="overflow-hidden rounded-[2.3rem] bg-bg">
                     <div className="flex items-center justify-between px-6 pt-4">
                         <span className="text-[10px] font-semibold text-text-secondary">9:41</span>

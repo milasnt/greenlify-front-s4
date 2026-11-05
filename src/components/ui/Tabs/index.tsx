@@ -67,8 +67,8 @@ export default function Tabs({
             onKeyDown={handleKeyDown}
             className={variant === "segmented"
                 ? "mx-auto flex w-fit gap-1 rounded-full border border-border bg-bg-card p-1 max-[480px]:w-full"
-                : "flex snap-x gap-2 overflow-x-auto rounded-full border border-border bg-bg-card p-1.5 [scrollbar-width:none] lg:justify-center [&::-webkit-scrollbar]:hidden"}
-        >
+                : "flex w-full snap-x gap-1 overflow-x-auto rounded-full border border-border bg-bg-card p-1.5 scrollbar-none [&::-webkit-scrollbar]:hidden"}
+     >
             {items.map((item, index) => {
                 const isActive = item.id === active;
 
@@ -86,7 +86,9 @@ export default function Tabs({
                         tabIndex={isActive ? 0 : -1}
                         onClick={() => onChange(item.id)}
                         className={`flex shrink-0 snap-center items-center justify-center gap-2 whitespace-nowrap rounded-full font-heading font-bold transition duration-300 ${
-                            variant === "segmented" ? "flex-1 px-6 py-2 text-sm" : "px-4 py-2.5 text-xs"
+                            variant === "segmented"
+                                ? "flex-1 px-3 py-2 text-sm sm:px-6"
+                                : "px-2.5 py-2 text-[11px] xl:px-3 xl:text-xs"
                         } ${
                             isActive
                                 ? "bg-green-primary text-white shadow-md shadow-green-primary/25"

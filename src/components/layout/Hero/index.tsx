@@ -24,12 +24,12 @@ export default function Hero({
         : "";
 
     const spacingStyles = isHome
-        ? "pb-20 pt-16 lg:pt-24"
-        : "pb-14 pt-14 lg:pb-20 lg:pt-20";
+        ? "pb-14 pt-10 sm:pb-20 sm:pt-16 lg:pt-24"
+        : "pb-10 pt-10 sm:pb-14 sm:pt-14 lg:pb-20 lg:pt-20";
 
     const titleStyles = isHome
-        ? "text-4xl sm:text-5xl lg:text-6xl"
-        : "text-4xl sm:text-5xl";
+        ? "text-[1.75rem] xs:text-4xl sm:text-5xl lg:text-6xl"
+        : "text-[1.75rem] xs:text-4xl sm:text-5xl";
 
     return (
         <section className="relative w-full overflow-hidden bg-bg">
@@ -37,15 +37,15 @@ export default function Hero({
             <div className="absolute -top-32 right-0 h-120 w-120 rounded-full bg-green-light/15 blur-3xl" aria-hidden />
             <div className="absolute -left-24 top-1/2 h-72 w-72 rounded-full bg-purple-primary/10 blur-3xl" aria-hidden />
 
-            <div className={`relative mx-auto grid max-w-6xl items-center gap-14 px-4 sm:px-6 ${containerStyles} ${spacingStyles}`}>
-                <Reveal>
+            <div className={`relative mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 ${containerStyles} ${spacingStyles} lg:gap-14`}>
+                <Reveal className="min-w-0">
 
-                    <h1 className={`mt-6 max-w-3xl font-heading font-extrabold leading-[1.08] tracking-tight ${titleStyles}`}>
+                    <h1 className={`mt-6 max-w-3xl wrap-break-word font-heading font-extrabold leading-[1.08] tracking-tight ${titleStyles}`}>
                         {title}
                     </h1>
 
                     {text && (
-                        <p className="mt-6 max-w-xl text-lg leading-relaxed text-text-secondary">
+                        <p className="mt-5 max-w-xl text-base leading-relaxed sm:mt-6 sm:text-lg text-text-secondary">
                             {text}
                         </p>
                     )}
@@ -58,7 +58,7 @@ export default function Hero({
                 </Reveal>
 
                 {visual && (
-                    <Reveal delay={150} className="relative flex items-center justify-center">
+                    <Reveal delay={150} className="relative flex min-w-0 items-center justify-center">
                         {!isHome && (
                             <div className="absolute flex h-60 w-60 items-center justify-center sm:h-72 sm:w-72" aria-hidden>
                                 <div className="absolute h-full w-full rounded-full bg-green-primary/5" />

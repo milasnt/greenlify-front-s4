@@ -48,7 +48,7 @@ export default function Contato() {
                                     items={[
                                         { icon: <FaEnvelope />, title: "Email", text: "greenlify@gmail.com" },
                                         { icon: <FaLocationDot />, title: "Localização", text: "Av. Paulista, 1106 - Bela Vista, São Paulo - SP." },
-                                        { icon: <FaGithub />, title: "GitHub", text: "github.com/greenlify", href: "https://github.com/" },
+                                        { icon: <FaGithub />, title: "GitHub", text: "greenlify", href: "https://github.com/milasnt/greenlify-front-s4" },
                                     ]}
                                 />
                             </Card>
@@ -73,7 +73,7 @@ export default function Contato() {
                     </div>
 
                     <Reveal delay={150}>
-                        <Card hover={false} className="p-8">
+                        <Card hover={false} className="p-6 sm:p-8">
                             {submitted ? (
                                 <div className="flex flex-col items-center gap-4 py-10 text-center">
                                     <IconBox icon={<FaCircleCheck />} variant="solid" size="lg" />

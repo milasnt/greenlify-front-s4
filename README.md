@@ -31,6 +31,13 @@ O usuário pode realizar missões, enviar comprovações das atividades, acumula
 
 <br>
 
+<img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white">
+<img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white">
+<img src="https://img.shields.io/badge/Google_Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white">
+
+<br>
+
 <img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white">
 <img src="https://img.shields.io/badge/React_Hook_Form-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white">
 <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white">
@@ -46,64 +53,67 @@ O usuário pode realizar missões, enviar comprovações das atividades, acumula
 | **TypeScript** | Tipagem dos componentes, propriedades, dados e funcionalidades. |
 | **Vite** | Configuração do projeto, desenvolvimento e build da aplicação. |
 | **Tailwind CSS** | Estilização da interface e desenvolvimento responsivo. |
-| **React Router DOM** | Navegação entre as páginas e criação de rotas dinâmicas. |
+| **React Router DOM** | Navegação entre as páginas e gerenciamento de rotas. |
 | **React Hook Form** | Gerenciamento e validação dos formulários. |
+| **Java** | Desenvolvimento do backend principal e das regras de negócio. |
+| **Spring Boot** | Construção da API REST e gerenciamento dos serviços do backend Java. |
+| **Python** | Desenvolvimento do serviço auxiliar responsável pelo processamento e validação dos vídeos. |
+| **Google Gemini API** | Utilização de inteligência artificial para auxiliar na análise e validação das comprovações em vídeo. |
 | **Git** | Controle de versão do projeto. |
-| **GitHub** | Hospedagem do repositório e colaboração da equipe. |
+| **GitHub** | Hospedagem dos repositórios e colaboração da equipe. |
 
 ---
 
-
 ## ✨ Funcionalidades
 
-A Greenlify foi estruturada para apresentar uma experiência completa de participação, desde a exploração das missões até o acompanhamento dos resultados obtidos pelo usuário.
+A Greenlify foi desenvolvida para ampliar o engajamento dos usuários da SoulUp por meio da gamificação sustentável, conectando ações ambientais a mecanismos de reconhecimento, progressão e participação coletiva.
 
 <table>
   <tr>
     <td align="center">🌱</td>
     <td>
       <strong>Missões Sustentáveis</strong><br>
-      Exibição de missões contínuas e mensais com descrição, critérios, prazo, dificuldade e impacto ambiental.
+      Disponibilização de missões contínuas e mensais, organizadas por categorias e acompanhadas de descrição, critérios de comprovação, prazo, impacto ambiental, dificuldade e pontuação.
     </td>
   </tr>
 
   <tr>
     <td align="center">🔎</td>
     <td>
-      <strong>Detalhamento das Missões</strong><br>
-      Visualização das informações específicas de cada missão antes de sua realização.
+      <strong>Detalhamento e Filtros de Missões</strong><br>
+      Consulta das informações de cada missão e filtragem por categoria, impacto ambiental e nível de dificuldade.
     </td>
   </tr>
 
   <tr>
     <td align="center">🎥</td>
     <td>
-      <strong>Envio de Comprovação</strong><br>
-      Simulação do envio de vídeos utilizados como comprovação da realização das atividades.
+      <strong>Envio de Comprovação em Vídeo</strong><br>
+      Envio de vídeos para comprovar a realização das atividades, vinculando cada comprovação ao usuário e à missão correspondente.
     </td>
   </tr>
 
   <tr>
     <td align="center">🤖</td>
     <td>
-      <strong>Validação Inteligente</strong><br>
-      Processo de validação das comprovações utilizando inteligência artificial para verificar a realização das ações.
+      <strong>Validação com Inteligência Artificial</strong><br>
+      Integração de um serviço desenvolvido em Python com a API do Google Gemini para analisar os vídeos enviados e verificar sua correspondência com os critérios das missões.
     </td>
   </tr>
 
   <tr>
     <td align="center">🔐</td>
     <td>
-      <strong>Segurança e Prevenção de Fraudes</strong><br>
-      Utilização de mecanismos como validação de arquivos, controle de tentativas e fingerprint para reduzir comportamentos fraudulentos.
+      <strong>Fingerprint e Prevenção de Fraudes</strong><br>
+      Combinação de SHA-256, pHash e embeddings para identificar arquivos duplicados e conteúdos visualmente semelhantes, dificultando a reutilização de vídeos para obtenção indevida de pontos.
     </td>
   </tr>
 
   <tr>
     <td align="center">🏆</td>
     <td>
-      <strong>Pontuação</strong><br>
-      Acúmulo de pontos de acordo com o impacto ambiental das missões realizadas e seus resultados de validação.
+      <strong>Pontuação por Impacto Ambiental</strong><br>
+      Atribuição de pontos conforme o impacto ambiental das missões, considerando critérios de pontuação previamente definidos.
     </td>
   </tr>
 
@@ -111,7 +121,7 @@ A Greenlify foi estruturada para apresentar uma experiência completa de partici
     <td align="center">⭐</td>
     <td>
       <strong>XP e Nível de Contribuição</strong><br>
-      Acompanhamento da experiência acumulada e da evolução do usuário dentro da plataforma.
+      Sistema de progressão que representa a experiência acumulada e a evolução do usuário de acordo com sua participação nas atividades sustentáveis.
     </td>
   </tr>
 
@@ -119,31 +129,31 @@ A Greenlify foi estruturada para apresentar uma experiência completa de partici
     <td align="center">🏅</td>
     <td>
       <strong>Rankings</strong><br>
-      Consulta aos rankings <strong>mensal</strong>, <strong>all time</strong> e de <strong>grupos</strong>, permitindo acompanhar diferentes formas de desempenho.
+      Rankings mensais e gerais (All Time), além de rankings de grupos, permitindo acompanhar o desempenho individual e coletivo.
     </td>
   </tr>
 
   <tr>
     <td align="center">👥</td>
     <td>
-      <strong>Grupos</strong><br>
-      Criação, entrada e visualização de grupos para participação e comparação do desempenho coletivo.
+      <strong>Grupos e Engajamento Coletivo</strong><br>
+      Participação em grupos e acompanhamento do desempenho coletivo, com posições determinadas pelos Selos Verdes resgatados pelos integrantes.
     </td>
   </tr>
 
   <tr>
     <td align="center">💰</td>
     <td>
-      <strong>Recompensas</strong><br>
-      Disponibilização de recompensas relacionadas ao desempenho do usuário e aos resultados obtidos nas atividades.
+      <strong>Recompensas e Selos Verdes</strong><br>
+      Reconhecimento das conquistas por meio de Selos Verdes e integração com benefícios do ecossistema SoulUp, como vales de energia e compensações de carbono.
     </td>
   </tr>
 
   <tr>
     <td align="center">🔥</td>
     <td>
-      <strong>Streak</strong><br>
-      Acompanhamento da participação contínua do usuário nas atividades da Greenlify.
+      <strong>Streak de Participação</strong><br>
+      Acompanhamento da recorrência das atividades sustentáveis, incentivando a continuidade da participação dos usuários.
     </td>
   </tr>
 
@@ -151,7 +161,7 @@ A Greenlify foi estruturada para apresentar uma experiência completa de partici
     <td align="center">👤</td>
     <td>
       <strong>Perfil Sustentável</strong><br>
-      Visualização de pontos, XP, missões concluídas, nível de contribuição, impacto ambiental e evolução do usuário.
+      Reunião de informações sobre a evolução do usuário, incluindo participação, conquistas, pontos, XP e nível de contribuição.
     </td>
   </tr>
 
@@ -159,146 +169,343 @@ A Greenlify foi estruturada para apresentar uma experiência completa de partici
     <td align="center">📊</td>
     <td>
       <strong>Desempenho Mensal</strong><br>
-      Resumo dos resultados obtidos durante o mês, incluindo pontos, missões concluídas e posição no ranking.
+      Resumo dos resultados obtidos durante o mês, permitindo acompanhar a participação, as missões concluídas e as conquistas alcançadas.
     </td>
   </tr>
 
   <tr>
     <td align="center">📤</td>
     <td>
-      <strong>Compartilhamento</strong><br>
-      Possibilidade de compartilhar o resumo do desempenho mensal e das conquistas obtidas.
+      <strong>Compartilhamento de Conquistas</strong><br>
+      Possibilidade de compartilhar resultados e conquistas nas redes sociais, ampliando a visibilidade das ações sustentáveis e da SoulUp.
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center">🔗</td>
+    <td>
+      <strong>Integração entre Serviços</strong><br>
+      Comunicação entre o backend principal em Java com Spring Boot e o serviço auxiliar em Python, responsável pelo processamento e pela validação inteligente dos vídeos.
     </td>
   </tr>
 </table>
-
----
 
 ## 📁 Estrutura de Pastas do Projeto
 
 A estrutura do projeto foi organizada de forma a separar as páginas, componentes reutilizáveis, imagens e arquivos de configuração da aplicação.
 
 ```text
-greenlify-front/
-│
+greenlify-front-s4/
 ├── src/
+│   ├── assets/
+│   │   ├── img/
+│   │   │   ├── home/
+│   │   │   │   └── hero-leaf.png
+│   │   │   ├── integrantes/
+│   │   │   │   ├── img-camila.jpeg
+│   │   │   │   ├── img-enzo.jpeg
+│   │   │   │   ├── img-lucas.jpeg
+│   │   │   │   └── img-sophia.jpeg
+│   │   │   ├── logo/
+│   │   │   │   └── logoGreenlify.svg
+│   │   │   └── sobre/
+│   │   │       ├── img-fiap.jpeg
+│   │   │       └── img-soulup.png
+│   │   └── .gitkeep
+│   ├── components/
+│   │   ├── layout/
+│   │   │   ├── CtaBanner/
+│   │   │   ├── Footer/
+│   │   │   ├── Grid/
+│   │   │   ├── Header/
+│   │   │   ├── Hero/
+│   │   │   ├── Logo/
+│   │   │   ├── Menu/
+│   │   │   ├── Reveal/
+│   │   │   ├── Section/
+│   │   │   └── SectionHeading/
+│   │   └── ui/
+│   │       ├── Badge/
+│   │       ├── Button/
+│   │       ├── Card/
+│   │       ├── Chart/
+│   │       ├── Dashboard/
+│   │       ├── FAQCard/
+│   │       ├── FeatureCard/
+│   │       ├── Feedback/
+│   │       ├── Field/
+│   │       ├── Forms/
+│   │       ├── IconBox/
+│   │       ├── ItemList/
+│   │       ├── MediaCard/
+│   │       ├── Modal/
+│   │       ├── Pagination/
+│   │       ├── ProgressBar/
+│   │       ├── Roadmap/
+│   │       ├── Tabs/
+│   │       └── Toast/
 │   ├── docs/
 │   │   └── img/
-│   │     ├── home.png
-│   │     ├── missoes.png
-│   │     └── perfil.png
-│   │
-│   ├── assets/
-│   │   └── img/
-│   │     ├── sobre/
-│   │     └── integrantes/
-│   │ 
-│   ├── components/
-│   │   ├── Button/
-│   │   ├── Card/
-│   │   ├── Dashboard/
-│   │   ├── FAQCard/
-│   │   ├── Footer/
-│   │   ├── Forms/
-│   │   ├── Header/
-│   │   ├── Hero/
-│   │   ├── Menu/
-│   │   ├── MissionCard/
-│   │   ├── MissionFilter/
-│   │   ├── MissionModal/
-│   │   ├── ProfileHeader/
-│   │   ├── ProfileStat/
-│   │   ├── RankingTable/
-│   │   ├── RankingTabs/
-│   │   ├── Roadmap/
-│   │   └── Section/
-│   │
+│   │       ├── home.png
+│   │       ├── missoes.png
+│   │       └── perfil.png
+│   ├── features/
+│   │   ├── badges/
+│   │   │   ├── components/
+│   │   │   │   ├── Badge/
+│   │   │   │   ├── CarteiraCard/
+│   │   │   │   └── ColetarSelos/
+│   │   │   ├── hooks/
+│   │   │   │   └── useBadges.ts
+│   │   │   ├── services/
+│   │   │   │   └── badgeService.ts
+│   │   │   └── types/
+│   │   │       └── badges.ts
+│   │   ├── demo/
+│   │   │   ├── components/
+│   │   │   │   ├── DemoShowcase/
+│   │   │   │   ├── PhoneDemo/
+│   │   │   │   ├── PhoneGrupos/
+│   │   │   │   ├── PhoneMissoes/
+│   │   │   │   ├── PhonePerfil/
+│   │   │   │   ├── PhoneRanking/
+│   │   │   │   ├── PhoneSelos/
+│   │   │   │   └── PhoneTabs/
+│   │   │   ├── types/
+│   │   │   │   └── demo.ts
+│   │   │   └── utils/
+│   │   │       └── formatar.ts
+│   │   ├── groups/
+│   │   │   ├── hooks/
+│   │   │   │   └── useGroups.ts
+│   │   │   ├── services/
+│   │   │   │   └── groupService.ts
+│   │   │   └── types/
+│   │   │       └── group.ts
+│   │   ├── missions/
+│   │   │   ├── components/
+│   │   │   │   ├── FilterBar/
+│   │   │   │   ├── MissionCard/
+│   │   │   │   ├── MissionFilter/
+│   │   │   │   ├── MissionModal/
+│   │   │   │   └── Upload/
+│   │   │   ├── hooks/
+│   │   │   │   ├── useFiltroMissoes.ts
+│   │   │   │   └── useMissoes.ts
+│   │   │   ├── services/
+│   │   │   │   └── missionService.ts
+│   │   │   ├── types/
+│   │   │   │   └── mission.ts
+│   │   │   └── utils/
+│   │   │       └── mapMission.ts
+│   │   ├── profile/
+│   │   │   ├── components/
+│   │   │   │   ├── ProfileHeader/
+│   │   │   │   └── SummaryCard/
+│   │   │   ├── hooks/
+│   │   │   │   └── useProfile.ts
+│   │   │   ├── services/
+│   │   │   │   └── profileService.ts
+│   │   │   └── types/
+│   │   │       └── profile.ts
+│   │   ├── ranking/
+│   │   │   ├── components/
+│   │   │   │   ├── GroupCard/
+│   │   │   │   ├── RankingTable/
+│   │   │   │   └── RankingTabs/
+│   │   │   ├── hooks/
+│   │   │   │   └── useRankings.ts
+│   │   │   ├── services/
+│   │   │   │   └── rankingService.ts
+│   │   │   └── types/
+│   │   │       └── ranking.ts
+│   │   ├── usuario/
+│   │   │   ├── types/
+│   │   │   │   └── usuario.ts
+│   │   │   └── utils/
+│   │   │       └── usuarioAtual.ts
+│   │   └── validation/
+│   │       ├── components/
+│   │       │   ├── AnalysisResult/
+│   │       │   └── VideoFrames/
+│   │       ├── services/
+│   │       │   └── validationService.ts
+│   │       └── types/
+│   │           └── validation.ts
 │   ├── routes/
-│   │   ├── Home/
-│   │   ├── Sobre/
-│   │   ├── NossaSolucao/
-│   │   ├── Missoes/
-│   │   ├── MissaoDetalhe/
-│   │   ├── Perfil/
-│   │   ├── Integrantes/
 │   │   ├── Contato/
+│   │   ├── Error/
 │   │   ├── FAQ/
-│   │   └── Error/
-│   │
+│   │   ├── Grupos/
+│   │   ├── Home/
+│   │   ├── Integrantes/
+│   │   ├── MissaoDetalhe/
+│   │   ├── Missoes/
+│   │   ├── NossaSolucao/
+│   │   ├── Perfil/
+│   │   ├── Rankings/
+│   │   ├── Resumo/
+│   │   ├── Sobre/
+│   │   └── Validacao/
+│   ├── shared/
+│   │   ├── hooks/
+│   │   │   └── useCarregar.ts
+│   │   └── services/
+│   │       └── api.ts
 │   ├── App.tsx
-│   ├── main.tsx
-│   └── global.css
-│
+│   ├── global.css
+│   └── main.tsx
+├── .env.example
 ├── .gitignore
-├── package.json
+├── eslint.config.js
+├── index.html
 ├── package-lock.json
+├── package.json
+├── README.md
 ├── tsconfig.app.json
 ├── tsconfig.json
-├── vite.config.ts
-└── README.md
+├── tsconfig.node.json
+└── vite.config.ts
 ```
 ---
 
 ## 🖼️ Imagens do Projeto
 
 A interface do Greenlify foi desenvolvida com uma identidade visual voltada à sustentabilidade, utilizando imagens, ícones e elementos gráficos para tornar a navegação mais intuitiva e apresentar as principais funcionalidades da solução.
+## 💻 Interfaces do Projeto
 
-### 💻 Interfaces do Projeto
+Algumas das telas da Greenlify, da página inicial à jornada completa do usuário.
 
-<p align="center">
-  <img src="src/docs/img/home.png" alt="Página inicial do Greenlify" width="800">
-</p>
-
-<p align="center">
-  <img src="src/docs/img/missoes.png" alt="Página de missões do Greenlify" width="800">
-</p>
-
-<p align="center">
-  <img src="src/docs/img/perfil.png" alt="Página de perfil do Greenlify" width="800">
-</p>
-
----
+<table align="center">
+  <tr>
+    <td align="center" width="33%">
+      <img src="src/docs/img/home.png" alt="Página inicial da Greenlify" width="100%"><br>
+      <sub><b>Página inicial</b><br>Apresentação da plataforma</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="src/docs/img/visaogeral.png" alt="Visão geral da Greenlify" width="100%"><br>
+      <sub><b>Visão geral</b><br>Resumo das funcionalidades</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="src/docs/img/mobile-missoes.png" alt="Greenlify em dispositivo móvel" width="100%"><br>
+      <sub><b>Versão mobile</b><br>Layout responsivo</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="33%">
+      <img src="src/docs/img/missoes.png" alt="Lista de missões sustentáveis" width="100%"><br>
+      <sub><b>Missões</b><br>Desafios contínuos e mensais</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="src/docs/img/validacao.png" alt="Validação de missão por vídeo" width="100%"><br>
+      <sub><b>Validação</b><br>Envio e análise do vídeo</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="src/docs/img/grupos.png" alt="Grupos da comunidade" width="100%"><br>
+      <sub><b>Grupos</b><br>Comunidade e Selos Verdes</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="33%">
+      <img src="src/docs/img/ranking.png" alt="Ranking de usuários e grupos" width="100%"><br>
+      <sub><b>Rankings</b><br>Mensal, grupos e all-time</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="src/docs/img/perfil.png" alt="Perfil sustentável do usuário" width="100%"><br>
+      <sub><b>Perfil</b><br>Nível, pontos e conquistas</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="src/docs/img/resumo.png" alt="Resumo de impacto do usuário" width="100%"><br>
+      <sub><b>Resumo</b><br>Impacto para compartilhar</sub>
+    </td>
+  </tr>
+</table>
 
 ## 🚀 Como Usar
 
-### 📋 Pré-requisitos
+### 🌐 Acessar a aplicação
+
+A aplicação Greenlify está hospedada na Vercel e pode ser acessada pelo link:
+
+<p align="center">
+  <a href="https://greenlify-front-s4.vercel.app/">
+    <img src="https://img.shields.io/badge/Acessar%20Greenlify-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Acessar Greenlify na Vercel">
+  </a>
+</p>
+
+**URL do projeto:** https://greenlify-front-s4.vercel.app/
+
+### 📁 Repositório do GitHub
+
+O código-fonte do projeto está disponível no GitHub:
+
+<p align="center">
+  <a href="https://github.com/milasnt/greenlify-front-s4">
+    <img src="https://img.shields.io/badge/Visualizar%20Repositório-GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="Repositório Greenlify no GitHub">
+  </a>
+</p>
+
+**Link do repositório:** https://github.com/milasnt/greenlify-front-s4
+
+### 🎥 Vídeo de apresentação
+
+O vídeo apresenta a proposta da Greenlify, suas principais funcionalidades e o funcionamento da solução.
+
+**Link do YouTube:** [INSERIR LINK DO VÍDEO AQUI]
+
+### 💻 Executar localmente
+
+#### Pré-requisitos
 
 Para executar o projeto localmente, é necessário ter instalado:
 
-- Node.js
-- npm
-- Git
+- [Node.js](https://nodejs.org/)
+- npm (gerenciador de pacotes do Node.js)
+- [Git](https://git-scm.com/)
 
-### 📥 Instalação
+#### 1. Clonar o repositório
 
-Clone o repositório:
+Abra o terminal e execute:
 
 ```bash
 git clone https://github.com/milasnt/greenlify-front.git
 ```
-Acesse a pasta do projeto:
+
+#### 2. Acessar a pasta do projeto
 
 ```bash
-cd greenlify-front
+cd greenlify-front-s4
 ```
 
-Instale as dependências:
+#### 3. Instalar as dependências
+
 ```bash
 npm install
 ```
 
-Após instalar as dependências, execute o servidor de desenvolvimento:
+#### 4. Configurar as variáveis de ambiente
+
+Crie um arquivo `.env` na raiz do projeto e configure a URL da API utilizada pela aplicação:
+
+```env
+VITE_API_URL=https://greenlify-s4.onrender.com
+```
+
+- `VITE_API_URL`: endereço do back-end principal, desenvolvido em Java.
+
+#### 5. Executar a aplicação
+
+Após instalar as dependências e configurar as variáveis de ambiente, execute:
+
 ```bash
 npm run dev
 ```
 
-O Vite disponibilizará um endereço local no terminal. Acesse o endereço pelo navegador, normalmente:
+O Vite disponibilizará um endereço local no terminal. Acesse pelo navegador, normalmente:
 
-```bash
+```text
 http://localhost:5173
 ```
-
----
 
 ## 👨‍💻 Autores e Créditos
 
@@ -383,7 +590,7 @@ http://localhost:5173
 ### 📁 Repositório do GitHub
 
 <p>
-  <a href="https://github.com/milasnt/greenlify-front">
+  <a href="https://github.com/milasnt/greenlify-front-s4">
     🔗<strong>Acessar o repositório do projeto</strong>
   </a>
 </p>

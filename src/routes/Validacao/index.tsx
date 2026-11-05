@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
     FaClapperboard,
@@ -11,92 +11,57 @@ import {
     FaCheck,
 } from "react-icons/fa6";
 import Grid from "../../components/layout/Grid";
-import Hero from "../../components/layout/Hero";
 import Reveal from "../../components/layout/Reveal";
 import Section from "../../components/layout/Section";
 import Button from "../../components/ui/Button";
 import Card from "../../components/ui/Card";
+import Feedback from "../../components/ui/Feedback";
 import IconBox from "../../components/ui/IconBox";
 import Roadmap, { type RoadmapItem } from "../../components/ui/Roadmap";
 import Upload from "../../features/missions/components/Upload";
+import { useMissaoContinua } from "../../features/missions/hooks/useMissoes";
 import AnalysisResult, { type AnalysisStatus } from "../../features/validation/components/AnalysisResult";
 import VideoFrames from "../../features/validation/components/VideoFrames";
-
+import { useEnviarEvidencia } from "../../features/validation/hooks/useEnviarEvidencia";
+import { statusDoUpload } from "../../features/validation/utils/statusUpload";
 
 interface ValidacaoProps {
     missaoId?: string;
 }
 
-type Resultado = "aprovada" | "parcialmente_aprovada" | "rejeitada";
-
-type Estado =
-    | { tipo: "aguardando" }
-    | { tipo: "processando"; etapa: number; resultado: Resultado }
-    | { tipo: "resultado"; resultado: Resultado };
-
 const etapas = [
-    { id: "envio", titulo: "Envio do vídeo", descricao: "Verificação do arquivo e formato", icon: <FaCloudArrowUp /> },
-    { id: "quadros", titulo: "Extração de quadros", descricao: "Amostras do vídeo são separadas", icon: <FaClapperboard /> },
-    { id: "ia", titulo: "Análise visual por IA", descricao: "Identificação de elementos relevantes", icon: <FaMagnifyingGlassChart /> },
-    { id: "regras", titulo: "Avaliação das regras", descricao: "Critérios da missão são conferidos", icon: <FaListCheck /> },
+    { id: "leitura", titulo: "Envio do vídeo", descricao: "O arquivo é enviado ao servidor da Greenlify", icon: <FaCloudArrowUp /> },
+    { id: "quadros", titulo: "Análise do quadro", descricao: "A IA gera a impressão digital (pHash) do vídeo", icon: <FaClapperboard /> },
+    { id: "comparacao", titulo: "Comparação com envios anteriores", descricao: "O back-end procura vídeos semelhantes", icon: <FaMagnifyingGlassChart /> },
+    { id: "regras", titulo: "Parecer da IA e regras", descricao: "O Gemini confere a missão e as regras definem o status", icon: <FaListCheck /> },
 ];
-
-const INTERVALO_ETAPA = 1400;
 
 export default function Validacao({ missaoId }: ValidacaoProps) {
     const [searchParams] = useSearchParams();
-    const [estado, setEstado] = useState<Estado>({ tipo: "aguardando" });
-    const [arquivo, setArquivo] = useState<string | null>(null);
-    const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+    const [arquivo, setArquivo] = useState<File | null>(null);
+    const { estado, enviar, reiniciar } = useEnviarEvidencia();
 
-    const missao = missoes.find((item) => item.id === (missaoId ?? searchParams.get("missao"))) ?? missoes[0];
+    const idMissao = missaoId ?? searchParams.get("missao") ?? undefined;
+    const { missao, carregando, erro } = useMissaoContinua(idMissao);
 
-    useEffect(() => {
-        const pending = timers.current;
-        return () => pending.forEach(clearTimeout);
-    }, []);
-
-    function limparTimers() {
-        timers.current.forEach(clearTimeout);
-        timers.current = [];
+    function enviarEvidencia() {
+        if (arquivo && missao) void enviar(arquivo, Number(missao.id));
     }
 
-    function simular(resultado: Resultado) {
-        limparTimers();
-        setEstado({ tipo: "processando", etapa: 0, resultado });
-
-        etapas.forEach((_, index) => {
-            timers.current.push(
-                setTimeout(() => {
-                    setEstado((atual) => (atual.tipo === "processando" ? { ...atual, etapa: index + 1 } : atual));
-                }, (index + 1) * INTERVALO_ETAPA),
-            );
-        });
-
-        timers.current.push(
-            setTimeout(() => setEstado({ tipo: "resultado", resultado }), etapas.length * INTERVALO_ETAPA + 600),
-        );
-    }
-
-    function reiniciar() {
-        limparTimers();
+    function enviarNovamente() {
         setArquivo(null);
-        setEstado({ tipo: "aguardando" });
+        reiniciar();
     }
 
     const processando = estado.tipo === "processando";
     const etapaAtual = processando ? estado.etapa : estado.tipo === "resultado" ? etapas.length : -1;
 
     const status: AnalysisStatus =
-        estado.tipo === "aguardando"
-            ? "waiting"
-            : estado.tipo === "processando"
+        estado.tipo === "processando"
             ? "processing"
-            : estado.resultado === "aprovada"
-            ? "approved"
-            : estado.resultado === "parcialmente_aprovada"
-            ? "partially_approved"
-            : "rejected";
+            : estado.tipo === "resultado"
+            ? statusDoUpload(estado.upload.status)
+            : "waiting";
 
     const itensAnalise: RoadmapItem[] = etapas.map((etapa, index) => ({
         title: etapa.titulo,
@@ -107,94 +72,95 @@ export default function Validacao({ missaoId }: ValidacaoProps) {
 
     return (
         <>
-            <Hero
-                badge={<><FaMicrochip /> Validação por inteligência artificial</>}
-                title="Envie a evidência. Acompanhe a análise."
-                text={
-                    <>
-                        Esta é uma <strong className="text-text-main">demonstração interativa</strong>: a IA ainda
-                        não está conectada a um serviço real. A IA auxilia identificando elementos visuais — quem
-                        decide a aprovação são as regras da missão.
-                    </>
-                }
-            />
-
             <Section size="sm">
-                <Reveal>
+                {!idMissao ? (
                     <Card hover={false} className="flex flex-wrap items-center justify-between gap-4 p-5">
-                        <div className="flex items-center gap-4">
-                            <IconBox icon={<FaFileVideo />} size="lg" />
+                        <p className="text-sm text-text-secondary">Escolha uma missão para enviar a evidência.</p>
 
-                            <div>
-                                <p className="text-xs text-text-secondary">Missão selecionada</p>
-                                <p className="font-heading font-bold text-text-main">{missao.titulo}</p>
-                            </div>
-                        </div>
-
-                        <Link to="/missoes" className="text-sm font-semibold text-green-primary underline-offset-4 hover:underline">
-                            Trocar missão
-                        </Link>
+                        <Button to="/missoes" variant="secondary">
+                            Ver missões
+                        </Button>
                     </Card>
-                </Reveal>
+                ) : carregando ? (
+                    <div className="h-24 animate-pulse rounded-2xl border border-border bg-bg-card" />
+                ) : erro || !missao ? (
+                    <Feedback tipo="erro" mensagem={erro ?? "Missão não encontrada."} />
+                ) : (
+                    <>
+                        <Reveal>
+                            <Card hover={false} className="flex flex-wrap items-center justify-between gap-4 p-5">
+                                <div className="flex items-center gap-4">
+                                    <IconBox icon={<FaFileVideo />} size="lg" />
 
-                <Grid split="wide-left" className="mt-8">
-                    <Reveal delay={100}>
-                        <Card hover={false}>
-                            <Upload
-                                variant="dropzone"
-                                fileName={arquivo}
-                                disabled={estado.tipo !== "aguardando"}
-                                onSelectFile={(file) => setArquivo(file.name)}
-                            />
+                                    <div>
+                                        <p className="text-xs text-text-secondary">Missão selecionada</p>
+                                        <p className="font-heading font-bold text-text-main">{missao.titulo}</p>
+                                    </div>
+                                </div>
 
-                            <div className="mt-6">
-                                <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-text-secondary">
-                                    Quadros extraídos
-                                </p>
+                                <Link to="/missoes" className="text-sm font-semibold text-green-primary underline-offset-4 hover:underline">
+                                    Trocar missão
+                                </Link>
+                            </Card>
+                        </Reveal>
 
-                                <VideoFrames
-                                    stage={etapaAtual}
-                                    scanning={processando && estado.etapa >= 2}
+                        <Grid split="wide-left" className="mt-8">
+                            <Reveal delay={100}>
+                                <Card hover={false}>
+                                    <Upload
+                                        variant="dropzone"
+                                        fileName={arquivo?.name ?? null}
+                                        disabled={estado.tipo === "processando" || estado.tipo === "resultado"}
+                                        onSelectFile={setArquivo}
+                                    />
+
+                                    <div className="mt-6">
+                                        <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-text-secondary">
+                                            Quadros extraídos
+                                        </p>
+
+                                        <VideoFrames
+                                            stage={etapaAtual}
+                                            scanning={processando && estado.etapa >= 2}
+                                        />
+                                    </div>
+
+                                    {estado.tipo === "erro" && (
+                                        <Feedback tipo="erro" mensagem={estado.mensagem} className="mt-6" />
+                                    )}
+
+                                    <div className="mt-6 flex flex-wrap gap-3">
+                                        <Button onClick={enviarEvidencia} disabled={!arquivo || processando || estado.tipo === "resultado"}>
+                                            <FaMicrochip aria-hidden />
+                                            {estado.tipo === "erro" ? "Tentar novamente" : "Enviar para análise"}
+                                        </Button>
+
+                                        {(estado.tipo === "resultado" || estado.tipo === "erro") && (
+                                            <Button variant="secondary" onClick={enviarNovamente}>
+                                                <FaRotateRight aria-hidden />
+                                                Enviar outro vídeo
+                                            </Button>
+                                        )}
+                                    </div>
+                                </Card>
+                            </Reveal>
+
+                            <Reveal delay={160} className="flex flex-col gap-6">
+                                <Roadmap boxed items={itensAnalise} />
+
+                                <AnalysisResult
+                                    status={status}
+                                    step={processando ? estado.etapa : 0}
+                                    totalSteps={etapas.length}
+                                    missionTitle={missao.titulo}
+                                    parecer={estado.tipo === "resultado" ? estado.upload.analise : undefined}
+                                    limiteRealizacoes={missao.limiteRealizacoes}
+                                    pontos={missao.pontos}
                                 />
-                            </div>
-
-                            <div className="mt-6 flex flex-wrap gap-3">
-                                <Button onClick={() => simular("aprovada")} disabled={processando}>
-                                    <FaMicrochip aria-hidden />
-                                    Simular análise
-                                </Button>
-
-                                <Button variant="secondary" onClick={() => simular("parcialmente_aprovada")} disabled={processando}>
-                                    Simular aprovação parcial
-                                </Button>
-
-                                <Button variant="secondary" onClick={() => simular("rejeitada")} disabled={processando}>
-                                    Simular reprovação
-                                </Button>
-
-                                {estado.tipo === "resultado" && (
-                                    <Button variant="secondary" onClick={reiniciar}>
-                                        <FaRotateRight aria-hidden />
-                                        Enviar novamente
-                                    </Button>
-                                )}
-                            </div>
-                        </Card>
-                    </Reveal>
-
-                    <Reveal delay={160} className="flex flex-col gap-6">
-                        <Roadmap boxed items={itensAnalise} />
-
-                        <AnalysisResult
-                            status={status}
-                            step={processando ? estado.etapa : 0}
-                            totalSteps={etapas.length}
-                            missionTitle={missao.titulo}
-                            pontos={missao.pontos}
-                            xp={missao.xp}
-                        />
-                    </Reveal>
-                </Grid>
+                            </Reveal>
+                        </Grid>
+                    </>
+                )}
             </Section>
         </>
     );

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowLeft, FaListCheck, FaWandMagicSparkles } from "react-icons/fa6";
@@ -6,8 +5,6 @@ import Reveal from "../../../../components/layout/Reveal";
 import Badge, { type Impacto, type Dificuldade } from "../../../../components/ui/Badge";
 import Button from "../../../../components/ui/Button";
 import ItemList from "../../../../components/ui/ItemList";
-import Upload, { type UploadStatus } from "../Upload";
-
 
 interface MissionModalProps {
     id?: string;
@@ -16,7 +13,6 @@ interface MissionModalProps {
     impacto: Impacto;
     dificuldade: Dificuldade;
     pontos: number;
-    xp: number;
     limiteRealizacoes?: number;
     criteria: ReactNode;
     backTo?: string;
@@ -29,24 +25,9 @@ export default function MissionModal({
     impacto,
     dificuldade,
     pontos,
-    xp,
     criteria,
     backTo = "/missoes",
 }: MissionModalProps) {
-    const [uploadStatus, setUploadStatus] = useState<UploadStatus>("idle");
-    const [fileName, setFileName] = useState<string | null>(null);
-
-    function handleSelectFile(file: File) {
-        setFileName(file.name);
-        setUploadStatus("selected");
-    }
-
-    function handleSubmitUpload() {
-        setUploadStatus("sending");
-        setTimeout(() => {
-            setUploadStatus("success");
-        }, 1500);
-    }
 
     return (
         <section className="mx-auto w-full max-w-6xl px-4 pb-20 pt-10 sm:px-6">
@@ -60,7 +41,7 @@ export default function MissionModal({
                 </Link>
             </Reveal>
 
-            <div className="mt-6 grid gap-10 lg:grid-cols-[1.5fr_1fr]">
+            <div className="mt-6 grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:gap-10">
                 <div className="space-y-10">
                     <Reveal>
                         <div className="flex flex-wrap items-center gap-2">
@@ -68,7 +49,7 @@ export default function MissionModal({
                             <Badge type="impacto" value={impacto} />
                         </div>
 
-                        <h1 className="mt-4 font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">
+                        <h1 className="mt-4 wrap-break-word font-heading text-2xl font-extrabold tracking-tight xs:text-3xl sm:text-4xl">
                             {titulo}
                         </h1>
 
@@ -85,32 +66,18 @@ export default function MissionModal({
 
                         {criteria}
                     </Reveal>
-
-                    <Reveal delay={160}>
-                        <Upload
-                            status={uploadStatus}
-                            fileName={fileName}
-                            onSelectFile={handleSelectFile}
-                            onSubmit={handleSubmitUpload}
-                        />
-                    </Reveal>
                 </div>
 
                 <Reveal delay={120}>
-                    <aside className="sticky top-24 rounded-3xl bg-night p-7 text-night-text">
+                    <aside className="rounded-3xl bg-night p-6 text-night-text sm:p-7 lg:sticky lg:top-24">
                         <p className="font-heading text-xs font-bold uppercase tracking-[0.2em] text-green-light">
                             Recompensa
                         </p>
 
-                        <div className="mt-4 flex items-end gap-6">
+                        <div className="mt-4 flex flex-wrap items-end gap-x-6 gap-y-3">
                             <div>
                                 <p className="font-heading text-4xl font-extrabold text-green-light">+{pontos}</p>
                                 <p className="text-xs text-night-muted">pontos</p>
-                            </div>
-
-                            <div>
-                                <p className="font-heading text-4xl font-extrabold">+{xp}</p>
-                                <p className="text-xs text-night-muted">de experiência</p>
                             </div>
                         </div>
 

@@ -38,7 +38,7 @@ export default function SectionHeading({
                 </p>
             )}
 
-            <Title className="mt-3 font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">
+            <Title className="mt-3 wrap-break-word font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">
                 {title}
             </Title>
 

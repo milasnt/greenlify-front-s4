@@ -8,8 +8,9 @@ interface AnalysisResultProps {
     step?: number;
     totalSteps?: number;
     missionTitle: string;
+    parecer?: string;
+    limiteRealizacoes: number;
     pontos: number;
-    xp: number;
 }
 
 export default function AnalysisResult({
@@ -18,7 +19,6 @@ export default function AnalysisResult({
     totalSteps = 4,
     missionTitle,
     pontos,
-    xp,
 }: AnalysisResultProps) {
     return (
         <div aria-live="polite" className="flex-1">
@@ -68,11 +68,6 @@ export default function AnalysisResult({
                         <div>
                             <p className="font-heading text-2xl font-extrabold text-green-primary">+{pontos}</p>
                             <p className="text-xs text-green-dark/70">pontos</p>
-                        </div>
-
-                        <div>
-                            <p className="font-heading text-2xl font-extrabold text-green-primary">+{xp}</p>
-                            <p className="text-xs text-green-dark/70">XP</p>
                         </div>
                     </div>
 
